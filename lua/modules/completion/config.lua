@@ -161,6 +161,7 @@ function config.cmp()
             {name = "treesitter"},
             {name = "buffer"},
             {name = "latex_symbols"},
+            {name = "vim_dadbod_completion"},
             {name = "cmp_tabnine"}
         },
         experimental = {
@@ -215,9 +216,11 @@ function config.tabnine()
     local tabnine = require("cmp_tabnine.config")
     tabnine:setup({max_line = 200, max_num_results = 20, sort = true})
 end
-
 function config.autopairs()
-    require("nvim-autopairs").setup {}
+    local npairs = require("nvim-autopairs")
+    local Rule = require("nvim-autopairs.rule")
+    npairs.setup()
+    npairs.add_rule(Rule("$$", "$$", "tex"))
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     local cmp = require("cmp")
     cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({map_char = {tex = ""}}))

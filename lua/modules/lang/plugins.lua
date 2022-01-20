@@ -24,6 +24,6 @@ lang["chrisbra/csv.vim"] = {opt = true, ft = "csv"}
 lang["lervag/vimtex"] = {opt=true,ft='tex',config=conf.latex}
 lang["dhruvasagar/vim-table-mode"] = {opt=true,ft='markdown'}
 lang["mzlogin/vim-markdown-toc"] = {opt=true,ft='markdown'}
-lang["ekickx/clipboard-image.nvim"] = {opt=true,ft='markdown',config=conf.clipboard_image}
+lang["ekickx/clipboard-image.nvim"] = {opt=true,commit='f678fb378c049cd3f6b0a187014e9bc3bbd09706',cmd={'PasteImg'},ft='markdown',config=conf.clipboard_image}
 lang['h-hg/fcitx.nvim'] = {opt=false,event="VimEnter"}
 return lang

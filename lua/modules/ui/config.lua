@@ -46,14 +46,14 @@ function config.catppuccin()
                 telescope = true,
                 nvimtree = {enabled = true, show_root = true},
                 which_key = true,
-                indent_blankline = {enabled = true, colored_indent_levels = false},
+                indent_blankline = {enabled = true, colored_indent_levels = true},
                 dashboard = true,
                 neogit = false,
                 vim_sneak = false,
                 fern = false,
                 barbar = false,
                 bufferline = true,
-                markdown = true,
+				markdown = true,
                 lightspeed = false,
                 ts_rainbow = true,
                 hop = true
@@ -442,24 +442,6 @@ function config.indent_blankline()
     }
     vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
     vim.g.indentLine_concealcursor = ""
-end
-
-function config.notify()
-    require("notify").setup(
-        {
-            stages = "fade_in_slide_out",
-            timeout = 3000,
-            background_colour = "Normal",
-            icons = {
-                ERROR = "",
-                WARN = "",
-                INFO = "",
-                DEBUG = "",
-                TRACE = "✎"
-            }
-        }
-    )
-    vim.notify = require("notify")
 end
 
 return config

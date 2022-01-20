@@ -36,7 +36,5 @@ ui["akinsho/nvim-bufferline.lua"] = {
     event = "BufRead",
     config = conf.nvim_bufferline
 }
-ui["dstein64/nvim-scrollview"] = {opt = true, event = "BufRead"}
-ui["rcarriga/nvim-notify"] = {opt=true,config=conf.notify}
 
 return ui

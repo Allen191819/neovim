@@ -126,11 +126,11 @@ editor["tpope/vim-surround"] = {
     event = "BufRead"
 }
 editor["Allen191819/vim-expand-region"] = {
-    opt = true,
+    opt = false,
     requires = {
-        {"kana/vim-textobj-user",opt = true},
-        {"sgur/vim-textobj-parameter",opt = true},
-        {"kana/vim-textobj-line", opt = true}
+        {"kana/vim-textobj-user",opt = false},
+        {"sgur/vim-textobj-parameter",opt = false},
+        {"kana/vim-textobj-line", opt = false}
     },
     config = conf.expand_region
 }
@@ -140,7 +140,7 @@ editor["alpertuna/vim-header"]={
     config=conf.add_header
 }
 editor["mg979/vim-visual-multi"] = {
-    opt = true
+    opt = false
 }
 editor["Chiel92/vim-autoformat"]={
     cmd = {'Autoformat'},
@@ -150,5 +150,4 @@ editor["AndrewRadev/switch.vim"] = {
     cmd = {"SwitchReverse","Switch"},
     opt = true
 }
-
 return editor

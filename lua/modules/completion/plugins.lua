@@ -25,8 +25,7 @@ completion["kosayoda/nvim-lightbulb"] = {
     config = conf.lightbulb
 }
 completion["onsails/lspkind-nvim"] = {
-    opt = true,
-    after = "nvim-lspconfig",
+    opt = false,
     config=conf.lspkind
 }
 completion["ray-x/lsp_signature.nvim"] = {opt = true, after = "nvim-lspconfig"}
@@ -45,6 +44,7 @@ completion["hrsh7th/nvim-cmp"] = {
         { "hrsh7th/cmp-cmdline" ,after="cmp-calc"},
         { "ray-x/cmp-treesitter" ,after="cmp-cmdline"},
         {"kdheepak/cmp-latex-symbols", after = "cmp-treesitter"},
+		{"kristijanhusak/vim-dadbod-completion",ft={"sql","mysql"}},
         {
              'tzachar/cmp-tabnine',
              run = './install.sh',

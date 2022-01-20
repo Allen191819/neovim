@@ -7,7 +7,7 @@ function config.symbols_outline()
         highlight_hovered_item = true,
         width = 60,
         show_guides = true,
-        auto_preview = true,
+        auto_preview = false,
         position = "right",
         show_numbers = true,
         show_relative_numbers = true,
@@ -344,8 +344,8 @@ function config.floaterm()
     vim.g.floaterm_title=""
     vim.g.floaterm_borderchars   = {'─','│','─','│','╭','╮','╯','╰'}
     vim.g.floaterm_keymap_new    = '<F7>'
-    vim.g.floaterm_keymap_prev   = '<F8>'
-    vim.g.floaterm_keymap_next   = '<F9>'
+    vim.g.floaterm_keymap_prev   = '<F3>'
+    vim.g.floaterm_keymap_next   = '<F4>'
     vim.g.floaterm_keymap_toggle = '<F12>'
 end
 

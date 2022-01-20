@@ -57,4 +57,11 @@ tools["gelguy/wilder.nvim"] = {
     requires = {{"romgrk/fzy-lua-native", after = "wilder.nvim"}}
 }
 
+tools["kristijanhusak/vim-dadbod-ui"] = {
+	opt=true,
+	cmd={"DBUIToggle"},
+	requires={{"tpope/vim-dadbod",opt=true}},
+	config = conf.dadbod
+}
+
 return tools

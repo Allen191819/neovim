@@ -154,6 +154,7 @@ local load_core = function()
     require("core.mapping")
     require("keymap")
     require("core.event")
+	require("core.function")
     pack.load_compile()
 
     vim.cmd [[colorscheme catppuccin]]

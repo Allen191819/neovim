@@ -8,7 +8,6 @@ if not packer_plugins["lsp_signature.nvim"].loaded then
     vim.cmd [[packadd lsp_signature.nvim]]
 end
 
-
 local nvim_lsp = require("lspconfig")
 local lsp_installer = require("nvim-lsp-installer")
 
@@ -82,15 +81,15 @@ lsp_installer.settings {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 capabilities.textDocument.completion.completionItem.documentationFormat = {
-    "markdown", "plaintext"
+    "markdown",
+    "plaintext"
 }
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.preselectSupport = true
 capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
 capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
 capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-capabilities.textDocument.completion.completionItem.commitCharactersSupport =
-    true
+capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
 capabilities.textDocument.completion.completionItem.tagSupport = {
     valueSet = {1}
 }
@@ -100,32 +99,34 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 
 -- Override default format setting
 
-vim.lsp.handlers["textDocument/formatting"] =
-    function(err, result, ctx)
-        if err ~= nil or result == nil then return end
-        if vim.api.nvim_buf_get_var(ctx.bufnr, "init_changedtick") ==
-            vim.api.nvim_buf_get_var(ctx.bufnr, "changedtick") then
-            local view = vim.fn.winsaveview()
-            vim.lsp.util.apply_text_edits(result, ctx.bufnr)
-            vim.fn.winrestview(view)
-            if ctx.bufnr == vim.api.nvim_get_current_buf() then
-                vim.b.saving_format = true
-                vim.cmd [[update]]
-                vim.b.saving_format = false
-            end
+vim.lsp.handlers["textDocument/formatting"] = function(err, result, ctx)
+    if err ~= nil or result == nil then
+        return
+    end
+    if vim.api.nvim_buf_get_var(ctx.bufnr, "init_changedtick") == vim.api.nvim_buf_get_var(ctx.bufnr, "changedtick") then
+        local view = vim.fn.winsaveview()
+        vim.lsp.util.apply_text_edits(result, ctx.bufnr)
+        vim.fn.winrestview(view)
+        if ctx.bufnr == vim.api.nvim_get_current_buf() then
+            vim.b.saving_format = true
+            vim.cmd [[update]]
+            vim.b.saving_format = false
         end
     end
+end
 
 local function custom_attach(client)
-    require("lsp_signature").on_attach({
-        bind = true,
-        use_lspsaga = false,
-        floating_window = true,
-        fix_pos = true,
-        hint_enable = true,
-        hi_parameter = "Search",
-        handler_opts = {"double"}
-    })
+    require("lsp_signature").on_attach(
+        {
+            bind = true,
+            use_lspsaga = false,
+            floating_window = true,
+            fix_pos = true,
+            hint_enable = true,
+            hi_parameter = "Search",
+            handler_opts = {"double"}
+        }
+    )
 
     if client.resolved_capabilities.document_formatting then
         vim.cmd [[augroup Format]]
@@ -138,20 +139,31 @@ end
 local function switch_source_header_splitcmd(bufnr, splitcmd)
     bufnr = nvim_lsp.util.validate_bufnr(bufnr)
     local params = {uri = vim.uri_from_bufnr(bufnr)}
-    vim.lsp.buf_request(bufnr, "textDocument/switchSourceHeader", params,
-                        function(err, result)
-        if err then error(tostring(err)) end
-        if not result then
-            print("Corresponding file can’t be determined")
-            return
+    vim.lsp.buf_request(
+        bufnr,
+        "textDocument/switchSourceHeader",
+        params,
+        function(err, result)
+            if err then
+                error(tostring(err))
+            end
+            if not result then
+                print("Corresponding file can’t be determined")
+                return
+            end
+            vim.api.nvim_command(splitcmd .. " " .. vim.uri_to_fname(result))
         end
-        vim.api.nvim_command(splitcmd .. " " .. vim.uri_to_fname(result))
-    end)
+    )
 end
 
 -- Override server settings here
 
 local enhance_server_opts = {
+    ["sqls"] = function(opts)
+        opts.cmd = {"sqls"}
+		opts.args={"-config ~/.config/sqls/config.yml"}
+        opts.filetypes = {"sql", "mysql"}
+    end,
     ["sumneko_lua"] = function(opts)
         opts.settings = {
             Lua = {
@@ -170,8 +182,11 @@ local enhance_server_opts = {
     end,
     ["clangd"] = function(opts)
         opts.args = {
-            "--background-index", "-std=c++20", "--pch-storage=memory",
-            "--clang-tidy", "--suggest-missing-includes"
+            "--background-index",
+            "-std=c++20",
+            "--pch-storage=memory",
+            "--clang-tidy",
+            "--suggest-missing-includes"
         }
         opts.capabilities.offsetEncoding = {"utf-16"}
         opts.single_file_support = true
@@ -209,34 +224,44 @@ local enhance_server_opts = {
                     {
                         fileMatch = {"package.json"},
                         url = "https://json.schemastore.org/package.json"
-                    }, {
+                    },
+                    {
                         fileMatch = {"tsconfig*.json"},
                         url = "https://json.schemastore.org/tsconfig.json"
-                    }, {
+                    },
+                    {
                         fileMatch = {
-                            ".prettierrc", ".prettierrc.json",
+                            ".prettierrc",
+                            ".prettierrc.json",
                             "prettier.config.json"
                         },
                         url = "https://json.schemastore.org/prettierrc.json"
-                    }, {
+                    },
+                    {
                         fileMatch = {".eslintrc", ".eslintrc.json"},
                         url = "https://json.schemastore.org/eslintrc.json"
-                    }, {
+                    },
+                    {
                         fileMatch = {
-                            ".babelrc", ".babelrc.json", "babel.config.json"
+                            ".babelrc",
+                            ".babelrc.json",
+                            "babel.config.json"
                         },
                         url = "https://json.schemastore.org/babelrc.json"
                     },
                     {
                         fileMatch = {"lerna.json"},
                         url = "https://json.schemastore.org/lerna.json"
-                    }, {
+                    },
+                    {
                         fileMatch = {
-                            ".stylelintrc", ".stylelintrc.json",
+                            ".stylelintrc",
+                            ".stylelintrc.json",
                             "stylelint.config.json"
                         },
                         url = "http://json.schemastore.org/stylelintrc.json"
-                    }, {
+                    },
+                    {
                         fileMatch = {"/.github/workflows/*"},
                         url = "https://json.schemastore.org/github-workflow.json"
                     }
@@ -278,19 +303,21 @@ local enhance_server_opts = {
     end
 }
 
-lsp_installer.on_server_ready(function(server)
-    local opts = {
-        capabilities = capabilities,
-        flags = {debounce_text_changes = 500},
-        on_attach = custom_attach
-    }
+lsp_installer.on_server_ready(
+    function(server)
+        local opts = {
+            capabilities = capabilities,
+            flags = {debounce_text_changes = 500},
+            on_attach = custom_attach
+        }
 
-    if enhance_server_opts[server.name] then
-        enhance_server_opts[server.name](opts)
+        if enhance_server_opts[server.name] then
+            enhance_server_opts[server.name](opts)
+        end
+
+        server:setup(opts)
     end
-
-    server:setup(opts)
-end)
+)
 
 -- https://github.com/vscode-langservers/vscode-html-languageserver-bin
 
@@ -336,17 +363,22 @@ local shfmt = require("efmls-configs.formatters.shfmt")
 
 -- Add your own config for formatter and linter here
 
--- local rustfmt = require("modules.completion.efm.formatters.rustfmt")
+local rustfmt = require("modules.completion.efm.formatters.rustfmt")
 
 -- Override default config here
 
-flake8 = vim.tbl_extend('force', flake8, {
-    prefix = "flake8: max-line-length=160, ignore F403 and F405",
-    lintStdin = true,
-    lintIgnoreExitCode = true,
-    lintFormats = {"%f:%l:%c: %t%n%n%n %m"},
-    lintCommand = "flake8 --max-line-length 160 --extend-ignore F403,F405 --format '%(path)s:%(row)d:%(col)d: %(code)s %(code)s %(text)s' --stdin-display-name ${INPUT} -"
-})
+flake8 =
+    vim.tbl_extend(
+    "force",
+    flake8,
+    {
+        prefix = "flake8: max-line-length=160, ignore F403 and F405",
+        lintStdin = true,
+        lintIgnoreExitCode = true,
+        lintFormats = {"%f:%l:%c: %t%n%n%n %m"},
+        lintCommand = "flake8 --max-line-length 160 --extend-ignore F403,F405 --format '%(path)s:%(row)d:%(col)d: %(code)s %(code)s %(text)s' --stdin-display-name ${INPUT} -"
+    }
+)
 
 -- Setup formatter and linter for efmls here
 
@@ -356,7 +388,7 @@ efmls.setup {
     c = {formatter = clangfmt, linter = clangtidy},
     cpp = {formatter = clangfmt, linter = clangtidy},
     go = {formatter = goimports, linter = staticcheck},
-    python = {formatter = black, linter = flake8},
+    -- python = {formatter = black, linter = flake8},
     vue = {formatter = prettier},
     typescript = {formatter = prettier, linter = eslint},
     javascript = {formatter = prettier, linter = eslint},
@@ -368,6 +400,6 @@ efmls.setup {
     css = {formatter = prettier},
     scss = {formatter = prettier},
     sh = {formatter = shfmt, linter = shellcheck},
-    markdown = {formatter = prettier}
-    -- rust = {formatter = rustfmt},
+    -- markdown = {formatter = prettier},
+    rust = {formatter = rustfmt}
 }
