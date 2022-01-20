@@ -1,7 +1,19 @@
-# neovim
+<!-- markdownlint-disable MD033 MD041 -->
+<p align="center">
+  <a href="https://v2.nonebot.dev/"><img src="https://v2.nonebot.dev/logo.png" width="200" height="200" alt="nonebot"></a>
+</p>
 
-This is my neovim config.
+<div align="center">
 
+# Neovim
+
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable-next-line MD036 -->
+_✨ neovim lua config ✨_
+<!-- prettier-ignore-end -->
+</div>
+
+## Toc
 
 <!-- vim-markdown-toc GFM -->
 
