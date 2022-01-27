@@ -43,6 +43,7 @@ function config.lspkind()
         }
     )
 end
+
 function config.cmp()
     vim.cmd [[highlight CmpItemAbbrDeprecated guifg=#D8DEE9 guibg=NONE gui=strikethrough]]
     vim.cmd [[highlight CmpItemKindSnippet guifg=#BF616A guibg=NONE]]
@@ -67,7 +68,6 @@ function config.cmp()
     local source_menu = {
         cmp_tabnine = "[TN]",
         buffer = "[BUF]",
-        orgmode = "[ORG]",
         nvim_lsp = "[LSP]",
         nvim_lua = "[LUA]",
         path = "[PATH]",
@@ -104,6 +104,12 @@ function config.cmp()
                         menu = entry.completion_item.data.detail .. " " .. menu
                     end
                     vim_item.kind = ""
+                end
+                if entry.source.name == "copilot" then
+                    if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+                        menu = entry.completion_item.data.detail .. " " .. menu
+                    end
+                    vim_item.kind = ""
                 end
                 vim_item.menu = menu
                 return vim_item
@@ -149,8 +155,8 @@ function config.cmp()
             {name = "copilot"}
         },
         experimental = {
-            native_menu = true,
-            ghost_text = true
+            native_menu = false,
+            ghost_text = false
         },
         preselect = types.cmp.PreselectMode.Item,
         completion = {
