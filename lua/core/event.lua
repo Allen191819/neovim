@@ -23,30 +23,37 @@ function autocmd.load_autocmds()
                 [[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]]
             }, -- Reload Vim script automatically if setlocal autoread
             {
-                "BufWritePost,FileWritePost", "*.vim",
+                "BufWritePost,FileWritePost",
+                "*.vim",
                 [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]
-            }, {"BufWritePre", "/tmp/*", "setlocal noundofile"},
+            },
+            {"BufWritePre", "/tmp/*", "setlocal noundofile"},
             {"BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile"},
             {"BufWritePre", "MERGE_MSG", "setlocal noundofile"},
             {"BufWritePre", "*.tmp", "setlocal noundofile"},
             {"BufWritePre", "*.bak", "setlocal noundofile"},
             {"BufEnter", "*", "silent! lcd %:p:h"}, -- auto place to last edit
             {
-                "BufReadPost", "*",
+                "BufReadPost",
+                "*",
                 [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif]]
-            },
-       },
+            }
+        },
         wins = {
             -- Highlight current line only on focused window
             {
-                "WinEnter,BufEnter,InsertLeave", "*",
+                "WinEnter,BufEnter,InsertLeave",
+                "*",
                 [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]]
-            }, {
-                "WinLeave,BufLeave,InsertEnter", "*",
+            },
+            {
+                "WinLeave,BufLeave,InsertEnter",
+                "*",
                 [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]]
             }, -- Force write shada on leaving nvim
             {
-                "VimLeave", "*",
+                "VimLeave",
+                "*",
                 [[if has('nvim') | wshada! | else | wviminfo! | endif]]
             },
             -- Check if file changed when its window is focus, more eager than 'autoread'
@@ -58,20 +65,25 @@ function autocmd.load_autocmds()
             {"BufNewFile,BufRead", "*.toml", " setf toml"},
             {"FileType", "make", "set noexpandtab shiftwidth=8 softtabstop=0"},
             {
-                "FileType", "dashboard",
+                "FileType",
+                "dashboard",
                 "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"
-            }, {
-                "FileType", "*",
+            },
+            {
+                "FileType",
+                "*",
                 [[setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
             },
             {
-                "FileType", "c,cpp",
+                "FileType",
+                "c,cpp",
                 "nnoremap <leader>h :ClangdSwitchSourceHeaderVSplit<CR>"
             }
         },
         yank = {
             {
-                "TextYankPost", "*",
+                "TextYankPost",
+                "*",
                 [[silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=300})]]
             }
         }

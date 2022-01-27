@@ -64,7 +64,6 @@ end
 
 function config.lualine()
     local gps = require("nvim-gps")
-
     local function gps_content()
         if gps.is_available() then
             return gps.get_location()

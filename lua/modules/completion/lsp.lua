@@ -161,7 +161,7 @@ end
 local enhance_server_opts = {
     ["sqls"] = function(opts)
         opts.cmd = {"sqls"}
-		opts.args={"-config ~/.config/sqls/config.yml"}
+        opts.args = {"-config ~/.config/sqls/config.yml"}
         opts.filetypes = {"sql", "mysql"}
     end,
     ["sumneko_lua"] = function(opts)
@@ -322,7 +322,7 @@ lsp_installer.on_server_ready(
 -- https://github.com/vscode-langservers/vscode-html-languageserver-bin
 
 nvim_lsp.html.setup {
-    cmd = {"html-languageserver", "--stdio"},
+    cmd = {"vscode-html-languageserver", "--stdio"},
     filetypes = {"html"},
     init_options = {
         configurationSection = {"html", "css", "javascript"},
@@ -335,71 +335,73 @@ nvim_lsp.html.setup {
     on_attach = custom_attach
 }
 
-local efmls = require("efmls-configs")
+local efmconfigure = function()
+    local efmls = require("efmls-configs")
 
--- Init `efm-langserver` here.
+    -- Init `efm-langserver` here.
 
-efmls.init {
-    on_attach = custom_attach,
-    capabilities = capabilities,
-    init_options = {documentFormatting = true, codeAction = true}
-}
-
--- Require `efmls-configs-nvim`'s config here
-
-local vint = require("efmls-configs.linters.vint")
-local clangtidy = require("efmls-configs.linters.clang_tidy")
-local eslint = require("efmls-configs.linters.eslint")
-local flake8 = require("efmls-configs.linters.flake8")
-local shellcheck = require("efmls-configs.linters.shellcheck")
-local staticcheck = require("efmls-configs.linters.staticcheck")
-
-local black = require("efmls-configs.formatters.black")
-local luafmt = require("efmls-configs.formatters.lua_format")
-local clangfmt = require("efmls-configs.formatters.clang_format")
-local goimports = require("efmls-configs.formatters.goimports")
-local prettier = require("efmls-configs.formatters.prettier")
-local shfmt = require("efmls-configs.formatters.shfmt")
-
--- Add your own config for formatter and linter here
-
-local rustfmt = require("modules.completion.efm.formatters.rustfmt")
-
--- Override default config here
-
-flake8 =
-    vim.tbl_extend(
-    "force",
-    flake8,
-    {
-        prefix = "flake8: max-line-length=160, ignore F403 and F405",
-        lintStdin = true,
-        lintIgnoreExitCode = true,
-        lintFormats = {"%f:%l:%c: %t%n%n%n %m"},
-        lintCommand = "flake8 --max-line-length 160 --extend-ignore F403,F405 --format '%(path)s:%(row)d:%(col)d: %(code)s %(code)s %(text)s' --stdin-display-name ${INPUT} -"
+    efmls.init {
+        on_attach = custom_attach,
+        capabilities = capabilities,
+        init_options = {documentFormatting = true, codeAction = true}
     }
-)
 
--- Setup formatter and linter for efmls here
+    -- Require `efmls-configs-nvim`'s config here
 
-efmls.setup {
-    vim = {formatter = vint},
-    lua = {formatter = luafmt},
-    c = {formatter = clangfmt, linter = clangtidy},
-    cpp = {formatter = clangfmt, linter = clangtidy},
-    go = {formatter = goimports, linter = staticcheck},
-    -- python = {formatter = black, linter = flake8},
-    vue = {formatter = prettier},
-    typescript = {formatter = prettier, linter = eslint},
-    javascript = {formatter = prettier, linter = eslint},
-    typescriptreact = {formatter = prettier, linter = eslint},
-    javascriptreact = {formatter = prettier, linter = eslint},
-    yaml = {formatter = prettier},
-    json = {formatter = prettier, linter = eslint},
-    html = {formatter = prettier},
-    css = {formatter = prettier},
-    scss = {formatter = prettier},
-    sh = {formatter = shfmt, linter = shellcheck},
-    -- markdown = {formatter = prettier},
-    rust = {formatter = rustfmt}
-}
+    local vint = require("efmls-configs.linters.vint")
+    local clangtidy = require("efmls-configs.linters.clang_tidy")
+    local eslint = require("efmls-configs.linters.eslint")
+    local flake8 = require("efmls-configs.linters.flake8")
+    local shellcheck = require("efmls-configs.linters.shellcheck")
+    local staticcheck = require("efmls-configs.linters.staticcheck")
+
+    local black = require("efmls-configs.formatters.black")
+    local luafmt = require("efmls-configs.formatters.lua_format")
+    local clangfmt = require("efmls-configs.formatters.clang_format")
+    local goimports = require("efmls-configs.formatters.goimports")
+    local prettier = require("efmls-configs.formatters.prettier")
+    local shfmt = require("efmls-configs.formatters.shfmt")
+
+    -- Add your own config for formatter and linter here
+
+    local rustfmt = require("modules.completion.efm.formatters.rustfmt")
+
+    -- Override default config here
+
+    flake8 =
+        vim.tbl_extend(
+        "force",
+        flake8,
+        {
+            prefix = "flake8: max-line-length=160, ignore F403 and F405",
+            lintStdin = true,
+            lintIgnoreExitCode = true,
+            lintFormats = {"%f:%l:%c: %t%n%n%n %m"},
+            lintCommand = "flake8 --max-line-length 160 --extend-ignore F403,F405 --format '%(path)s:%(row)d:%(col)d: %(code)s %(code)s %(text)s' --stdin-display-name ${INPUT} -"
+        }
+    )
+
+    -- Setup formatter and linter for efmls here
+
+    efmls.setup {
+        vim = {formatter = vint},
+        lua = {formatter = luafmt},
+        c = {formatter = clangfmt, linter = clangtidy},
+        cpp = {formatter = clangfmt, linter = clangtidy},
+        go = {formatter = goimports, linter = staticcheck},
+        -- python = {formatter = black, linter = flake8},
+        vue = {formatter = prettier},
+        typescript = {formatter = prettier, linter = eslint},
+        javascript = {formatter = prettier, linter = eslint},
+        typescriptreact = {formatter = prettier, linter = eslint},
+        javascriptreact = {formatter = prettier, linter = eslint},
+        yaml = {formatter = prettier},
+        json = {formatter = prettier, linter = eslint},
+        html = {formatter = prettier},
+        css = {formatter = prettier},
+        scss = {formatter = prettier},
+        sh = {formatter = shfmt, linter = shellcheck},
+        -- markdown = {formatter = prettier},
+        rust = {formatter = rustfmt}
+    }
+end

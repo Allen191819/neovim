@@ -43,7 +43,6 @@ function config.lspkind()
         }
     )
 end
-
 function config.cmp()
     vim.cmd [[highlight CmpItemAbbrDeprecated guifg=#D8DEE9 guibg=NONE gui=strikethrough]]
     vim.cmd [[highlight CmpItemKindSnippet guifg=#BF616A guibg=NONE]]
@@ -58,13 +57,10 @@ function config.cmp()
     vim.cmd [[highlight CmpItemKindFunction guifg=#B48EAD guibg=NONE]]
     vim.cmd [[highlight CmpItemKindMethod guifg=#B48EAD guibg=NONE]]
 
-    local t = function(str)
-        return vim.api.nvim_replace_termcodes(str, true, true, true)
-    end
-    local has_words_before = function()
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-    end
+    require("cmp_nvim_ultisnips").setup {
+        show_snippets = "all"
+    }
+    local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
     local types = require("cmp.types")
     local cmp = require("cmp")
     local lspkind = require("lspkind")
@@ -76,14 +72,15 @@ function config.cmp()
         nvim_lua = "[LUA]",
         path = "[PATH]",
         tmux = "[TMUX]",
-        luasnip = "[SNIP]",
+        ultisnips = "[SNIP]",
         spell = "[SPELL]",
         treesitter = "[TS]",
         emoji = "[Emoji]",
         calc = "[Calc]",
         vim_dadbod_completion = "[DB]",
         latex_symbols = "[Latex]",
-        cmdline = "[Cmd]"
+        cmdline = "[Cmd]",
+        copilot = "[AI]"
     }
     cmp.setup {
         sorting = {
@@ -113,59 +110,46 @@ function config.cmp()
             end
         },
         mapping = {
-            ["<CR>"] = cmp.mapping.confirm({select = true}),
             ["<C-p>"] = cmp.mapping.select_prev_item(),
             ["<C-n>"] = cmp.mapping.select_next_item(),
             ["<C-d>"] = cmp.mapping.scroll_docs(-4),
             ["<C-f>"] = cmp.mapping.scroll_docs(4),
             ["<C-e>"] = cmp.mapping.close(),
+            ["<CR>"] = cmp.mapping.confirm({select = true}),
+            ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), {"i", "c"}),
             ["<Tab>"] = cmp.mapping(
                 function(fallback)
-                    if cmp.visible() then
-                        cmp.select_next_item()
-                    elseif require("luasnip").expand_or_jumpable() then
-                        require("luasnip").expand_or_jump()
-                    elseif has_words_before() then
-                        cmp.complete()
-                    else
-                        fallback()
-                    end
+                    cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
                 end,
-                {"i", "s"}
+                {"i", "s", "c"}
             ),
             ["<S-Tab>"] = cmp.mapping(
                 function(fallback)
-                    if cmp.visible() then
-                        cmp.select_prev_item()
-                    elseif require("luasnip").jumpable(-1) then
-                        require("luasnip").jump(-1)
-                    else
-                        fallback()
-                    end
+                    cmp_ultisnips_mappings.jump_backwards(fallback)
                 end,
-                {"i", "s"}
+                {"i", "s", "c"}
             )
         },
         snippet = {
             expand = function(args)
-                require("luasnip").lsp_expand(args.body)
+                vim.fn["UltiSnips#Anon"](args.body)
             end
         },
         sources = {
             {name = "nvim_lsp"},
             {name = "nvim_lua"},
-            {name = "luasnip"},
+            {name = "ultisnips"},
             {name = "path"},
-            {name = "spell"},
             {name = "calc"},
             {name = "treesitter"},
             {name = "buffer"},
             {name = "latex_symbols"},
             {name = "vim_dadbod_completion"},
-            {name = "cmp_tabnine"}
+            {name = "cmp_tabnine"},
+            {name = "copilot"}
         },
         experimental = {
-            native_menu = false,
+            native_menu = true,
             ghost_text = true
         },
         preselect = types.cmp.PreselectMode.Item,
@@ -204,12 +188,11 @@ function config.cmp()
     )
 end
 
-function config.luasnip()
-    require("luasnip").config.set_config {
-        history = true,
-        updateevents = "TextChanged,TextChangedI"
-    }
-    require("luasnip/loaders/from_vscode").load()
+function config.ultisnips()
+    vim.api.nvim_exec([[
+	autocmd BufWritePost *.snippets :CmpUltisnipsReloadSnippets
+	]], true)
+    vim.g.UltiSnipsRemoveSelectModeMappings = 0
 end
 
 function config.tabnine()

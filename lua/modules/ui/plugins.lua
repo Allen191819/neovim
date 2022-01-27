@@ -10,10 +10,10 @@ ui["catppuccin/nvim"] = {
 }
 ui["hoob3rt/lualine.nvim"] = {
     opt = true,
-    after = "lualine-lsp-progress",
+    after = "nvim-gps",
     config = conf.lualine
 }
-ui["arkav/lualine-lsp-progress"] = {opt = true, after = "nvim-gps"}
+ui["arkav/lualine-lsp-progress"] = {opt = true, after = "nvim-lspconfig"}
 ui["glepnir/dashboard-nvim"] = {opt = true, event = "BufWinEnter"}
 ui["kyazdani42/nvim-tree.lua"] = {
     opt = true,

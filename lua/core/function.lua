@@ -24,7 +24,7 @@ func! CompileRunGccH()
         silent! exec "VimtexStopAll"
         silent! exec "VimtexCompile"
 	elseif &filetype == 'html'
-		silent! exec "!".g:mkdp_browser." % &"
+		silent! exec "!surf % &"
 	elseif &filetype == 'javascript'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
 	elseif &filetype == 'go'
