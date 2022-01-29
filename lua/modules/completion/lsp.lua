@@ -283,6 +283,13 @@ local enhance_server_opts = {
             custom_attach(client)
         end
     end,
+    ["pylsp"] = function(opts)
+        -- Disable `dockerls`'s format
+        opts.on_attach = function(client)
+            client.resolved_capabilities.document_formatting = false
+            custom_attach(client)
+        end
+    end,
     ["gopls"] = function(opts)
         opts.settings = {
             gopls = {
@@ -332,7 +339,10 @@ nvim_lsp.html.setup {
     single_file_support = true,
     flags = {debounce_text_changes = 500},
     capabilities = capabilities,
-    on_attach = custom_attach
+    on_attach = function(client)
+        client.resolved_capabilities.document_formatting = false
+        custom_attach(client)
+    end
 }
 
 local efmconfigure = function()
@@ -354,13 +364,13 @@ local efmconfigure = function()
     local flake8 = require("efmls-configs.linters.flake8")
     local shellcheck = require("efmls-configs.linters.shellcheck")
     local staticcheck = require("efmls-configs.linters.staticcheck")
-
     local black = require("efmls-configs.formatters.black")
     local luafmt = require("efmls-configs.formatters.lua_format")
     local clangfmt = require("efmls-configs.formatters.clang_format")
     local goimports = require("efmls-configs.formatters.goimports")
     local prettier = require("efmls-configs.formatters.prettier")
     local shfmt = require("efmls-configs.formatters.shfmt")
+    local alex = require "efmls-configs.linters.alex"
 
     -- Add your own config for formatter and linter here
 
@@ -389,7 +399,8 @@ local efmconfigure = function()
         c = {formatter = clangfmt, linter = clangtidy},
         cpp = {formatter = clangfmt, linter = clangtidy},
         go = {formatter = goimports, linter = staticcheck},
-        -- python = {formatter = black, linter = flake8},
+        latex = {formatter = alex},
+        python = {formatter = black, linter = flake8},
         vue = {formatter = prettier},
         typescript = {formatter = prettier, linter = eslint},
         javascript = {formatter = prettier, linter = eslint},
@@ -401,7 +412,9 @@ local efmconfigure = function()
         css = {formatter = prettier},
         scss = {formatter = prettier},
         sh = {formatter = shfmt, linter = shellcheck},
-        -- markdown = {formatter = prettier},
+        markdown = {formatter = prettier},
         rust = {formatter = rustfmt}
     }
 end
+
+efmconfigure()

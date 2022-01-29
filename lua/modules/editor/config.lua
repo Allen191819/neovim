@@ -379,9 +379,9 @@ function config.floaterm()
     vim.g.floaterm_height = 0.7
     vim.g.floaterm_title = ""
     vim.g.floaterm_borderchars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"}
-    vim.g.floaterm_keymap_new = "<F7>"
-    vim.g.floaterm_keymap_prev = "<F3>"
-    vim.g.floaterm_keymap_next = "<F4>"
+    vim.g.floaterm_keymap_new = ""
+    vim.g.floaterm_keymap_prev = ""
+    vim.g.floaterm_keymap_next = ""
     vim.g.floaterm_keymap_toggle = "<F12>"
 end
 

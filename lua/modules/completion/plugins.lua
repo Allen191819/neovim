@@ -5,10 +5,10 @@ completion["neovim/nvim-lspconfig"] = {
     event = {"BufReadPre","BufNewFile","BufRead"},
     config = conf.nvim_lsp
 }
---[[completion["creativenull/efmls-configs-nvim"] = {
+completion["creativenull/efmls-configs-nvim"] = {
     opt = false,
     requires = "neovim/nvim-lspconfig"
-}]]
+}
 completion["williamboman/nvim-lsp-installer"] = {
     opt = true,
     after = "nvim-lspconfig"
@@ -38,7 +38,6 @@ completion["hrsh7th/nvim-cmp"] = {
         {"hrsh7th/cmp-path", after = "cmp-nvim-lua"},
         {"hrsh7th/cmp-buffer", after = "cmp-path"},
         {"hrsh7th/cmp-calc", after = "cmp-path"},
-        {"hrsh7th/cmp-cmdline", after = "cmp-buffer"},
         {"ray-x/cmp-treesitter", after = "cmp-buffer"},
         {"kdheepak/cmp-latex-symbols",ft={"tex"}},
         {"kristijanhusak/vim-dadbod-completion", ft = {"sql", "mysql"}},
@@ -62,5 +61,6 @@ completion["windwp/nvim-autopairs"] = {
     after = "nvim-cmp",
     config = conf.autopairs
 }
-completion["github/copilot.vim"] = {opt = true, cmd = "Copilot"}
+completion["Allen191819/copilot.vim"] = {opt = true, event="InsertEnter", config=conf.copilot}
 return completion
+

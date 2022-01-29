@@ -101,8 +101,7 @@ local plug_map = {
     ["n|<leader>sr"] = map_cu("RestoreSession"):with_noremap():with_silent(),
     ["n|<leader>sd"] = map_cu("DeleteSession"):with_noremap():with_silent(),
     -- Copliot
-    ["n|<F8>"] = map_cr("Copilot"):with_noremap():with_silent(),
-
+    ["n|<F2>"] = map_cr("Copilot"):with_noremap():with_silent(),
     -- QuickRun
     ["n|<A-e>"] = map_cr("QuickRun"):with_noremap():with_silent(),
     -- Plugin SnipRun
@@ -116,9 +115,7 @@ local plug_map = {
     ["n|<leader>dr"] = map_cr("lua require('dap').continue()"):with_noremap():with_silent(),
     ["n|<leader>dd"] = map_cr("lua require('dap').disconnect()"):with_noremap():with_silent(),
     ["n|<leader>db"] = map_cr("lua require('dap').toggle_breakpoint()"):with_noremap():with_silent(),
-    ["n|<leader>dB"] = map_cr("lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))"):with_noremap(
-
-    ):with_silent(),
+    ["n|<leader>dB"] = map_cr("lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))"):with_noremap():with_silent(),
     ["n|<leader>dbl"] = map_cr("lua require('dap').list_breakpoints()"):with_noremap():with_silent(),
     ["n|<leader>drc"] = map_cr("lua require('dap').run_to_cursor()"):with_noremap():with_silent(),
     ["n|<leader>drl"] = map_cr("lua require('dap').run_last()"):with_noremap():with_silent(),

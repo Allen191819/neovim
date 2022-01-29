@@ -55,5 +55,4 @@ M.format = function()
     end
 end
 
-vim.cmd [[command! FormatWrite lua require'modules.completion.formatting'.format()]]
 return M

@@ -31,8 +31,8 @@ local def_map = {
     ["n|<S-Tab>"] = map_cr(":bprevious<CR>"):with_silent(),
     ["n|<C-q>"] = map_cmd("<Esc>/<++><CR>:nohlsearch<CR>\"_c4l"):with_silent(),
     -- Insert
-    ["i|<C-q>"] = map_cmd("<Esc>/<++><CR>:nohlsearch<CR>\"_c4l"):with_silent(),
     ["i|<Cr>"] = map_cmd("<CR>x<BS>"):with_noremap(),
+    ["i|<C-q>"] = map_cmd("<Esc>/<++><CR>:nohlsearch<CR>\"_c4l"):with_silent(),
     ["i|<C-u>"] = map_cmd("<C-G>u<C-U>"):with_noremap(),
     ["i|<C-b>"] = map_cmd("<Left>"):with_noremap(),
     ["i|<C-a>"] = map_cmd("<ESC>^i"):with_noremap(),

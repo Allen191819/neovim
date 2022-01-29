@@ -79,7 +79,6 @@ function config.cmp()
         calc = "[Calc]",
         vim_dadbod_completion = "[DB]",
         latex_symbols = "[Latex]",
-        cmdline = "[Cmd]",
         copilot = "[AI]"
     }
     cmp.setup {
@@ -171,27 +170,6 @@ function config.cmp()
             end
         }
     }
-    cmp.setup.cmdline(
-        ":",
-        {
-            sources = cmp.config.sources(
-                {
-                    {name = "path"}
-                },
-                {
-                    {name = "cmdline"}
-                }
-            )
-        }
-    )
-    cmp.setup.cmdline(
-        "/",
-        {
-            sources = {
-                {name = "buffer"}
-            }
-        }
-    )
 end
 
 function config.ultisnips()
@@ -300,6 +278,16 @@ function config.nvim_lsputils()
             require("lsputil.symbols").workspace_handler(nil, result, {bufnr = bufn}, nil)
         end
     end
+end
+
+function config.copilot()
+    vim.cmd [[
+	imap <silent><script><expr> <A-h> copilot#Accept("\<CR>")
+	imap <silent><nowait><expr> <A-j> copilot#NextResult(1)
+	imap <silent><nowait><expr> <A-k> copilot#NextResult(-1)
+	]]
+    vim.g.copilot_no_tab_map = true
+    vim.g.copilot_echo_num_completions = false
 end
 
 return config
