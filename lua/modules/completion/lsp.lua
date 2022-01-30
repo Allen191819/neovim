@@ -351,7 +351,7 @@ local efmconfigure = function()
     -- Init `efm-langserver` here.
 
     efmls.init {
-        on_attach = custom_attach,
+	on_attach = custom_attach,
         capabilities = capabilities,
         init_options = {documentFormatting = true, codeAction = true}
     }

@@ -1,6 +1,27 @@
 local config = {}
 
 function config.rust_tools()
+    local function custom_attach(client)
+        require("lsp_signature").on_attach(
+            {
+                bind = true,
+                use_lspsaga = false,
+                floating_window = true,
+                fix_pos = true,
+                hint_enable = true,
+                hi_parameter = "Search",
+                handler_opts = {"double"}
+            }
+        )
+
+        if client.resolved_capabilities.document_formatting then
+            vim.cmd [[augroup Format]]
+            vim.cmd [[autocmd! * <buffer>]]
+            vim.cmd [[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]]
+            vim.cmd [[augroup END]]
+        end
+    end
+
     local opts = {
         tools = {
             -- rust-tools options
@@ -66,14 +87,51 @@ function config.rust_tools()
         -- all the opts to send to nvim-lspconfig
         -- these override the defaults set by rust-tools.nvim
         -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-        server = {} -- rust-analyer options
+        server = {
+            standalone = false,
+            on_attach = function(client)
+                client.resolved_capabilities.document_formatting = false
+                custom_attach(client)
+            end
+        } -- rust-analyer options
     }
 
     require("rust-tools").setup(opts)
 end
 
 function config.lang_go()
-    vim.g.go_doc_keywordprg_enabled = false
+    local path = require "nvim-lsp-installer.path"
+    local install_root_dir = path.concat {vim.fn.stdpath "data", "lsp_servers"}
+
+    require("go").setup(
+        {
+            go = "go", -- go command, can be go[default] or go1.18beta1
+            goimport = "gopls", -- goimport command, can be gopls[default] or goimport
+            fillstruct = "gopls", -- can be nil (use fillstruct, slower) and gopls
+            gofmt = "gofumpt", --gofmt cmd,
+            gopls_cmd = {install_root_dir .. "/go/gopls"},
+            max_line_len = 120, -- max line length in goline format
+            tag_transform = false, -- tag_transfer  check gomodifytags for details
+            comment_placeholder = "ﳑ ", -- comment_placeholder your cool placeholder e.g. ﳑ       
+            icons = {breakpoint = "🧘", currentpos = "🏃"},
+            verbose = false, -- output loginf in messages
+            lsp_cfg = true, -- true: use non-default gopls setup specified in go/lsp.lua
+            lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
+            lsp_codelens = true, -- set to false to disable codelens, true by default
+            lsp_diag_hdlr = true, -- hook lsp diag handler
+            lsp_document_formatting = true,
+            gopls_remote_auto = true, -- add -remote=auto to gopls
+            dap_debug = true, -- set to false to disable dap
+            dap_debug_keymap = false, -- true: use keymap for debugger defined in go/dap.lua
+            dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
+            dap_debug_vt = false, -- set to true to enable dap virtual text
+            build_tags = "tag1,tag2", -- set default build tags
+            textobjects = false, -- enable default text jobects through treesittter-text-objects
+            test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
+            run_in_floaterm = true, -- set to true to run in float window.
+            filstruct = "gopls"
+        }
+    )
 end
 
 function config.makrkdown_preview()
@@ -90,9 +148,9 @@ function config.makrkdown_preview()
 
     vim.g.vmt_auto_update_on_save = 1
     vim.cmd([[
-    source ~/.config/nvim/md-snippets.vim
-    autocmd BufRead,BufNewFile *.md setlocal spell
-]])
+	source ~/.config/nvim/md-snippets.vim
+	autocmd BufRead,BufNewFile *.md setlocal spell
+	]])
 end
 
 function config.clipboard_image()
@@ -108,9 +166,9 @@ function config.clipboard_image()
         markdown = {
             affix = "![](%s)"
         },
-		tex = {
-			affix = "{%s}"
-		}
+        tex = {
+            affix = "{%s}"
+        }
     }
 end
 

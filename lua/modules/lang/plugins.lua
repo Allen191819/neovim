@@ -1,11 +1,12 @@
 local lang = {}
 local conf = require("modules.lang.config")
 
-lang['fatih/vim-go'] = {
+lang['ray-x/go.nvim'] = {
     opt = true,
     ft = 'go',
     run = ':GoInstallBinaries',
-    config = conf.lang_go
+    config = conf.lang_go,
+	required = {'ray-x/guihua.lua', run = 'cd lua/fzy && make',after="go.nvim"}
 }
 lang["rust-lang/rust.vim"] = {opt = true, ft = "rust"}
 lang["simrat39/rust-tools.nvim"] = {
