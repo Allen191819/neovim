@@ -177,6 +177,7 @@ function config.ultisnips()
 	autocmd BufWritePost *.snippets :CmpUltisnipsReloadSnippets
 	]], true)
     vim.g.UltiSnipsRemoveSelectModeMappings = 0
+    vim.g.UltiSnipsEditSplit = "vertical"
 end
 
 function config.tabnine()
@@ -288,6 +289,35 @@ function config.copilot()
 	]]
     vim.g.copilot_no_tab_map = true
     vim.g.copilot_echo_num_completions = false
+end
+
+function config.lean()
+    local function custom_attach(client)
+        require("lsp_signature").on_attach(
+            {
+                bind = true,
+                use_lspsaga = false,
+                floating_window = true,
+                fix_pos = true,
+                hint_enable = true,
+                hi_parameter = "Search",
+                handler_opts = {"double"}
+            }
+        )
+
+        if client.resolved_capabilities.document_formatting then
+            vim.cmd [[augroup Format]]
+            vim.cmd [[autocmd! * <buffer>]]
+            vim.cmd [[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]]
+            vim.cmd [[augroup END]]
+        end
+    end
+    require("lean").setup {
+        abbreviations = {builtin = true},
+        lsp = {on_attach = custom_attach},
+        lsp3 = {on_attach = custom_attach},
+        mappings = true
+    }
 end
 
 return config

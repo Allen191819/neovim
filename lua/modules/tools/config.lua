@@ -133,8 +133,8 @@ function config.sniprun()
                 "Classic", -- "display results in the command-line  area
                 "VirtualTextOk", -- "display ok results as virtual text (multiline is shortened)
                 "VirtualTextErr", -- "display error results as virtual text
-                -- "TempFloatingWindow",      -- "display results in a floating window
-                "LongTempFloatingWindow" -- "same as above, but only long results. To use with VirtualText__
+                "TempFloatingWindow",      -- "display results in a floating window
+                -- "LongTempFloatingWindow" -- "same as above, but only long results. To use with VirtualText__
                 -- "Terminal"                 -- "display results in a vertical split
             },
             -- " miscellaneous compatibility/adjustement settings
@@ -149,13 +149,13 @@ end
 
 function config.wilder()
     vim.cmd [[
-call wilder#setup({'modes': [':', '/', '?']})
-call wilder#set_option('use_python_remote_plugin', 0)
+	call wilder#setup({'modes': [':', '/', '?']})
+	call wilder#set_option('use_python_remote_plugin', 0)
 
-call wilder#set_option('pipeline', [wilder#branch(wilder#cmdline_pipeline({'use_python': 0,'fuzzy': 1, 'fuzzy_filter': wilder#lua_fzy_filter()}),wilder#vim_search_pipeline(), [wilder#check({_, x -> empty(x)}), wilder#history(), wilder#result({'draw': [{_, x -> ' ' . x}]})])])
+	call wilder#set_option('pipeline', [wilder#branch(wilder#cmdline_pipeline({'use_python': 0,'fuzzy': 1, 'fuzzy_filter': wilder#lua_fzy_filter()}),wilder#vim_search_pipeline(), [wilder#check({_, x -> empty(x)}), wilder#history(), wilder#result({'draw': [{_, x -> ' ' . x}]})])])
 
-call wilder#set_option('renderer', wilder#renderer_mux({':': wilder#popupmenu_renderer({'highlighter': wilder#lua_fzy_highlighter(), 'left': [wilder#popupmenu_devicons()], 'right': [' ', wilder#popupmenu_scrollbar()]}), '/': wilder#wildmenu_renderer({'highlighter': wilder#lua_fzy_highlighter()})}))
-]]
+	call wilder#set_option('renderer', wilder#renderer_mux({':': wilder#popupmenu_renderer({'highlighter': wilder#lua_fzy_highlighter(), 'left': [wilder#popupmenu_devicons()], 'right': [' ', wilder#popupmenu_scrollbar()]}), '/': wilder#wildmenu_renderer({'highlighter': wilder#lua_fzy_highlighter()})}))
+	]]
 end
 
 function config.dadbod()
@@ -166,4 +166,9 @@ function config.dadbod()
     vim.g.db_ui_table_helpers = {mysql = {List = 'select * from "{table}" order by id asc'}}
 end
 
+function config.quickrun()
+	vim.cmd [[
+let b:quickrun_config = {'outputter/buffer/into': 1,"outputter/opener":"new"}
+	]]
+end
 return config

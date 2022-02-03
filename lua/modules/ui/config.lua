@@ -13,7 +13,7 @@ end
 function config.catppuccin()
     require("catppuccin").setup(
         {
-            transparent_background = false,
+            transparent_background = true,
             term_colors = true,
             styles = {
                 comments = "italic",
@@ -53,7 +53,7 @@ function config.catppuccin()
                 fern = false,
                 barbar = false,
                 bufferline = true,
-				markdown = true,
+                markdown = true,
                 lightspeed = false,
                 ts_rainbow = true,
                 hop = true
@@ -202,10 +202,11 @@ function config.lualine()
             if next(clients) == nil then
                 return msg
             end
+            msg = ""
             for _, client in ipairs(clients) do
                 local filetypes = client.config.filetypes
                 if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                    return client.name
+                    msg = msg .. " " .. client.name
                 end
             end
             return msg
@@ -314,7 +315,8 @@ function config.nvim_bufferline()
                 {filetype = "NvimTree", text = "File Explorer", text_align = "center", padding = 1},
                 {filetype = "undotree", text = "Undo History", text_align = "left"},
                 {filetype = "Outline", text = "Outline Window", text_align = "right"},
-                {filetype = "dbui", text = "Dbui", text_align = "left"}
+                {filetype = "dbui", text = "Dbui", text_align = "left"},
+                {filetype = "leaninfo", text = "Leaninfo", text_align = "right"}
             }
         }
     }
@@ -441,6 +443,26 @@ function config.indent_blankline()
     }
     vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
     vim.g.indentLine_concealcursor = ""
+end
+
+function config.web_icons()
+    require "nvim-web-devicons".setup {
+        override = {
+            lean = {
+                icon = "ﬦ",
+                color = "#428850",
+                cterm_color = "65",
+                name = "lean"
+            },
+            v = {
+                icon = "",
+                color = "#428850",
+                cterm_color = "65",
+                name = "coq"
+            }
+        },
+        default = true
+    }
 end
 
 return config

@@ -62,5 +62,5 @@ completion["windwp/nvim-autopairs"] = {
     config = conf.autopairs
 }
 completion["Allen191819/copilot.vim"] = {opt = true, event="InsertEnter", config=conf.copilot}
+completion["Julian/lean.nvim"] = {opt=true, config=conf.lean, after="nvim-treesitter",ft="lean"}
 return completion
-

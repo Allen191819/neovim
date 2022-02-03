@@ -20,7 +20,7 @@ for type, icon in pairs(signs) do
 end
 vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
 vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
 local border = {
     {"╭", "FloatBorder"},
@@ -345,13 +345,17 @@ nvim_lsp.html.setup {
     end
 }
 
+-- https://github.com/REditorSupport/languageserver
+
+nvim_lsp.r_language_server.setup{}
+
 local efmconfigure = function()
     local efmls = require("efmls-configs")
 
     -- Init `efm-langserver` here.
 
     efmls.init {
-	on_attach = custom_attach,
+        on_attach = custom_attach,
         capabilities = capabilities,
         init_options = {documentFormatting = true, codeAction = true}
     }

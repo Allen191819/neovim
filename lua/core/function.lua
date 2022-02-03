@@ -10,6 +10,9 @@ func! CompileRunGccH()
 	elseif &filetype == 'cpp'
 		exec "!g++ -std=c++11 % -Wall -o %< -g"
 		:FloatermNew --position=bottom --wintype=split --height=0.35 time ./%<
+	elseif &filetype == 'rust'
+		exec "!rustc %"
+		:FloatermNew --position=bottom --wintype=split --height=0.35 time ./%<
 	elseif &filetype == 'java'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 javac % && java %<
     elseif &filetype == 'lua'
@@ -18,6 +21,8 @@ func! CompileRunGccH()
 		:FloatermNew --position=bottom --wintype=split --height=0.35 bash %
 	elseif &filetype == 'python'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 python3 %
+	elseif &filetype == 'r'
+		:FloatermNew --position=bottom --wintype=split --height=0.35 Rscript %
 	elseif &filetype == 'markdown'
 		exec "MarkdownPreview"
 	elseif &filetype == 'tex'
@@ -29,8 +34,6 @@ func! CompileRunGccH()
 		:FloatermNew --position=bottom --wintype=split --height=0.35 export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
 	elseif &filetype == 'go'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 go run %
-	elseif &filetype == 'csv'
-        silent! exec "lua require('nvim-preview-csv').preview()"
 	endif
 endfunc
 ]]
@@ -46,6 +49,9 @@ func! CompileRunGccF()
 	elseif &filetype == 'cpp'
 		exec "!g++ -std=c++11 % -Wall -o %< -g"
 		:FloatermNew time ./%<
+	elseif &filetype == 'rust'
+		exec "!rustc %"
+		:FloatermNew time ./%<
 	elseif &filetype == 'java'
 		:FloatermNew javac % && java %<
     elseif &filetype == 'lua'
@@ -54,6 +60,8 @@ func! CompileRunGccF()
 		:FloatermNew bash %
 	elseif &filetype == 'python'
 		:FloatermNew python3 %
+	elseif &filetype == 'r'
+		:FloatermNew Rscript %
 	elseif &filetype == 'javascript'
 		:FloatermNew export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
 	elseif &filetype == 'go'

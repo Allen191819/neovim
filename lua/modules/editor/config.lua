@@ -58,7 +58,7 @@ end
 function config.vim_cursorwod()
     vim.api.nvim_command("augroup user_plugin_cursorword")
     vim.api.nvim_command("autocmd!")
-    vim.api.nvim_command("autocmd FileType NvimTree,lspsagafinder,dashboard let b:cursorword = 0")
+    vim.api.nvim_command("autocmd FileType NvimTree,dashboard let b:cursorword = 0")
     vim.api.nvim_command("autocmd WinEnter * if &diff || &pvw | let b:cursorword = 0 | endif")
     vim.api.nvim_command("autocmd InsertEnter * let b:cursorword = 0")
     vim.api.nvim_command("autocmd InsertLeave * let b:cursorword = 1")
@@ -245,69 +245,6 @@ end
 
 function config.dap()
     local dap = require("dap")
-
-    dap.adapters.go = function(callback, config)
-        local stdout = vim.loop.new_pipe(false)
-        local handle
-        local pid_or_err
-        local port = 38697
-        local opts = {
-            stdio = {nil, stdout},
-            args = {"dap", "-l", "127.0.0.1:" .. port},
-            detached = true
-        }
-        handle, pid_or_err =
-            vim.loop.spawn(
-            "dlv",
-            opts,
-            function(code)
-                stdout:close()
-                handle:close()
-                if code ~= 0 then
-                    print("dlv exited with code", code)
-                end
-            end
-        )
-        assert(handle, "Error running dlv: " .. tostring(pid_or_err))
-        stdout:read_start(
-            function(err, chunk)
-                assert(not err, err)
-                if chunk then
-                    vim.schedule(
-                        function()
-                            require("dap.repl").append(chunk)
-                        end
-                    )
-                end
-            end
-        )
-        -- Wait for delve to start
-        vim.defer_fn(
-            function()
-                callback({type = "server", host = "127.0.0.1", port = port})
-            end,
-            100
-        )
-    end
-    -- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
-    dap.configurations.go = {
-        {type = "go", name = "Debug", request = "launch", program = "${file}"},
-        {
-            type = "go",
-            name = "Debug test", -- configuration for debugging test files
-            request = "launch",
-            mode = "test",
-            program = "${file}"
-        }, -- works with go.mod packages and sub packages
-        {
-            type = "go",
-            name = "Debug test (go.mod)",
-            request = "launch",
-            mode = "test",
-            program = "./${relativeFileDirname}"
-        }
-    }
-
     dap.adapters.python = {
         type = "executable",
         command = os.getenv("HOME") .. "/.local/share/nvim/dapinstall/python_dbg/bin/python",
@@ -359,19 +296,19 @@ end
 
 function config.expand_region()
     vim.cmd [[
-let g:expand_region_text_objects = {
-      \ 'iw'  :0,
-      \ 'iW'  :0,
-      \ 'i"'  :1,
-      \ 'i''' :1,
-      \ 'i]'  :1, 
-      \ 'ib'  :1, 
-      \ 'iB'  :1, 
-      \ 'ip'  :1,
-	  \ 'i,'  :1,
-	  \ 'il'  :1
-      \ }
-]]
+	let g:expand_region_text_objects = {
+		\ 'iw'  :0,
+		\ 'iW'  :0,
+		\ 'i"'  :1,
+		\ 'i''' :1,
+		\ 'i]'  :1,
+		\ 'ib'  :1,
+		\ 'iB'  :1,
+		\ 'ip'  :1,
+		\ 'i,'  :1,
+		\ 'il'  :1
+		\ }
+		]]
 end
 
 function config.floaterm()
@@ -392,6 +329,21 @@ function config.add_header()
     vim.g.header_field_author = "allen"
     vim.g.header_field_author_email = "mzm191891@163.com"
     vim.g.header_field_timestamp_format = "%Y-%m-%d"
+end
+
+function config.headlines()
+    vim.cmd [[highlight CodeBlock guibg=#1c1c1c]]
+    vim.cmd [[highlight Dash guibg=#D19A66 gui=bold]]
+    require("headlines").setup {
+        markdown = {
+            source_pattern_start = "^```",
+            source_pattern_end = "^```$",
+            dash_pattern = "^---+$",
+            headline_pattern = false,
+            codeblock_highlight = "CodeBlock",
+            dash_highlight = "Dash"
+        }
+    }
 end
 
 return config

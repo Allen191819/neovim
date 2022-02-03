@@ -59,7 +59,6 @@ local function load_options()
 		startofline = false,
 		whichwrap = "h,l,<,>,[,],~",
 		splitbelow = true,
-		splitright = true,
 		switchbuf = "useopen",
 		backspace = "indent,eol,start",
 		diffopt = "filler,iwhite,internal,algorithm:patience",

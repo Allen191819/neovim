@@ -168,4 +168,10 @@ editor["AndrewRadev/switch.vim"] = {
     cmd = {"SwitchReverse", "Switch"},
     opt = true
 }
+editor["lukas-reineke/headlines.nvim"] ={
+	opt = true,
+	after = "nvim-treesitter",
+	config = conf.headlines,
+	ft = "markdown"
+}
 return editor
