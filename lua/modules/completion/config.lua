@@ -5,8 +5,9 @@ function config.nvim_lsp()
 end
 
 function config.lightbulb()
-    vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+    vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = true, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = false, text = "💡", text_unavailable = "" } }]]
 end
+
 function config.lspkind()
     local lspkind = require("lspkind")
     lspkind.init(
@@ -74,7 +75,6 @@ function config.cmp()
         tmux = "[TMUX]",
         ultisnips = "[SNIP]",
         spell = "[SPELL]",
-        treesitter = "[TS]",
         emoji = "[Emoji]",
         calc = "[Calc]",
         vim_dadbod_completion = "[DB]",
@@ -146,7 +146,6 @@ function config.cmp()
             {name = "ultisnips"},
             {name = "path"},
             {name = "calc"},
-            {name = "treesitter"},
             {name = "buffer"},
             {name = "latex_symbols"},
             {name = "vim_dadbod_completion"},
@@ -195,92 +194,6 @@ function config.autopairs()
     cmp_autopairs.lisp[#cmp_autopairs.lisp + 1] = "racket"
 end
 
-function config.nvim_lsputils()
-    if vim.fn.has("nvim-0.5.1") == 1 then
-        vim.lsp.handlers["textDocument/codeAction"] = require "lsputil.codeAction".code_action_handler
-        vim.lsp.handlers["textDocument/references"] = require "lsputil.locations".references_handler
-        vim.lsp.handlers["textDocument/definition"] = require "lsputil.locations".definition_handler
-        vim.lsp.handlers["textDocument/declaration"] = require "lsputil.locations".declaration_handler
-        vim.lsp.handlers["textDocument/typeDefinition"] = require "lsputil.locations".typeDefinition_handler
-        vim.lsp.handlers["textDocument/implementation"] = require "lsputil.locations".implementation_handler
-        vim.lsp.handlers["textDocument/documentSymbol"] = require "lsputil.symbols".document_handler
-        vim.lsp.handlers["workspace/symbol"] = require "lsputil.symbols".workspace_handler
-    else
-        local bufnr = vim.api.nvim_buf_get_number(0)
-
-        vim.lsp.handlers["textDocument/codeAction"] = function(_, _, actions)
-            require("lsputil.codeAction").code_action_handler(nil, actions, nil, nil, nil)
-        end
-
-        vim.lsp.handlers["textDocument/references"] = function(_, _, result)
-            require("lsputil.locations").references_handler(
-                nil,
-                result,
-                {
-                    bufnr = bufnr
-                },
-                nil
-            )
-        end
-
-        vim.lsp.handlers["textDocument/definition"] = function(_, method, result)
-            require("lsputil.locations").definition_handler(
-                nil,
-                result,
-                {
-                    bufnr = bufnr,
-                    method = method
-                },
-                nil
-            )
-        end
-
-        vim.lsp.handlers["textDocument/declaration"] = function(_, method, result)
-            require("lsputil.locations").declaration_handler(
-                nil,
-                result,
-                {
-                    bufnr = bufnr,
-                    method = method
-                },
-                nil
-            )
-        end
-
-        vim.lsp.handlers["textDocument/typeDefinition"] = function(_, method, result)
-            require("lsputil.locations").typeDefinition_handler(
-                nil,
-                result,
-                {
-                    bufnr = bufnr,
-                    method = method
-                },
-                nil
-            )
-        end
-
-        vim.lsp.handlers["textDocument/implementation"] = function(_, method, result)
-            require("lsputil.locations").implementation_handler(
-                nil,
-                result,
-                {
-                    bufnr = bufnr,
-                    method = method
-                },
-                nil
-            )
-        end
-
-        vim.lsp.handlers["textDocument/documentSymbol"] = function(_, _, result, _, bufn)
-            require("lsputil.symbols").document_handler(nil, result, {bufnr = bufn}, nil)
-        end
-
-        vim.lsp.handlers["textDocument/symbol"] = function(_, _, result, _, bufn)
-            require("lsputil.symbols").workspace_handler(nil, result, {bufnr = bufn}, nil)
-        end
-    end
-end
-
 function config.copilot()
     vim.cmd [[
 	imap <silent><script><expr> <A-h> copilot#Accept("\<CR>")
@@ -316,7 +229,27 @@ function config.lean()
         abbreviations = {builtin = true},
         lsp = {on_attach = custom_attach},
         lsp3 = {on_attach = custom_attach},
-        mappings = true
+        mappings = true,
+        infoview = {
+            -- Automatically open an infoview on entering a Lean buffer?
+            autoopen = true,
+            -- Set infoview windows' starting dimensions.
+            -- Windows are opened horizontally or vertically depending on spacing.
+            width = 40,
+            height = 20,
+            -- Show indicators for pin locations when entering an infoview window?
+            -- always | never | auto (= only when there are multiple pins)
+            indicators = "auto"
+        },
+        -- Progress bar support
+        progress_bars = {
+            -- Enable the progress bars?
+            enable = true,
+            -- Use a different priority for the signs
+            priority = 10
+        },
+        -- Print Lean's stderr messages to a vim buffer
+        stderr = {enable = true}
     }
 end
 

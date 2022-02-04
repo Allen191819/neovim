@@ -129,4 +129,5 @@ local plug_map = {
     ["o|m"] = map_cu([[lua require('tsht').nodes()]]):with_silent()
 }
 
+
 bind.nvim_load_mapping(plug_map)

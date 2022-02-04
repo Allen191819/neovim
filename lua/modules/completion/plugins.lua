@@ -2,7 +2,7 @@ local completion = {}
 local conf = require("modules.completion.config")
 completion["neovim/nvim-lspconfig"] = {
     opt = true,
-    event = {"BufReadPre","BufNewFile","BufRead"},
+    event = {"BufReadPre", "BufNewFile", "BufRead"},
     config = conf.nvim_lsp
 }
 completion["creativenull/efmls-configs-nvim"] = {
@@ -13,20 +13,17 @@ completion["williamboman/nvim-lsp-installer"] = {
     opt = true,
     after = "nvim-lspconfig"
 }
-completion["RishabhRD/nvim-lsputils"] = {
+completion["rmagatti/goto-preview"] = {
     opt = true,
     after = "nvim-lspconfig",
-    config = conf.nvim_lsputils
+    config = conf.goto_preview
 }
 completion["kosayoda/nvim-lightbulb"] = {
     opt = true,
     after = "nvim-lspconfig",
     config = conf.lightbulb
 }
-completion["onsails/lspkind-nvim"] = {
-    opt = false,
-    config = conf.lspkind
-}
+completion["onsails/lspkind-nvim"] = {opt = false, config = conf.lspkind}
 completion["ray-x/lsp_signature.nvim"] = {opt = true, after = "nvim-lspconfig"}
 completion["hrsh7th/nvim-cmp"] = {
     config = conf.cmp,
@@ -38,11 +35,9 @@ completion["hrsh7th/nvim-cmp"] = {
         {"hrsh7th/cmp-path", after = "cmp-nvim-lua"},
         {"hrsh7th/cmp-buffer", after = "cmp-path"},
         {"hrsh7th/cmp-calc", after = "cmp-path"},
-        {"ray-x/cmp-treesitter", after = "cmp-buffer"},
-        {"kdheepak/cmp-latex-symbols",ft={"tex"}},
+        {"kdheepak/cmp-latex-symbols", ft = {"tex"}},
         {"kristijanhusak/vim-dadbod-completion", ft = {"sql", "mysql"}},
-		{"hrsh7th/cmp-copilot",after = "copilot.vim"},
-        {
+        {"hrsh7th/cmp-copilot", after = "copilot.vim"}, {
             "tzachar/cmp-tabnine",
             run = "./install.sh",
             after = "nvim-cmp",
@@ -61,6 +56,15 @@ completion["windwp/nvim-autopairs"] = {
     after = "nvim-cmp",
     config = conf.autopairs
 }
-completion["Allen191819/copilot.vim"] = {opt = true, event="InsertEnter", config=conf.copilot}
-completion["Julian/lean.nvim"] = {opt=true, config=conf.lean, after="nvim-treesitter",ft="lean"}
+completion["Allen191819/copilot.vim"] = {
+    opt = true,
+    event = "InsertEnter",
+    config = conf.copilot
+}
+completion["Julian/lean.nvim"] = {
+    opt = true,
+    config = conf.lean,
+    ft = "lean",
+    after = {"nvim-treesitter", "nvim-lspconfig"}
+}
 return completion
