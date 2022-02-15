@@ -1,7 +1,8 @@
-vim.api.nvim_set_keymap("n", "RR", ":call CompileRunGccH()<CR>", {silent = true, noremap = true})
-vim.api.nvim_set_keymap("n", "Rf", ":call CompileRunGccF()<CR>", {silent = true, noremap = true})
-vim.cmd(
-    [[
+vim.api.nvim_set_keymap("n", "RR", ":call CompileRunGccH()<CR>",
+                        {silent = true, noremap = true})
+vim.api.nvim_set_keymap("n", "Rf", ":call CompileRunGccF()<CR>",
+                        {silent = true, noremap = true})
+vim.cmd([[
 func! CompileRunGccH()
 	exec "w"
 	if &filetype == 'c'
@@ -29,18 +30,16 @@ func! CompileRunGccH()
         silent! exec "VimtexStopAll"
         silent! exec "VimtexCompile"
 	elseif &filetype == 'html'
-		silent! exec "!surf % &"
+		silent! exec "!chromium % &"
 	elseif &filetype == 'javascript'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
 	elseif &filetype == 'go'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 go run %
 	endif
 endfunc
-]]
-)
+]])
 
-vim.cmd(
-    [[
+vim.cmd([[
 func! CompileRunGccF()
 	exec "w"
 	if &filetype == 'c'
@@ -68,5 +67,5 @@ func! CompileRunGccF()
 		:FloatermNew go run %
 	endif
 endfunc
-]]
-)
+
+]])

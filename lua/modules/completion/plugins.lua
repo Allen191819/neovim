@@ -13,11 +13,6 @@ completion["williamboman/nvim-lsp-installer"] = {
     opt = true,
     after = "nvim-lspconfig"
 }
-completion["rmagatti/goto-preview"] = {
-    opt = true,
-    after = "nvim-lspconfig",
-    config = conf.goto_preview
-}
 completion["kosayoda/nvim-lightbulb"] = {
     opt = true,
     after = "nvim-lspconfig",
@@ -32,7 +27,7 @@ completion["hrsh7th/nvim-cmp"] = {
         {"quangnguyen30192/cmp-nvim-ultisnips"},
         {"hrsh7th/cmp-nvim-lsp", after = "nvim-cmp"},
         {"hrsh7th/cmp-nvim-lua", after = "cmp-nvim-lsp"},
-        {"hrsh7th/cmp-path", after = "cmp-nvim-lua"},
+        {"hrsh7th/cmp-path", after = "cmp-nvim-lsp"},
         {"hrsh7th/cmp-buffer", after = "cmp-path"},
         {"hrsh7th/cmp-calc", after = "cmp-path"},
         {"kdheepak/cmp-latex-symbols", ft = {"tex"}},
@@ -40,7 +35,7 @@ completion["hrsh7th/nvim-cmp"] = {
         {"hrsh7th/cmp-copilot", after = "copilot.vim"}, {
             "tzachar/cmp-tabnine",
             run = "./install.sh",
-            after = "nvim-cmp",
+			event = "InsertEnter",
             config = conf.tabnine
         }
     }
@@ -58,7 +53,7 @@ completion["windwp/nvim-autopairs"] = {
 }
 completion["Allen191819/copilot.vim"] = {
     opt = true,
-    event = "InsertEnter",
+	cmd = 'Copilot',
     config = conf.copilot
 }
 completion["Julian/lean.nvim"] = {
@@ -66,5 +61,10 @@ completion["Julian/lean.nvim"] = {
     config = conf.lean,
     ft = "lean",
     after = {"nvim-treesitter", "nvim-lspconfig"}
+}
+completion["filipdutescu/renamer.nvim"] = {
+    opt = true,
+    config = conf.renamer,
+    after = "nvim-lspconfig"
 }
 return completion

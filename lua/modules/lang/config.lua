@@ -2,17 +2,15 @@ local config = {}
 
 function config.rust_tools()
     local function custom_attach(client)
-        require("lsp_signature").on_attach(
-            {
-                bind = true,
-                use_lspsaga = false,
-                floating_window = true,
-                fix_pos = true,
-                hint_enable = true,
-                hi_parameter = "Search",
-                handler_opts = {"double"}
-            }
-        )
+        require("lsp_signature").on_attach({
+            bind = true,
+            use_lspsaga = false,
+            floating_window = true,
+            fix_pos = true,
+            hint_enable = true,
+            hi_parameter = "Search",
+            handler_opts = {"double"}
+        })
 
         if client.resolved_capabilities.document_formatting then
             vim.cmd [[augroup Format]]
@@ -71,14 +69,10 @@ function config.rust_tools()
                 -- the border that is used for the hover window
                 -- see vim.api.nvim_open_win()
                 border = {
-                    {"╭", "FloatBorder"},
-                    {"─", "FloatBorder"},
-                    {"╮", "FloatBorder"},
-                    {"│", "FloatBorder"},
-                    {"╯", "FloatBorder"},
-                    {"─", "FloatBorder"},
-                    {"╰", "FloatBorder"},
-                    {"│", "FloatBorder"}
+                    {"╭", "FloatBorder"}, {"─", "FloatBorder"},
+                    {"╮", "FloatBorder"}, {"│", "FloatBorder"},
+                    {"╯", "FloatBorder"}, {"─", "FloatBorder"},
+                    {"╰", "FloatBorder"}, {"│", "FloatBorder"}
                 },
                 -- whether the hover action window gets automatically focused
                 auto_focus = false
@@ -103,35 +97,33 @@ function config.lang_go()
     local path = require "nvim-lsp-installer.path"
     local install_root_dir = path.concat {vim.fn.stdpath "data", "lsp_servers"}
 
-    require("go").setup(
-        {
-            go = "go", -- go command, can be go[default] or go1.18beta1
-            goimport = "gopls", -- goimport command, can be gopls[default] or goimport
-            fillstruct = "gopls", -- can be nil (use fillstruct, slower) and gopls
-            gofmt = "gofumpt", --gofmt cmd,
-            gopls_cmd = {install_root_dir .. "/go/gopls"},
-            max_line_len = 120, -- max line length in goline format
-            tag_transform = false, -- tag_transfer  check gomodifytags for details
-            comment_placeholder = "ﳑ ", -- comment_placeholder your cool placeholder e.g. ﳑ       
-            icons = {breakpoint = "🧘", currentpos = "🏃"},
-            verbose = false, -- output loginf in messages
-            lsp_cfg = true, -- true: use non-default gopls setup specified in go/lsp.lua
-            lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
-            lsp_codelens = true, -- set to false to disable codelens, true by default
-            lsp_diag_hdlr = true, -- hook lsp diag handler
-            lsp_document_formatting = true,
-            gopls_remote_auto = true, -- add -remote=auto to gopls
-            dap_debug = true, -- set to false to disable dap
-            dap_debug_keymap = false, -- true: use keymap for debugger defined in go/dap.lua
-            dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
-            dap_debug_vt = false, -- set to true to enable dap virtual text
-            build_tags = "tag1,tag2", -- set default build tags
-            textobjects = false, -- enable default text jobects through treesittter-text-objects
-            test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
-            run_in_floaterm = true, -- set to true to run in float window.
-            filstruct = "gopls"
-        }
-    )
+    require("go").setup({
+        go = "go", -- go command, can be go[default] or go1.18beta1
+        goimport = "gopls", -- goimport command, can be gopls[default] or goimport
+        fillstruct = "gopls", -- can be nil (use fillstruct, slower) and gopls
+        gofmt = "gofumpt", -- gofmt cmd,
+        gopls_cmd = {install_root_dir .. "/go/gopls"},
+        max_line_len = 120, -- max line length in goline format
+        tag_transform = false, -- tag_transfer  check gomodifytags for details
+        comment_placeholder = "ﳑ ", -- comment_placeholder your cool placeholder e.g. ﳑ       
+        icons = {breakpoint = "🧘", currentpos = "🏃"},
+        verbose = false, -- output loginf in messages
+        lsp_cfg = true, -- true: use non-default gopls setup specified in go/lsp.lua
+        lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
+        lsp_codelens = true, -- set to false to disable codelens, true by default
+        lsp_diag_hdlr = true, -- hook lsp diag handler
+        lsp_document_formatting = true,
+        gopls_remote_auto = true, -- add -remote=auto to gopls
+        dap_debug = true, -- set to false to disable dap
+        dap_debug_keymap = false, -- true: use keymap for debugger defined in go/dap.lua
+        dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
+        dap_debug_vt = false, -- set to true to enable dap virtual text
+        build_tags = "tag1,tag2", -- set default build tags
+        textobjects = false, -- enable default text jobects through treesittter-text-objects
+        test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
+        run_in_floaterm = true, -- set to true to run in float window.
+        filstruct = "gopls"
+    })
 end
 
 function config.makrkdown_preview()
@@ -143,7 +135,11 @@ function config.makrkdown_preview()
     vim.g.mkdp_highlight_css = ""
     vim.g.mkdp_page_title = "「${name}」"
     vim.g.mkdp_filetypes = {"markdown"}
-    vim.g.mkdp_preview_options = {hide_yaml_meta = 1, disable_filename = 1, theme = "light"}
+    vim.g.mkdp_preview_options = {
+        hide_yaml_meta = 1,
+        disable_filename = 1,
+        theme = "light"
+    }
     vim.g.mkdp_markdown_css = "/home/allen/.config/nvim/color/markdown.css"
 
     vim.g.vmt_auto_update_on_save = 1
@@ -154,21 +150,15 @@ function config.makrkdown_preview()
 end
 
 function config.clipboard_image()
-    require "clipboard-image".setup {
+    require"clipboard-image".setup {
         default = {
             img_dir = "img",
             img_dir_txt = "img",
-            img_name = function()
-                return os.date("%Y-%m-%d-%H-%M-%S")
-            end,
+            img_name = function() return os.date("%Y-%m-%d-%H-%M-%S") end,
             affix = "%s"
         },
-        markdown = {
-            affix = "![](%s)"
-        },
-        tex = {
-            affix = "{%s}"
-        }
+        markdown = {affix = "![](%s)"},
+        tex = {affix = "{%s}"}
     }
 end
 
@@ -195,6 +185,33 @@ function config.latex()
         sections = 1,
         styles = 1
     }
+end
+
+function config.markdown_flow()
+    require("mkdnflow").setup({
+        default_mappings = false,
+        create_dirs = true,
+        links_relative_to = "first",
+        filetypes = {md = true, rmd = true, markdown = true},
+        evaluate_prefix = true,
+        new_file_prefix = [[os.date('%Y-%m-%d_')]],
+        wrap_to_beginning = false,
+        wrap_to_end = false
+    })
+    local bind = require("keymap.bind")
+    local map_cr = bind.map_cr
+    require("keymap.config")
+    local plug_map = {
+        ["n|<CR>"] = map_cr("MkdnFollowPath"):with_noremap():with_silent(),
+        ["n|<BS>"] = map_cr("MkdnGoBack"):with_noremap():with_silent()
+    }
+    bind.nvim_load_mapping(plug_map)
+end
+
+function config.matlab()
+	vim.g.matlab_server_launcher = 'vim'
+	vim.g.matlab_auto_mappings = 0
+	vim.g.matlab_server_split = 'vertical'
 end
 
 return config

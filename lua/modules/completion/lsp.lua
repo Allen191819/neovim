@@ -352,6 +352,9 @@ local efmconfigure = function()
     local prettier = require("efmls-configs.formatters.prettier")
     local shfmt = require("efmls-configs.formatters.shfmt")
     local alex = require "efmls-configs.linters.alex"
+    local pylint = require "efmls-configs.linters.pylint"
+    local yapf = require 'efmls-configs.formatters.yapf'
+    local vulture = require 'efmls-configs.linters.vulture'
 
     -- Add your own config for formatter and linter here
 
@@ -376,7 +379,7 @@ local efmconfigure = function()
         cpp = {formatter = clangfmt, linter = clangtidy},
         go = {formatter = goimports, linter = staticcheck},
         latex = {linter = alex},
-        python = {formatter = black, linter = flake8},
+        python = {formatter = black},
         vue = {formatter = prettier},
         typescript = {formatter = prettier, linter = eslint},
         javascript = {formatter = prettier, linter = eslint},

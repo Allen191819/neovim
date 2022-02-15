@@ -30,8 +30,10 @@ function config.telescope()
                 vertical = {mirror = false}
             },
             file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-            grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-            qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+            grep_previewer = require("telescope.previewers").vim_buffer_vimgrep
+                .new,
+            qflist_previewer = require("telescope.previewers").vim_buffer_qflist
+                .new,
             file_sorter = require("telescope.sorters").get_fuzzy_file,
             file_ignore_patterns = {},
             generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
@@ -39,14 +41,7 @@ function config.telescope()
             winblend = 0,
             border = {},
             borderchars = {
-                "─",
-                "│",
-                "─",
-                "│",
-                "╭",
-                "╮",
-                "╯",
-                "╰"
+                "─", "│", "─", "│", "╭", "╮", "╯", "╰"
             },
             color_devicons = true,
             use_less = true,
@@ -122,29 +117,27 @@ function config.trouble()
 end
 
 function config.sniprun()
-    require "sniprun".setup(
-        {
-            selected_interpreters = {}, -- " use those instead of the default for the current filetype
-            repl_enable = {}, -- " enable REPL-like behavior for the given interpreters
-            repl_disable = {}, -- " disable REPL-like behavior for the given interpreters
-            interpreter_options = {}, -- " intepreter-specific options, consult docs / :SnipInfo <name>
-            -- " you can combo different display modes as desired
-            display = {
-                "Classic", -- "display results in the command-line  area
-                "VirtualTextOk", -- "display ok results as virtual text (multiline is shortened)
-                "VirtualTextErr", -- "display error results as virtual text
-                "TempFloatingWindow",      -- "display results in a floating window
-                -- "LongTempFloatingWindow" -- "same as above, but only long results. To use with VirtualText__
-                -- "Terminal"                 -- "display results in a vertical split
-            },
-            -- " miscellaneous compatibility/adjustement settings
-            inline_messages = 0, -- " inline_message (0/1) is a one-line way to display messages
-            -- " to workaround sniprun not being able to display anything
+    require"sniprun".setup({
+        selected_interpreters = {}, -- " use those instead of the default for the current filetype
+        repl_enable = {}, -- " enable REPL-like behavior for the given interpreters
+        repl_disable = {}, -- " disable REPL-like behavior for the given interpreters
+        interpreter_options = {}, -- " intepreter-specific options, consult docs / :SnipInfo <name>
+        -- " you can combo different display modes as desired
+        display = {
+            "Classic", -- "display results in the command-line  area
+            "VirtualTextOk", -- "display ok results as virtual text (multiline is shortened)
+            "VirtualTextErr", -- "display error results as virtual text
+            "TempFloatingWindow" -- "display results in a floating window
+            -- "LongTempFloatingWindow" -- "same as above, but only long results. To use with VirtualText__
+            -- "Terminal"                 -- "display results in a vertical split
+        },
+        -- " miscellaneous compatibility/adjustement settings
+        inline_messages = 0, -- " inline_message (0/1) is a one-line way to display messages
+        -- " to workaround sniprun not being able to display anything
 
-            borders = "shadow" -- " display borders around floating windows
-            -- " possible values are 'none', 'single', 'double', or 'shadow'
-        }
-    )
+        borders = "shadow" -- " display borders around floating windows
+        -- " possible values are 'none', 'single', 'double', or 'shadow'
+    })
 end
 
 function config.wilder()
@@ -163,12 +156,71 @@ function config.dadbod()
     vim.g.db_ui_use_nerd_fonts = 1
     vim.g.db_ui_save_localtion = "/home/allen/.local/nvim/dadbod"
     vim.g.db_ui_auto_execute_table_helpers = 1
-    vim.g.db_ui_table_helpers = {mysql = {List = 'select * from "{table}" order by id asc'}}
+    vim.g.db_ui_table_helpers = {
+        mysql = {List = 'select * from "{table}" order by id asc'}
+    }
 end
 
 function config.quickrun()
-	vim.cmd [[
+    vim.cmd [[
 let b:quickrun_config = {'outputter/buffer/into': 1,"outputter/opener":"new"}
 	]]
+end
+
+function config.undotree()
+    vim.g.undotree_WindowLayout = 4
+    vim.g.undotree_SetFocusWhenToggle = 1
+end
+
+function config.aerial()
+    require("aerial").setup({
+        -- Priority list of preferred backends for aerial.
+        -- This can be a filetype map (see :help aerial-filetype-map)
+        backends = {"treesitter", "markdown"},
+        close_behavior = "auto",
+        default_bindings = true,
+        default_direction = "prefer_right",
+        disable_max_lines = 1000,
+        filter_kind = {
+            "Class", "Constructor", "Enum", "Function", "Interface", "Module",
+            "Method", "Struct"
+        },
+        highlight_mode = "split_width",
+        highlight_closest = true,
+        highlight_on_jump = 300,
+        link_folds_to_tree = false,
+        link_tree_to_folds = true,
+        manage_folds = false,
+        max_width = 40,
+        min_width = 20,
+        nerd_font = "auto",
+        on_attach = nil,
+        open_automatic = false,
+        placement_editor_edge = true,
+        post_jump_cmd = "normal! zz",
+        close_on_select = false,
+        show_guides = true,
+        guides = {
+            mid_item = "├─",
+            last_item = "└─",
+            nested_top = "│ ",
+            whitespace = "  "
+        },
+        float = {
+            border = "rounded",
+            row = 1,
+            col = 0,
+            max_height = 100,
+            min_height = 4
+        },
+        treesitter = {
+            -- How long to wait (in ms) after a buffer change before updating
+            update_delay = 300
+        },
+        markdown = {
+            -- How long to wait (in ms) after a buffer change before updating
+            update_delay = 300
+        }
+    })
 end
 return config

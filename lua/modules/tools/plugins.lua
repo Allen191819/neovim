@@ -5,8 +5,8 @@ tools["RishabhRD/popfix"] = {opt = false}
 tools["nvim-lua/plenary.nvim"] = {opt = false}
 tools["nvim-telescope/telescope.nvim"] = {
     opt = true,
-    module = "telescope",
     cmd = "Telescope",
+    module = "telescope",
     config = conf.telescope,
     requires = {
         {"nvim-lua/plenary.nvim", opt = false},
@@ -49,14 +49,18 @@ tools["folke/trouble.nvim"] = {
 }
 tools["dstein64/vim-startuptime"] = {opt = true}
 tools["sindrets/diffview.nvim"] = {opt = true, cmd = {"DiffviewFileHistory", "DiffviewOpen"}}
-tools["mbbill/undotree"] = {opt = true, cmd = "UndotreeToggle"}
+tools["mbbill/undotree"] = {opt = true, cmd = "UndotreeToggle",config=conf.undotree}
 tools["kdheepak/lazygit.nvim"] = {opt = true, cmd = "LazyGit"}
 tools["gelguy/wilder.nvim"] = {
     event = "CmdlineEnter",
     config = conf.wilder,
     requires = {{"romgrk/fzy-lua-native", after = "wilder.nvim"}}
 }
-
+tools["stevearc/aerial.nvim"] = {
+	opt=true,
+	cmd="AerialToggle",
+	config=conf.aerial
+}
 tools["kristijanhusak/vim-dadbod-ui"] = {
 	opt=true,
 	cmd={"DBUIToggle"},

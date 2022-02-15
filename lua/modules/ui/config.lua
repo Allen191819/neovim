@@ -11,55 +11,53 @@ function config.edge()
 end
 
 function config.catppuccin()
-    require("catppuccin").setup(
-        {
-            transparent_background = true,
-            term_colors = true,
-            styles = {
-                comments = "italic",
-                functions = "italic,bold",
-                keywords = "italic",
-                strings = "NONE",
-                variables = "NONE"
-            },
-            integrations = {
-                treesitter = true,
-                native_lsp = {
-                    enabled = true,
-                    virtual_text = {
-                        errors = "italic",
-                        hints = "italic",
-                        warnings = "italic",
-                        information = "italic"
-                    },
-                    underlines = {
-                        errors = "underline",
-                        hints = "underline",
-                        warnings = "underline",
-                        information = "underline"
-                    }
+    require("catppuccin").setup({
+        transparent_background = false,
+        term_colors = true,
+        styles = {
+            comments = "italic",
+            functions = "italic,bold",
+            keywords = "italic",
+            strings = "NONE",
+            variables = "NONE"
+        },
+        integrations = {
+            treesitter = true,
+            native_lsp = {
+                enabled = true,
+                virtual_text = {
+                    errors = "italic",
+                    hints = "italic",
+                    warnings = "italic",
+                    information = "italic"
                 },
-                lsp_trouble = true,
-                lsp_saga = true,
-                gitgutter = false,
-                gitsigns = true,
-                telescope = true,
-                nvimtree = {enabled = true, show_root = true},
-                which_key = true,
-                indent_blankline = {enabled = true, colored_indent_levels = true},
-                dashboard = true,
-                neogit = false,
-                vim_sneak = false,
-                fern = false,
-                barbar = false,
-                bufferline = true,
-                markdown = true,
-                lightspeed = false,
-                ts_rainbow = true,
-                hop = true
-            }
+                underlines = {
+                    errors = "underline",
+                    hints = "underline",
+                    warnings = "underline",
+                    information = "underline"
+                }
+            },
+            lsp_trouble = true,
+            lsp_saga = true,
+            gitgutter = false,
+            gitsigns = true,
+            telescope = true,
+            nvimtree = {enabled = true, show_root = true},
+            which_key = true,
+            indent_blankline = {enabled = true, colored_indent_levels = true},
+            dashboard = true,
+            neogit = false,
+            vim_sneak = false,
+            fern = false,
+            barbar = false,
+            bufferline = true,
+            markdown = true,
+            lightspeed = false,
+            ts_rainbow = true,
+            hop = true
         }
-    )
+    })
 end
 
 function config.lualine()
@@ -86,9 +84,7 @@ function config.lualine()
         buffer_not_empty = function()
             return vim.fn.empty(vim.fn.expand "%:t") ~= 1
         end,
-        hide_in_width = function()
-            return vim.fn.winwidth(0) > 80
-        end,
+        hide_in_width = function() return vim.fn.winwidth(0) > 80 end,
         check_git_workspace = function()
             local filepath = vim.fn.expand "%:p:h"
             local gitdir = vim.fn.finddir(".git", filepath .. ";")
@@ -119,10 +115,11 @@ function config.lualine()
         },
         sections = {
             lualine_a = {"mode"},
-            lualine_b = {{"branch", color = {fg = colors.yellow}}, "diff", "diagnostics"},
+            lualine_b = {
+                {"branch", color = {fg = colors.yellow}}, "diff", "diagnostics"
+            },
             lualine_c = {
-                {"filename", color = {fg = colors.magenta}},
-                "lsp_progress"
+                {"filename", color = {fg = colors.magenta}}, "lsp_progress"
             },
             lualine_x = {},
             lualine_y = {},
@@ -143,12 +140,7 @@ function config.lualine()
             lualine_y = {},
             lualine_z = {}
         },
-        extensions = {
-            "quickfix",
-            "nvim-tree",
-            "fugitive",
-            symbols_outline
-        }
+        extensions = {"quickfix", "nvim-tree", "fugitive", symbols_outline}
     }
     local function ins_left(component)
         table.insert(conf.sections.lualine_c, component)
@@ -163,10 +155,7 @@ function config.lualine()
         cond = conditions.buffer_not_empty
     }
 
-    ins_left {
-        gps_content,
-        cond = gps.is_available
-    }
+    ins_left {gps_content, cond = gps.is_available}
 
     ins_right {
         "o:encoding", -- option component same as &encoding in viml
@@ -175,33 +164,18 @@ function config.lualine()
         color = {fg = colors.violet, gui = "bold"}
     }
 
-    ins_right {
-        "filetype",
-        color = {fg = colors.blue}
-    }
+    ins_right {"filetype", color = {fg = colors.blue}}
 
-    ins_right {
-        function()
-            return ""
-        end,
-        color = {fg = colors.blue}
-    }
+    ins_right {function() return "" end, color = {fg = colors.blue}}
 
-    ins_right {
-        function()
-            return "ﬦ"
-        end,
-        color = {fg = colors.orange}
-    }
+    ins_right {function() return "ﬦ" end, color = {fg = colors.orange}}
     ins_right {
         -- Lsp server name .
         function()
             local msg = "No Active Lsp"
             local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
             local clients = vim.lsp.get_active_clients()
-            if next(clients) == nil then
-                return msg
-            end
+            if next(clients) == nil then return msg end
             msg = ""
             for _, client in ipairs(clients) do
                 local filetypes = client.config.filetypes
@@ -219,7 +193,7 @@ function config.lualine()
 end
 
 function config.nvim_tree()
-    local tree_cb = require "nvim-tree.config".nvim_tree_callback
+    local tree_cb = require"nvim-tree.config".nvim_tree_callback
     require("nvim-tree").setup {
         disable_netrw = true,
         hijack_netrw = true,
@@ -312,10 +286,22 @@ function config.nvim_bufferline()
             always_show_bufferline = true,
             separator_style = "thin",
             offsets = {
-                {filetype = "NvimTree", text = "File Explorer", text_align = "center", padding = 1},
-                {filetype = "undotree", text = "Undo History", text_align = "left"},
-                {filetype = "Outline", text = "Outline Window", text_align = "right"},
-                {filetype = "dbui", text = "Dbui", text_align = "left"},
+                {
+                    filetype = "NvimTree",
+                    text = "File Explorer",
+                    text_align = "center",
+                    padding = 1
+                },
+                {
+                    filetype = "undotree",
+                    text = "Undo History",
+                    text_align = "left"
+                },
+                {
+                    filetype = "Outline",
+                    text = "Outline Window",
+                    text_align = "right"
+                }, {filetype = "dbui", text = "Dbui", text_align = "left"},
                 {filetype = "leaninfo", text = "Leaninfo", text_align = "right"}
             }
         }
@@ -398,45 +384,17 @@ function config.indent_blankline()
         char = "│",
         show_first_indent_level = true,
         filetype_exclude = {
-            "startify",
-            "dashboard",
-            "dotooagenda",
-            "log",
-            "fugitive",
-            "gitcommit",
-            "packer",
-            "vimwiki",
-            "markdown",
-            "json",
-            "txt",
-            "vista",
-            "help",
-            "todoist",
-            "NvimTree",
-            "peekaboo",
-            "git",
-            "TelescopePrompt",
-            "undotree",
-            "flutterToolsOutline",
-            "" -- for all buffers without a file type
+            "startify", "dashboard", "dotooagenda", "log", "fugitive",
+            "gitcommit", "packer", "vimwiki", "markdown", "json", "txt",
+            "vista", "help", "todoist", "NvimTree", "peekaboo", "git",
+            "TelescopePrompt", "undotree", "flutterToolsOutline", "" -- for all buffers without a file type
         },
         buftype_exclude = {"terminal", "nofile"},
         show_trailing_blankline_indent = false,
         show_current_context = true,
         context_patterns = {
-            "class",
-            "function",
-            "method",
-            "block",
-            "list_literal",
-            "selector",
-            "^if",
-            "^table",
-            "if_statement",
-            "while",
-            "for",
-            "type",
-            "var",
+            "class", "function", "method", "block", "list_literal", "selector",
+            "^if", "^table", "if_statement", "while", "for", "type", "var",
             "import"
         },
         space_char_blankline = " "
@@ -446,7 +404,7 @@ function config.indent_blankline()
 end
 
 function config.web_icons()
-    require "nvim-web-devicons".setup {
+    require"nvim-web-devicons".setup {
         override = {
             lean = {
                 icon = "ﬦ",
@@ -457,6 +415,12 @@ function config.web_icons()
             v = {
                 icon = "",
                 color = "#428850",
+                cterm_color = "65",
+                name = "coq"
+            },
+            m = {
+                icon = "",
+                color = "#FF8800",
                 cterm_color = "65",
                 name = "coq"
             }

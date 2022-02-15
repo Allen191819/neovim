@@ -19,11 +19,6 @@ editor["terrortylor/nvim-comment"] = {
         )
     end
 }
-editor["simrat39/symbols-outline.nvim"] = {
-    opt = true,
-    cmd = {"SymbolsOutline", "SymbolsOutlineOpen"},
-    config = conf.symbols_outline
-}
 editor["nvim-treesitter/nvim-treesitter"] = {
     opt = true,
     run = ":TSUpdate",
@@ -173,5 +168,10 @@ editor["lukas-reineke/headlines.nvim"] ={
 	after = "nvim-treesitter",
 	config = conf.headlines,
 	ft = "markdown"
+}
+editor['abecodes/tabout.nvim'] = {
+	opt=true,
+	config=conf.tabout,
+	after = "nvim-treesitter"
 }
 return editor

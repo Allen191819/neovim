@@ -1,8 +1,6 @@
 local config = {}
 
-function config.nvim_lsp()
-    require("modules.completion.lsp")
-end
+function config.nvim_lsp() require("modules.completion.lsp") end
 
 function config.lightbulb()
     vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = true, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = false, text = "💡", text_unavailable = "" } }]]
@@ -10,39 +8,37 @@ end
 
 function config.lspkind()
     local lspkind = require("lspkind")
-    lspkind.init(
-        {
-            with_text = true,
-            preset = "codicons",
-            symbol_map = {
-                Text = "",
-                Method = "",
-                Function = "",
-                Constructor = "",
-                Field = "ﰠ",
-                Variable = "",
-                Class = "ﴯ",
-                Interface = "",
-                Module = "",
-                Property = "ﰠ",
-                Unit = "塞",
-                Value = "",
-                Enum = "",
-                Keyword = "",
-                Snippet = "",
-                Color = "",
-                File = "",
-                Reference = "",
-                Folder = "",
-                EnumMember = "",
-                Constant = "",
-                Struct = "פּ",
-                Event = "",
-                Operator = "",
-                TypeParameter = ""
-            }
+    lspkind.init({
+        mode = "symbol_text",
+        preset = "codicons",
+        symbol_map = {
+            Text = "",
+            Method = "",
+            Function = "",
+            Constructor = "",
+            Field = "ﰠ",
+            Variable = "",
+            Class = "𝓒",
+            Interface = "ﰮ",
+            Module = "",
+            Property = "ﰠ",
+            Unit = "塞",
+            Value = "",
+            Enum = "",
+            Keyword = "",
+            Snippet = "",
+            Color = "",
+            File = "",
+            Reference = "",
+            Folder = "",
+            EnumMember = "",
+            Constant = "",
+            Struct = "פּ",
+            Event = "",
+            Operator = "",
+            TypeParameter ="𝙏"
         }
-    )
+    })
 end
 
 function config.cmp()
@@ -59,9 +55,7 @@ function config.cmp()
     vim.cmd [[highlight CmpItemKindFunction guifg=#B48EAD guibg=NONE]]
     vim.cmd [[highlight CmpItemKindMethod guifg=#B48EAD guibg=NONE]]
 
-    require("cmp_nvim_ultisnips").setup {
-        show_snippets = "all"
-    }
+    require("cmp_nvim_ultisnips").setup {show_snippets = "all"}
     local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
     local types = require("cmp.types")
     local cmp = require("cmp")
@@ -84,14 +78,10 @@ function config.cmp()
     cmp.setup {
         sorting = {
             comparators = {
-                cmp.config.compare.offset,
-                cmp.config.compare.exact,
-                cmp.config.compare.score,
-                require("cmp-under-comparator").under,
-                cmp.config.compare.kind,
-                cmp.config.compare.sort_text,
-                cmp.config.compare.length,
-                cmp.config.compare.order
+                cmp.config.compare.offset, cmp.config.compare.exact,
+                cmp.config.compare.score, require("cmp-under-comparator").under,
+                cmp.config.compare.kind, cmp.config.compare.sort_text,
+                cmp.config.compare.length, cmp.config.compare.order
             }
         },
         formatting = {
@@ -99,13 +89,15 @@ function config.cmp()
                 vim_item.kind = lspkind.presets.default[vim_item.kind]
                 local menu = source_menu[entry.source.name]
                 if entry.source.name == "cmp_tabnine" then
-                    if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+                    if entry.completion_item.data ~= nil and
+                        entry.completion_item.data.detail ~= nil then
                         menu = entry.completion_item.data.detail .. " " .. menu
                     end
                     vim_item.kind = ""
                 end
                 if entry.source.name == "copilot" then
-                    if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+                    if entry.completion_item.data ~= nil and
+                        entry.completion_item.data.detail ~= nil then
                         menu = entry.completion_item.data.detail .. " " .. menu
                     end
                     vim_item.kind = ""
@@ -122,18 +114,12 @@ function config.cmp()
             ["<C-e>"] = cmp.mapping.close(),
             ["<CR>"] = cmp.mapping.confirm({select = true}),
             ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), {"i", "c"}),
-            ["<Tab>"] = cmp.mapping(
-                function(fallback)
-                    cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-                end,
-                {"i", "s", "c"}
-            ),
-            ["<S-Tab>"] = cmp.mapping(
-                function(fallback)
-                    cmp_ultisnips_mappings.jump_backwards(fallback)
-                end,
-                {"i", "s", "c"}
-            )
+            ["<Tab>"] = cmp.mapping(function(fallback)
+                cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+            end, {"i", "s", "c"}),
+            ["<S-Tab>"] = cmp.mapping(function(fallback)
+                cmp_ultisnips_mappings.jump_backwards(fallback)
+            end, {"i", "s", "c"})
         },
         snippet = {
             expand = function(args)
@@ -141,26 +127,15 @@ function config.cmp()
             end
         },
         sources = {
-            {name = "nvim_lsp"},
-            {name = "nvim_lua"},
-            {name = "ultisnips"},
-            {name = "path"},
-            {name = "calc"},
-            {name = "buffer"},
-            {name = "latex_symbols"},
-            {name = "vim_dadbod_completion"},
-            {name = "cmp_tabnine"},
-            {name = "copilot"}
+            {name = "nvim_lsp"}, {name = "nvim_lua"}, {name = "ultisnips"},
+            {name = "path"}, {name = "calc"}, {name = "buffer"},
+            {name = "latex_symbols"}, {name = "vim_dadbod_completion"},
+            {name = "cmp_tabnine"}, {name = "copilot"}
         },
-        experimental = {
-            native_menu = false,
-            ghost_text = false
-        },
+        experimental = {native_menu = false, ghost_text = false},
         preselect = types.cmp.PreselectMode.Item,
         completion = {
-            autocomplete = {
-                types.cmp.TriggerEvent.TextChanged
-            },
+            autocomplete = {types.cmp.TriggerEvent.TextChanged},
             completeopt = "menu,menuone,noselect",
             keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
             keyword_length = 2,
@@ -190,7 +165,8 @@ function config.autopairs()
     npairs.add_rule(Rule("$$", "$$", "tex"))
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     local cmp = require("cmp")
-    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({map_char = {tex = ""}}))
+    cmp.event:on("confirm_done",
+                 cmp_autopairs.on_confirm_done({map_char = {tex = ""}}))
     cmp_autopairs.lisp[#cmp_autopairs.lisp + 1] = "racket"
 end
 
@@ -206,17 +182,15 @@ end
 
 function config.lean()
     local function custom_attach(client)
-        require("lsp_signature").on_attach(
-            {
-                bind = true,
-                use_lspsaga = false,
-                floating_window = true,
-                fix_pos = true,
-                hint_enable = true,
-                hi_parameter = "Search",
-                handler_opts = {"double"}
-            }
-        )
+        require("lsp_signature").on_attach({
+            bind = true,
+            use_lspsaga = false,
+            floating_window = true,
+            fix_pos = true,
+            hint_enable = true,
+            hi_parameter = "Search",
+            handler_opts = {"double"}
+        })
 
         if client.resolved_capabilities.document_formatting then
             vim.cmd [[augroup Format]]
@@ -226,30 +200,28 @@ function config.lean()
         end
     end
     require("lean").setup {
-        abbreviations = {builtin = true},
+        abbreviations = {builtin = true, extra = {wknight = "♘"}},
         lsp = {on_attach = custom_attach},
         lsp3 = {on_attach = custom_attach},
         mappings = true,
         infoview = {
-            -- Automatically open an infoview on entering a Lean buffer?
             autoopen = true,
-            -- Set infoview windows' starting dimensions.
-            -- Windows are opened horizontally or vertically depending on spacing.
             width = 40,
             height = 20,
-            -- Show indicators for pin locations when entering an infoview window?
-            -- always | never | auto (= only when there are multiple pins)
-            indicators = "auto"
+            indicators = "always"
         },
-        -- Progress bar support
-        progress_bars = {
-            -- Enable the progress bars?
-            enable = true,
-            -- Use a different priority for the signs
-            priority = 10
-        },
-        -- Print Lean's stderr messages to a vim buffer
+        progress_bars = {enable = true, priority = 10},
         stderr = {enable = true}
+    }
+end
+
+function config.renamer()
+    require("renamer").setup {
+        border = true,
+        border_chars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
+        show_refs = true,
+        with_qf_list = true,
+        with_popup = true
     }
 end
 

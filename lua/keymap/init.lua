@@ -28,7 +28,7 @@ local plug_map = {
     ["n|<leader>lr"] = map_cr("LspRestart"):with_noremap():with_silent():with_nowait(),
     ["n|g["] = map_cr("<cmd>lua vim.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
     ["n|g]"] = map_cr("<cmd>lua vim.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
-    ["n|<leader>r"] = map_cr("<cmd>lua vim.lsp.buf.rename()<CR>"):with_noremap():with_silent(),
+    ["n|<leader>r"] = map_cr("<cmd>lua require(\"renamer\").rename()<cr>"):with_noremap():with_silent(),
     ["n|K"] = map_cr("<cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
     ["n|<leader>ca"] = map_cr(":Telescope lsp_code_actions<CR>"):with_noremap():with_silent(),
     ["v|<leader>ca"] = map_cu(":Telescope lsp_range_code_actions<CR>"):with_noremap():with_silent(),
@@ -90,7 +90,7 @@ local plug_map = {
     ["n|ga"] = map_cmd("v:lua.enhance_align('nga')"):with_expr(),
     ["x|ga"] = map_cmd("v:lua.enhance_align('xga')"):with_expr(),
     -- Plugin SymbolsOutline
-    ["n|<leader>b"] = map_cr("SymbolsOutline"):with_noremap():with_silent(),
+    ["n|<leader>b"] = map_cr("AerialToggle"):with_noremap():with_silent(),
     -- Plugin split-term
     ["n|<C-\\>"] = map_cr("VTerm"):with_noremap():with_silent(),
     ["n|<F12>"] = map_cr("FloatermToggle"):with_noremap():with_silent(),

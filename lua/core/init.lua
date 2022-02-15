@@ -52,7 +52,7 @@ local leader_map = function()
 end
 
 local neovide_config = function()
-    vim.cmd [[set guifont=JetBrainsMono\ Nerd\ Font:h12]]
+    vim.cmd [[set guifont=mononoki\ Nerd\ Font\ Mono:h12]]
     vim.g.neovide_refresh_rate = 60
     vim.g.neovide_cursor_vfx_mode = "railgun"
     vim.g.neovide_no_idle = true

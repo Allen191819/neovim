@@ -90,7 +90,8 @@ local function load_options()
 		pumblend = 10,
 		winblend = 10,
 		autoread = true,
-		autowrite = true
+		autowrite = true,
+		autowriteall = true
 	}
 	local bw_local = {
 		undofile = true,
