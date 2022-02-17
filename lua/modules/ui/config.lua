@@ -1,5 +1,46 @@
 local config = {}
 
+function config.material()
+    require("material").setup({
+        contrast = {
+            sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+            floating_windows = true, -- Enable contrast for floating windows
+            line_numbers = false, -- Enable contrast background for line numbers
+            sign_column = false, -- Enable contrast background for the sign column
+            cursor_line = true, -- Enable darker background for the cursor line
+            non_current_windows = false, -- Enable darker background for non-current windows
+            popup_menu = true -- Enable lighter background for the popup menu
+        },
+        italics = {
+            comments = true, -- Enable italic comments
+            keywords = true, -- Enable italic keywords
+            functions = true, -- Enable italic functions
+            strings = true, -- Enable italic strings
+            variables = false -- Enable italic variables
+        },
+        contrast_filetypes = {
+            "terminal", -- Darker terminal background
+            "packer", -- Darker packer background
+            "qf", -- Darker qf list background
+            "undotree", "NvimTree", "dbui", "leaninfo"
+        },
+        high_visibility = {
+            lighter = true, -- Enable higher contrast text for lighter style
+            darker = true -- Enable higher contrast text for darker style
+        },
+        disable = {
+            borders = false, -- Disable borders between verticaly split windows
+            background = false, -- Prevent the theme from setting the background (NeoVim then uses your teminal background)
+            term_colors = false, -- Prevent the theme from setting terminal colors
+            eob_lines = false -- Hide the end-of-buffer lines
+        },
+        async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
+        lualine_style = "default",
+        custom_highlights = {} -- Overwrite highlights with your own
+    })
+    vim.g.material_style = "palenight"
+end
+
 function config.edge()
     vim.cmd [[set background=dark]]
     vim.g.edge_style = "aura"
@@ -8,57 +49,6 @@ function config.edge()
     vim.g.edge_show_eob = 1
     vim.g.edge_better_performance = 1
     vim.g.edge_transparent_background = 1
-end
-
-function config.catppuccin()
-    require("catppuccin").setup({
-        transparent_background = false,
-        term_colors = true,
-        styles = {
-            comments = "italic",
-            functions = "italic",
-            keywords = "italic",
-            strings = "NONE",
-            variables = "NONE"
-        },
-        integrations = {
-            treesitter = true,
-            native_lsp = {
-                enabled = true,
-                virtual_text = {
-                    errors = "italic",
-                    hints = "italic",
-                    warnings = "italic",
-                    information = "italic"
-                },
-                underlines = {
-                    errors = "underline",
-                    hints = "underline",
-                    warnings = "underline",
-                    information = "underline"
-                }
-            },
-            lsp_trouble = true,
-            lsp_saga = false,
-            gitgutter = false,
-            gitsigns = true,
-            telescope = true,
-            nvimtree = {enabled = true, show_root = true},
-            which_key = true,
-            indent_blankline = {enabled = true, colored_indent_levels = true},
-            dashboard = true,
-            neogit = false,
-            vim_sneak = false,
-            fern = false,
-            barbar = false,
-            bufferline = true,
-            markdown = true,
-            lightspeed = false,
-            ts_rainbow = true,
-            hop = true,
-            cmp = true
-        }
-    })
 end
 
 function config.lualine()
@@ -109,7 +99,7 @@ function config.lualine()
     local conf = {
         options = {
             icons_enabled = true,
-            theme = "catppuccin",
+            theme = "material",
             disabled_filetypes = {},
             component_separators = "|",
             section_separators = {left = "", right = ""}
@@ -285,7 +275,7 @@ function config.nvim_bufferline()
             show_tab_indicators = true,
             diagnostics = "nvim_lsp",
             always_show_bufferline = true,
-            separator_style = "thin",
+            separator_style = "thick",
             offsets = {
                 {
                     filetype = "NvimTree",
@@ -300,6 +290,11 @@ function config.nvim_bufferline()
                 },
                 {
                     filetype = "Outline",
+                    text = "Outline Window",
+                    text_align = "right"
+                },
+                {
+                    filetype = "earial",
                     text = "Outline Window",
                     text_align = "right"
                 }, {filetype = "dbui", text = "Dbui", text_align = "left"},
@@ -393,6 +388,7 @@ function config.indent_blankline()
         buftype_exclude = {"terminal", "nofile"},
         show_trailing_blankline_indent = false,
         show_current_context = true,
+        show_current_context_start = true,
         context_patterns = {
             "class", "function", "method", "block", "list_literal", "selector",
             "^if", "^table", "if_statement", "while", "for", "type", "var",

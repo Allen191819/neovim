@@ -1,12 +1,8 @@
 local ui = {}
 local conf = require("modules.ui.config")
 
-ui["kyazdani42/nvim-web-devicons"] = {opt = false,config=conf.web_icons}
+ui["kyazdani42/nvim-web-devicons"] = {opt = false, config = conf.web_icons}
 ui["sainnhe/edge"] = {opt = false, config = conf.edge}
-ui["catppuccin/nvim"] = {
-    opt = false,
-    config = conf.catppuccin
-}
 ui["hoob3rt/lualine.nvim"] = {
     opt = true,
     after = "nvim-gps",
@@ -35,5 +31,6 @@ ui["akinsho/nvim-bufferline.lua"] = {
     event = "BufRead",
     config = conf.nvim_bufferline
 }
+ui["marko-cerovac/material.nvim"] = {opt = false, config = conf.material}
 
 return ui
