@@ -18,10 +18,6 @@ for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
 end
-vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
-vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
-vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
-
 local border = {
     {"╭", "FloatBorder"}, {"─", "FloatBorder"}, {"╮", "FloatBorder"},
     {"│", "FloatBorder"}, {"╯", "FloatBorder"}, {"─", "FloatBorder"},
@@ -54,7 +50,6 @@ local function goto_definition(split_cmd)
             util.jump_to_location(result)
         end
     end
-
     return handler
 end
 
@@ -111,6 +106,9 @@ vim.lsp.handlers["textDocument/formatting"] =
     end
 
 local function custom_attach(client)
+    vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
+    vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
+    vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
     require("lsp_signature").on_attach({
         bind = true,
         use_lspsaga = false,
@@ -264,6 +262,18 @@ local enhance_server_opts = {
             custom_attach(client)
         end
     end,
+    ["hls"] = function(opts)
+        opts.on_attach = function(client)
+            client.resolved_capabilities.document_formatting = true
+            custom_attach(client)
+        end
+    end,
+    ["r_language_server"] = function(opts)
+        opts.on_attach = function(client)
+            client.resolved_capabilities.document_formatting = true
+            custom_attach(client)
+        end
+    end,
     ["gopls"] = function(opts)
         opts.settings = {
             gopls = {
@@ -317,15 +327,6 @@ nvim_lsp.html.setup {
     end
 }
 
--- https://github.com/REditorSupport/languageserver
-
-nvim_lsp.r_language_server.setup {
-    on_attach = function(client)
-        client.resolved_capabilities.document_formatting = true
-        custom_attach(client)
-    end
-}
-
 local efmconfigure = function()
     local efmls = require("efmls-configs")
 
@@ -345,7 +346,6 @@ local efmconfigure = function()
     local flake8 = require("efmls-configs.linters.flake8")
     local shellcheck = require("efmls-configs.linters.shellcheck")
     local staticcheck = require("efmls-configs.linters.staticcheck")
-    local black = require("efmls-configs.formatters.black")
     local luafmt = require("efmls-configs.formatters.lua_format")
     local clangfmt = require("efmls-configs.formatters.clang_format")
     local goimports = require("efmls-configs.formatters.goimports")
@@ -353,8 +353,8 @@ local efmconfigure = function()
     local shfmt = require("efmls-configs.formatters.shfmt")
     local alex = require "efmls-configs.linters.alex"
     local pylint = require "efmls-configs.linters.pylint"
-    local yapf = require 'efmls-configs.formatters.yapf'
-    local vulture = require 'efmls-configs.linters.vulture'
+    local yapf = require "efmls-configs.formatters.yapf"
+    local vulture = require "efmls-configs.linters.vulture"
 
     -- Add your own config for formatter and linter here
 
@@ -379,7 +379,7 @@ local efmconfigure = function()
         cpp = {formatter = clangfmt, linter = clangtidy},
         go = {formatter = goimports, linter = staticcheck},
         latex = {linter = alex},
-        python = {formatter = black},
+        python = {formatter = yapf},
         vue = {formatter = prettier},
         typescript = {formatter = prettier, linter = eslint},
         javascript = {formatter = prettier, linter = eslint},

@@ -1,5 +1,4 @@
 local config = {}
-
 function config.nvim_lsp() require("modules.completion.lsp") end
 
 function config.lightbulb()
@@ -36,7 +35,7 @@ function config.lspkind()
             Struct = "פּ",
             Event = "",
             Operator = "",
-            TypeParameter ="𝙏"
+            TypeParameter = "𝙏"
         }
     })
 end
@@ -130,7 +129,8 @@ function config.cmp()
             {name = "nvim_lsp"}, {name = "nvim_lua"}, {name = "ultisnips"},
             {name = "path"}, {name = "calc"}, {name = "buffer"},
             {name = "latex_symbols"}, {name = "vim_dadbod_completion"},
-            {name = "cmp_tabnine"}, {name = "copilot"}
+            {name = "cmp_tabnine"}, {name = "copilot"},
+            {name = "nvim_lsp_signature_help"}
         },
         experimental = {native_menu = false, ghost_text = false},
         preselect = types.cmp.PreselectMode.Item,
@@ -173,14 +173,17 @@ end
 function config.copilot()
     vim.cmd [[
 	imap <silent><script><expr> <A-h> copilot#Accept("\<CR>")
-	imap <silent><nowait><expr> <A-j> copilot#NextResult(1)
-	imap <silent><nowait><expr> <A-k> copilot#NextResult(-1)
 	]]
     vim.g.copilot_no_tab_map = true
     vim.g.copilot_echo_num_completions = false
+    vim.cmd [[
+	highlight CopilotSuggestion guifg=#555FFF ctermfg=8
+	]]
 end
 
 function config.lean()
+    vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
+    vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
     local function custom_attach(client)
         require("lsp_signature").on_attach({
             bind = true,
@@ -213,6 +216,12 @@ function config.lean()
         progress_bars = {enable = true, priority = 10},
         stderr = {enable = true}
     }
+    vim.lsp.handlers["textDocument/publishDiagnostics"] =
+        vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+            underline = false,
+            virtual_text = {spacing = 15, prefix = ''},
+            update_in_insert = true
+        })
 end
 
 function config.renamer()

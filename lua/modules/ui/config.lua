@@ -375,7 +375,6 @@ end
 
 function config.indent_blankline()
     vim.opt.termguicolors = true
-    vim.opt.list = true
     require("indent_blankline").setup {
         char = "│",
         show_first_indent_level = true,

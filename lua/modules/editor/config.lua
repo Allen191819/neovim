@@ -20,7 +20,7 @@ function config.nvim_treesitter()
 
     require"nvim-treesitter.configs".setup {
         ensure_installed = "maintained",
-        highlight = {enable = true, disable = {"latex","matlab"}},
+        highlight = {enable = true, disable = {"latex", "matlab","lean"}},
         rainbow = {
             enable = true,
             extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
@@ -249,6 +249,7 @@ function config.floaterm()
     vim.g.floaterm_keymap_prev = ""
     vim.g.floaterm_keymap_next = ""
     vim.g.floaterm_keymap_toggle = "<F12>"
+    vim.g.floaterm_autoclose = 0
 end
 
 function config.add_header()
@@ -275,22 +276,20 @@ function config.headlines()
     }
 end
 
-
 function config.tabout()
     require("tabout").setup {
-        tabkey = "<A-b>", -- key to trigger tabout, set to an empty string to disable
-        backwards_tabkey = "<A-v>", -- key to trigger backwards tabout, set to an empty string to disable
-        act_as_tab = true, -- shift content if tab out is not possible
+        tabkey = "<A-j>", -- key to trigger tabout, set to an empty string to disable
+        backwards_tabkey = "<A-k>", -- key to trigger backwards tabout, set to an empty string to disable
+        act_as_tab = false, -- shift content if tab out is not possible
         act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
         enable_backwards = true, -- well ...
-        completion = true, -- if the tabkey is used in a completion pum
+        completion = false, -- if the tabkey is used in a completion pum
         tabouts = {
             {open = "'", close = "'"}, {open = '"', close = '"'},
             {open = "`", close = "`"}, {open = "(", close = ")"},
             {open = "[", close = "]"}, {open = "{", close = "}"}
         },
-        ignore_beginning = true --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]] ,
+        ignore_beginning = true --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
     }
 end
-
 return config

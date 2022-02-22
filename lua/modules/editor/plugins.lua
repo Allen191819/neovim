@@ -10,19 +10,17 @@ editor["itchyny/vim-cursorword"] = {
 editor["terrortylor/nvim-comment"] = {
     opt = false,
     config = function()
-        require("nvim_comment").setup(
-            {
-                hook = function()
-                    require("ts_context_commentstring.internal").update_commentstring()
-                end
-            }
-        )
+        require("nvim_comment").setup({
+            hook = function()
+                require("ts_context_commentstring.internal").update_commentstring()
+            end
+        })
     end
 }
 editor["nvim-treesitter/nvim-treesitter"] = {
     opt = true,
     run = ":TSUpdate",
-    event = {"BufRead","BufNewFile"},
+    event = {"BufRead", "BufNewFile"},
     config = conf.nvim_treesitter
 }
 editor["romgrk/nvim-treesitter-context"] = {
@@ -67,11 +65,7 @@ editor["phaazon/hop.nvim"] = {
     opt = true,
     branch = "v1",
     cmd = {
-        "HopLine",
-        "HopLineStart",
-        "HopWord",
-        "HopPattern",
-        "HopChar1",
+        "HopLine", "HopLineStart", "HopWord", "HopPattern", "HopChar1",
         "HopChar2"
     },
     config = function()
@@ -104,8 +98,7 @@ editor["rcarriga/nvim-dap-ui"] = {
     opt = false,
     config = conf.dapui,
     requires = {
-        {"mfussenegger/nvim-dap", config = conf.dap},
-        {
+        {"mfussenegger/nvim-dap", config = conf.dap}, {
             "Pocco81/DAPInstall.nvim",
             opt = true,
             cmd = {"DIInstall", "DIUninstall", "DIList"},
@@ -123,10 +116,7 @@ editor["edluffy/specs.nvim"] = {
     event = "CursorMoved",
     config = conf.specs
 }
-editor["tpope/vim-surround"] = {
-    opt = true,
-    event = "BufRead"
-}
+editor["tpope/vim-surround"] = {opt = true, event = "BufRead"}
 editor["Allen191819/vim-expand-region"] = {
     opt = false,
     requires = {
@@ -139,39 +129,28 @@ editor["Allen191819/vim-expand-region"] = {
 editor["alpertuna/vim-header"] = {
     opt = true,
     cmd = {
-        "AddHeader",
-        "AddMinHeader",
-        "AddMITLicense",
-        "AddApacheLicense",
-        "AddGNULicense",
-        "AddAGPLicense",
-        "AddLGPLLicense",
-        "AddMPLLicense",
-        "AddWTFPLLicense",
-        "AddZlibLicense"
+        "AddHeader", "AddMinHeader", "AddMITLicense", "AddApacheLicense",
+        "AddGNULicense", "AddAGPLicense", "AddLGPLLicense", "AddMPLLicense",
+        "AddWTFPLLicense", "AddZlibLicense"
     },
     config = conf.add_header
 }
-editor["mg979/vim-visual-multi"] = {
-    opt = false
-}
-editor["Chiel92/vim-autoformat"] = {
-    cmd = {"Autoformat"},
-    opt = true
-}
+editor["mg979/vim-visual-multi"] = {opt = false}
+editor["Chiel92/vim-autoformat"] = {cmd = {"Autoformat"}, opt = true}
 editor["AndrewRadev/switch.vim"] = {
-    cmd = {"SwitchReverse", "Switch"},
-    opt = true
+    opt = true,
+	event = "BufRead"
+
 }
-editor["lukas-reineke/headlines.nvim"] ={
-	opt = true,
-	after = "nvim-treesitter",
-	config = conf.headlines,
-	ft = "markdown"
+editor["lukas-reineke/headlines.nvim"] = {
+    opt = true,
+    after = "nvim-treesitter",
+    config = conf.headlines,
+    ft = "markdown"
 }
-editor['abecodes/tabout.nvim'] = {
-	opt=true,
-	config=conf.tabout,
-	after = "nvim-treesitter"
+editor["abecodes/tabout.nvim"] = {
+    opt = true,
+    config = conf.tabout,
+    after = "nvim-treesitter"
 }
 return editor

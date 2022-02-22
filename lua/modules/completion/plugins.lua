@@ -30,12 +30,13 @@ completion["hrsh7th/nvim-cmp"] = {
         {"hrsh7th/cmp-path", after = "cmp-nvim-lsp"},
         {"hrsh7th/cmp-buffer", after = "cmp-path"},
         {"hrsh7th/cmp-calc", after = "cmp-path"},
-        {"kdheepak/cmp-latex-symbols", ft = {"tex"}},
+        {"kdheepak/cmp-latex-symbols", ft = {"markdown", "tex"}},
         {"kristijanhusak/vim-dadbod-completion", ft = {"sql", "mysql"}},
+        --        {"hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp"},
         {"hrsh7th/cmp-copilot", after = "copilot.vim"}, {
             "tzachar/cmp-tabnine",
             run = "./install.sh",
-			event = "InsertEnter",
+            event = "InsertEnter",
             config = conf.tabnine
         }
     }
@@ -51,9 +52,9 @@ completion["windwp/nvim-autopairs"] = {
     after = "nvim-cmp",
     config = conf.autopairs
 }
-completion["Allen191819/copilot.vim"] = {
+completion["github/copilot.vim"] = {
     opt = true,
-	cmd = 'Copilot',
+    cmd = "Copilot",
     config = conf.copilot
 }
 completion["Julian/lean.nvim"] = {
@@ -68,3 +69,4 @@ completion["filipdutescu/renamer.nvim"] = {
     after = "nvim-lspconfig"
 }
 return completion
+

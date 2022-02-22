@@ -68,4 +68,5 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
 	config = conf.dadbod
 }
 
+
 return tools

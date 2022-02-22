@@ -209,9 +209,9 @@ function config.markdown_flow()
 end
 
 function config.matlab()
-	vim.g.matlab_server_launcher = 'vim'
-	vim.g.matlab_auto_mappings = 0
-	vim.g.matlab_server_split = 'vertical'
+    vim.g.matlab_server_launcher = "vim"
+    vim.g.matlab_auto_mappings = 0
+    vim.g.matlab_server_split = "vertical"
 end
 
 return config

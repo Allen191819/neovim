@@ -140,7 +140,7 @@ local load_core = function()
     require("core.function")
     pack.load_compile()
 
-    vim.cmd [[colorscheme catppuccin]]
+    vim.cmd [[colorscheme material]]
 end
 
 load_core()
