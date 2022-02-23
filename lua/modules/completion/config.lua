@@ -72,7 +72,8 @@ function config.cmp()
         calc = "[Calc]",
         vim_dadbod_completion = "[DB]",
         latex_symbols = "[Latex]",
-        copilot = "[AI]"
+        copilot = "[AI]",
+        orgmode = "[Org]"
     }
     cmp.setup {
         sorting = {
@@ -100,6 +101,13 @@ function config.cmp()
                         menu = entry.completion_item.data.detail .. " " .. menu
                     end
                     vim_item.kind = ""
+                end
+                if entry.source.name == "orgmode" then
+                    if entry.completion_item.data ~= nil and
+                        entry.completion_item.data.detail ~= nil then
+                        menu = entry.completion_item.data.detail .. " " .. menu
+                    end
+                    vim_item.kind = ""
                 end
                 vim_item.menu = menu
                 return vim_item
@@ -130,7 +138,7 @@ function config.cmp()
             {name = "path"}, {name = "calc"}, {name = "buffer"},
             {name = "latex_symbols"}, {name = "vim_dadbod_completion"},
             {name = "cmp_tabnine"}, {name = "copilot"},
-            {name = "nvim_lsp_signature_help"}
+            {name = "nvim_lsp_signature_help"}, {name = 'orgmode'}
         },
         experimental = {native_menu = false, ghost_text = false},
         preselect = types.cmp.PreselectMode.Item,
@@ -195,6 +203,17 @@ function config.lean()
             handler_opts = {"double"}
         })
 
+        vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+                                                                  vim.lsp
+                                                                      .diagnostic
+                                                                      .on_publish_diagnostics,
+                                                                  {
+                signs = false,
+                underline = false,
+                virtual_text = {spacing = 15, prefix = ''},
+                update_in_insert = true
+            })
+
         if client.resolved_capabilities.document_formatting then
             vim.cmd [[augroup Format]]
             vim.cmd [[autocmd! * <buffer>]]
@@ -216,12 +235,6 @@ function config.lean()
         progress_bars = {enable = true, priority = 10},
         stderr = {enable = true}
     }
-    vim.lsp.handlers["textDocument/publishDiagnostics"] =
-        vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-            underline = false,
-            virtual_text = {spacing = 15, prefix = ''},
-            update_in_insert = true
-        })
 end
 
 function config.renamer()

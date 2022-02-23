@@ -414,12 +414,13 @@ function config.web_icons()
                 cterm_color = "65",
                 name = "coq"
             },
-            m = {
-                icon = "",
-                color = "#FF8800",
+            org = {
+                icon = "",
+                color = "#77A997",
                 cterm_color = "65",
-                name = "coq"
+                name = "org"
             }
+
         },
         default = true
     }

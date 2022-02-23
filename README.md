@@ -110,10 +110,6 @@ nvim
 │           ├── config.lua
 │           └── plugins.lua
 ├── md-snippets.vim
-├── my-snippets
-│   ├── package.json
-│   └── snippets
-│       └── go.json
 └── README.md
 ```
 

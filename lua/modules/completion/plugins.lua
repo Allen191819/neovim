@@ -60,7 +60,6 @@ completion["github/copilot.vim"] = {
 completion["Julian/lean.nvim"] = {
     opt = true,
     config = conf.lean,
-    ft = "lean",
     after = {"nvim-treesitter", "nvim-lspconfig"}
 }
 completion["filipdutescu/renamer.nvim"] = {

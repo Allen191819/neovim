@@ -208,10 +208,12 @@ function config.markdown_flow()
     bind.nvim_load_mapping(plug_map)
 end
 
-function config.matlab()
-    vim.g.matlab_server_launcher = "vim"
-    vim.g.matlab_auto_mappings = 0
-    vim.g.matlab_server_split = "vertical"
+function config.org()
+    require('orgmode').setup_ts_grammar()
+    require('orgmode').setup {
+        org_agenda_files = {'~/Workplace/org/*', '~/my-orgs/**/*'},
+        org_default_notes_file = '~/Workplace/org/refile.org'
+    }
 end
 
 return config

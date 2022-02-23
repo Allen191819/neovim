@@ -42,4 +42,12 @@ lang["jakewvincent/mkdnflow.nvim"] = {
     config = conf.markdown_flow
 }
 lang["psf/black"] = {opt = true, ft = "python"}
+lang["jalvesaq/Nvim-R"] = {opt = true, ft = "r"}
+lang["nvim-orgmode/orgmode"] = {
+    opt = true,
+    ft = "org",
+    config = conf.org,
+    after = "nvim-treesitter"
+}
 return lang
+

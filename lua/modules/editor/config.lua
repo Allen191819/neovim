@@ -20,7 +20,11 @@ function config.nvim_treesitter()
 
     require"nvim-treesitter.configs".setup {
         ensure_installed = "maintained",
-        highlight = {enable = true, disable = {"latex", "matlab","lean"}},
+        highlight = {
+            enable = true,
+            disable = {"latex", "lean","org"},
+            additional_vim_regex_highlighting = {'org'}
+        },
         rainbow = {
             enable = true,
             extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
@@ -28,7 +32,8 @@ function config.nvim_treesitter()
         },
         context_commentstring = {enable = true, enable_autocmd = false},
         matchup = {enable = true},
-        context = {enable = true, throttle = true}
+        context = {enable = true, throttle = true},
+        ensure_installed = {'org'}
     }
 end
 
@@ -277,19 +282,35 @@ function config.headlines()
 end
 
 function config.tabout()
+
     require("tabout").setup {
+
         tabkey = "<A-j>", -- key to trigger tabout, set to an empty string to disable
+
         backwards_tabkey = "<A-k>", -- key to trigger backwards tabout, set to an empty string to disable
+
         act_as_tab = false, -- shift content if tab out is not possible
+
         act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
+
         enable_backwards = true, -- well ...
+
         completion = false, -- if the tabkey is used in a completion pum
+
         tabouts = {
+
             {open = "'", close = "'"}, {open = '"', close = '"'},
+
             {open = "`", close = "`"}, {open = "(", close = ")"},
+
             {open = "[", close = "]"}, {open = "{", close = "}"}
+
         },
+
         ignore_beginning = true --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
+
     }
+
 end
+
 return config
