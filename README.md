@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD033 MD041 -->
 <p align="center">
-  <a href="https://github.com/Allen191819/neovim"><img src="https://github.com/Allen191819/neovim/blob/master/img/diana.png?raw=true" width="200" height="200" alt="my_neovim"></a>
+  <a href="https://github.com/Allen191819/neovim"><img src="https://github.com/Allen191819/neovim/blob/master/img/diana.png?raw=true" width="220" height="200" alt="my_neovim"></a>
 </p>
 
 <div align="center">
