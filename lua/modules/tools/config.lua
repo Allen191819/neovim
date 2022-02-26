@@ -156,14 +156,43 @@ function config.dadbod()
     vim.g.db_ui_use_nerd_fonts = 1
     vim.g.db_ui_save_localtion = "/home/allen/.local/nvim/dadbod"
     vim.g.db_ui_auto_execute_table_helpers = 1
+    vim.g.dbs = {Mydb = 'mysql://root@localhost/mydb'}
     vim.g.db_ui_table_helpers = {
         mysql = {List = 'select * from "{table}" order by id asc'}
     }
+    vim.g.db_ui_icons = {
+        expanded = {
+            db = '▾ ',
+            buffers = '▾ ',
+            saved_queries = '▾ ',
+            schemas = '▾ ',
+            schema = '▾ פּ',
+            tables = '▾ 藺',
+            table = '▾ '
+        },
+        collapsed = {
+            db = '▸ ',
+            buffers = '▸ ',
+            saved_queries = '▸ ',
+            schemas = '▸ ',
+            schema = '▸ פּ',
+            tables = '▸ 藺',
+            table = '▸ '
+        },
+        saved_query = '',
+        new_query = '璘',
+        tables = '離',
+        buffers = '﬘',
+        add_connection = '',
+        connection_ok = '✓',
+        connection_error = '✕'
+    }
+
 end
 
 function config.quickrun()
     vim.cmd [[
-let b:quickrun_config = {'outputter/buffer/into': 1,"outputter/opener":"new"}
+	let b:quickrun_config = {'outputter/buffer/into': 1,"outputter/opener":"new"}
 	]]
 end
 

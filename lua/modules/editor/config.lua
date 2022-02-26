@@ -22,7 +22,7 @@ function config.nvim_treesitter()
         ensure_installed = "maintained",
         highlight = {
             enable = true,
-            disable = {"latex", "lean","org"},
+            disable = {"latex", "lean", "org"},
             additional_vim_regex_highlighting = {'org'}
         },
         rainbow = {

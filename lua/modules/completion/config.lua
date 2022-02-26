@@ -137,7 +137,7 @@ function config.cmp()
             {name = "nvim_lsp"}, {name = "nvim_lua"}, {name = "ultisnips"},
             {name = "path"}, {name = "calc"}, {name = "buffer"},
             {name = "latex_symbols"}, {name = "vim_dadbod_completion"},
-            {name = "cmp_tabnine"}, {name = "copilot"},
+            {name = "cmp_tabnine"}, -- {name = "copilot"},
             {name = "nvim_lsp_signature_help"}, {name = 'orgmode'}
         },
         experimental = {native_menu = false, ghost_text = false},
@@ -179,14 +179,9 @@ function config.autopairs()
 end
 
 function config.copilot()
-    vim.cmd [[
-	imap <silent><script><expr> <A-h> copilot#Accept("\<CR>")
-	]]
-    vim.g.copilot_no_tab_map = true
-    vim.g.copilot_echo_num_completions = false
-    vim.cmd [[
-	highlight CopilotSuggestion guifg=#555FFF ctermfg=8
-	]]
+    vim.cmd [[ imap <silent><script><expr> <A-h> copilot#Accept("\<CR>") ]]
+    vim.cmd [[ let g:copilot_no_tab_map = v:true ]]
+    vim.cmd [[ highlight CopilotSuggestion guifg=#555FFF ctermfg=8 ]]
 end
 
 function config.lean()

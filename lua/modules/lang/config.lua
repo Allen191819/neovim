@@ -144,7 +144,6 @@ function config.makrkdown_preview()
 
     vim.g.vmt_auto_update_on_save = 1
     vim.cmd([[
-	source ~/.config/nvim/md-snippets.vim
 	autocmd BufRead,BufNewFile *.md setlocal spell
 	]])
 end

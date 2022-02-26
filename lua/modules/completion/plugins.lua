@@ -33,7 +33,8 @@ completion["hrsh7th/nvim-cmp"] = {
         {"kdheepak/cmp-latex-symbols", ft = {"markdown", "tex"}},
         {"kristijanhusak/vim-dadbod-completion", ft = {"sql", "mysql"}},
         --        {"hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp"},
-        {"hrsh7th/cmp-copilot", after = "copilot.vim"}, {
+        --        {"hrsh7th/cmp-copilot", after = "copilot.vim"},
+        {
             "tzachar/cmp-tabnine",
             run = "./install.sh",
             event = "InsertEnter",
