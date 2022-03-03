@@ -108,6 +108,8 @@ local plug_map = {
     --- Plugins vim-expand-region
     ["v|v"] = map_cmd("v:lua.expand_region('v')"):with_expr(),
     ["v|V"] = map_cmd("v:lua.expand_region('V')"):with_expr(),
+	-- Toggle window
+    ["n|<leader>f"] = map_cr("ToggleOnly"):with_noremap():with_silent(),
     -- Switch
     ["n|gs"] = map_cr("Switch"):with_noremap():with_silent(),
     -- Plugin Hop

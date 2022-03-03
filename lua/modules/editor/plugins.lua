@@ -137,11 +137,7 @@ editor["alpertuna/vim-header"] = {
 }
 editor["mg979/vim-visual-multi"] = {opt = false}
 editor["Chiel92/vim-autoformat"] = {cmd = {"Autoformat"}, opt = true}
-editor["AndrewRadev/switch.vim"] = {
-    opt = true,
-	event = "BufRead"
-
-}
+editor["AndrewRadev/switch.vim"] = {opt = true, event = "BufRead"}
 editor["lukas-reineke/headlines.nvim"] = {
     opt = true,
     after = "nvim-treesitter",
@@ -153,4 +149,7 @@ editor["abecodes/tabout.nvim"] = {
     config = conf.tabout,
     after = "nvim-treesitter"
 }
+editor["yianwillis/vimcdoc"] = {opt = false}
+editor["caenrique/nvim-maximize-window-toggle"] = {opt = false}
+editor["lewis6991/impatient.nvim"] = {opt=false}
 return editor

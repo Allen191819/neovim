@@ -68,11 +68,11 @@ lsp_installer.settings {
     }
 }
 vim.diagnostic.config({
-  virtual_text = false,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = true,
+    virtual_text = false,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true
 })
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -270,6 +270,7 @@ local enhance_server_opts = {
     end,
     ["hls"] = function(opts)
         opts.on_attach = function(client)
+            require("aerial").on_attach(client)
             client.resolved_capabilities.document_formatting = true
             custom_attach(client)
         end
@@ -401,5 +402,6 @@ local efmconfigure = function()
         rust = {formatter = rustfmt}
     }
 end
+
 
 efmconfigure()

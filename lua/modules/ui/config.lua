@@ -410,7 +410,7 @@ function config.web_icons()
             },
             v = {
                 icon = "",
-                color = "#428850",
+                color = "#42AA50",
                 cterm_color = "65",
                 name = "coq"
             },
@@ -419,8 +419,13 @@ function config.web_icons()
                 color = "#77A997",
                 cterm_color = "65",
                 name = "org"
+            },
+            snippets = {
+                icon = "",
+                color = "#ec5f67",
+                cterm_color = "65",
+                name = "snippets"
             }
-
         },
         default = true
     }

@@ -59,20 +59,17 @@ _✨ neovim lua config ✨_
 
 ```
 nvim
+.
 ├── color
 │   └── markdown.css
 ├── ftdetect
 │   └── mine.vim
 ├── ftplugin
 │   ├── c.vim
+│   ├── haskell.vim
 │   ├── lua.vim
-│   └── python.vim
-├── img
-│   ├── 2022-01-20-11-20-53.png
-│   ├── 2022-01-20-11-57-25.png
-│   ├── 2022-01-20-12-02-36.png
-│   ├── 2022-01-20-12-03-53.png
-│   └── 2022-01-20-12-14-17.png
+│   ├── markdown.vim
+│   └── tex.vim
 ├── init.lua
 ├── LICENSE
 ├── lua
@@ -109,8 +106,10 @@ nvim
 │       └── ui
 │           ├── config.lua
 │           └── plugins.lua
-├── md-snippets.vim
-└── README.md
+├── README.md
+└── ultsnips
+    ├── lua.snippets
+    └── markdown.snippets
 ```
 
 - lua 文件夹
@@ -156,8 +155,8 @@ nvim
 | `mode` | `keymapping` | `cmd or keymaping`        | `function`                 |
 | ------ | ------------ | ------------------------- | -------------------------- |
 | `i`    | `<A-h>`      | `copilot#Accept("\<CR>")` | 选择 Copilot 的 suggestion |
-| `i`    | `<A-j>`      | `copilot#NextResult(1)`   | 滚动 Copilot 的 suggestion |
-| `i`    | `<A-k>`      | `copilot#NextResult(-1)`  | 滚动 Copilot 的 suggestion |
+| `i`    | `<A-]>`      | `copilot#NextResult(1)`   | 滚动 Copilot 的 suggestion |
+| `i`    | `<A-[>`      | `copilot#NextResult(-1)`  | 滚动 Copilot 的 suggestion |
 | `i`    | `<C-]>`      | `copilot#Dismiss()`       | 关闭 Copilot 的 suggestion |
 
 - BufferLine
@@ -333,7 +332,73 @@ visual mode) followed by `S<p class="important">`.
       <em>Hello</em> world!
     </p>
 
-由于安装了 `Whichkey` 插件，当按下 `,` 后可以启动 `Whichkey` ,此时按下`<leader>`nvim 会给出相应的提示。
+- Coq
+
+| Command                   | Mapping       | Description                                                                                                                                                                                        |
+| ------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Starting and Stopping** |               |
+| `CoqStart`                | `<leader>cc`  | Launch Coqtail in the current buffer.                                                                                                                                                              |
+| `CoqStop`                 | `<leader>cq`  | Quit Coqtail in the current buffer.                                                                                                                                                                |
+| `CoqInterrupt`            | `CTRL-C`      | Send SIGINT to `coqtop`.                                                                                                                                                                           |
+| **Movement**              |               |
+| `{n}CoqNext`              | `<leader>cj`  | Send the next `n` (1 by default) sentences to Coq.                                                                                                                                                 |
+| `{n}CoqUndo`              | `<leader>ck`  | Step back `n` (1 by default) sentences.                                                                                                                                                            |
+| `{n}CoqToLine`            | `<leader>cl`  | Send/rewind all sentences up to line `n` (cursor position by default). `n` can also be `$` to check the entire buffer.                                                                             |
+| `CoqToTop`                | `<leader>cT`  | Rewind to the beginning of the file.                                                                                                                                                               |
+| `CoqJumpToEnd`            | `<leader>cG`  | Move the cursor to the end of the checked region.                                                                                                                                                  |
+| `CoqJumpToError`          | `<leader>cE`  | Move the cursor to the start of the error region.                                                                                                                                                  |
+| `CoqGotoDef[!] <arg>`     | `<leader>cgd` | Populate the quickfix list with possible locations of the definition of `<arg>` and try to jump to the first one. If your Vim supports `'tagfunc'` you can also use `CTRL-]`, `:tag`, and friends. |
+| **Queries**               |               |
+| `Coq <args>`              |               | Send arbitrary queries to Coq (e.g. `Check`, `About`, `Print`, etc.).                                                                                                                              |
+| `Coq Check <arg>`         | `<leader>ch`  | Show the type of `<arg>` (the mapping will use the term under the cursor or the highlighted range in visual mode).                                                                                 |
+| `Coq About <arg>`         | `<leader>ca`  | Show information about `<arg>`.                                                                                                                                                                    |
+| `Coq Print <arg>`         | `<leader>cp`  | Show the definition of `<arg>`.                                                                                                                                                                    |
+| `Coq Locate <arg>`        | `<leader>cf`  | Show where `<arg>` is defined.                                                                                                                                                                     |
+| `Coq Search <args>`       | `<leader>cs`  | Show theorems about `<args>`.                                                                                                                                                                      |
+| **Panel Management**      |               |
+| `CoqRestorePanels`        | `<leader>cr`  | Re-open the Goal and Info panels.                                                                                                                                                                  |
+| `{n}CoqGotoGoal`          | `<leader>cgg` | Scroll the Goal panel to the start of the `n`th goal (defaults to 1). Number of lines shown is controlled by `g:coqtail_goal_lines`.                                                               |
+| `{n}CoqGotoGoal!`         | `<leader>cgG` | Scroll the Goal panel to the end of the `n`th goal.                                                                                                                                                |
+| `CoqGotoGoalNext`         | `]g`          | Scroll the Goal panel to the start of the next goal.                                                                                                                                               |
+| `CoqGotoGoalNext!`        | `]G`          | Scroll the Goal panel to the end of the next goal.                                                                                                                                                 |
+| `CoqGotoGoalPrev`         | `[g`          | Scroll the Goal panel to the start of the previous goal.                                                                                                                                           |
+| `CoqGotoGoalPrev!`        | `[G`          | Scroll the Goal panel to the end of the previous goal.                                                                                                                                             |
+
+- Lean
+
+**In Lean Files**
+
+| Key                  | Function                                                            |
+| -------------------- | ------------------------------------------------------------------- |
+| `<LocalLeader>i`     | toggle the infoview open or closed                                  |
+| `<LocalLeader>p`     | pause the current infoview                                          |
+| `<LocalLeader>x`     | place an infoview pin                                               |
+| `<LocalLeader>c`     | clear all current infoview pins                                     |
+| `<LocalLeader>dx`    | place an infoview diff pin                                          |
+| `<LocalLeader>dc`    | clear current infoview diff pin                                     |
+| `<LocalLeader>dd`    | toggle auto diff pin mode                                           |
+| `<LocalLeader>dt`    | toggle auto diff pin mode without clearing diff pin                 |
+| `<LocalLeader>s`     | insert a `sorry` for each open goal                                 |
+| `<LocalLeader>t`     | replace a "try this:" suggestion under the cursor                   |
+| `<LocalLeader><Tab>` | jump into the infoview window associated with the current lean file |
+| `<LocalLeader>\\`    | show what abbreviation produces the symbol under the cursor         |
+
+**In Infoview Windows**
+
+| Key                  | Function                                                          |
+| -------------------- | ----------------------------------------------------------------- |
+| `<CR>`               | click a widget or interactive area of the infoview                |
+| `K`                  | click a widget or interactive area of the infoview                |
+| `<Tab>`              | jump into a tooltip (from a widget click)                         |
+| `<Shift-Tab>`        | jump out of a tooltip and back to its parent                      |
+| `<Esc>`              | clear all open tooltips                                           |
+| `J`                  | jump into a tooltip (from a widget click)                         |
+| `C`                  | clear all open tooltips                                           |
+| `I`                  | mouse-enter what is under the cursor                              |
+| `i`                  | mouse-leave what is under the cursor                              |
+| `<LocalLeader><Tab>` | jump to the lean file associated with the current infoview window |
+
+- 由于安装了 `Whichkey` 插件，当按下 `,` 后可以启动 `Whichkey` ,此时按下`<leader>`nvim 会给出相应的提示。
 
 ![whichkey](img/2022-01-20-15-22-22.png)
 

@@ -28,8 +28,15 @@ tools["nvim-telescope/telescope-frecency.nvim"] = {
     requires = {{"tami5/sqlite.lua", opt = true}}
 }
 tools["jvgrootveld/telescope-zoxide"] = {opt = true, after = "telescope.nvim"}
-tools["nvim-telescope/telescope-symbols.nvim"] = {opt = true, after = "telescope.nvim"}
-tools["thinca/vim-quickrun"] = {opt = true, cmd = {"QuickRun", "Q"}, config=conf.quickrun}
+tools["nvim-telescope/telescope-symbols.nvim"] = {
+    opt = true,
+    after = "telescope.nvim"
+}
+tools["thinca/vim-quickrun"] = {
+    opt = true,
+    cmd = {"QuickRun", "Q"},
+    config = conf.quickrun
+}
 tools["michaelb/sniprun"] = {
     opt = true,
     run = "bash ./install.sh",
@@ -38,9 +45,7 @@ tools["michaelb/sniprun"] = {
 tools["folke/which-key.nvim"] = {
     opt = true,
     keys = ",",
-    config = function()
-        require("which-key").setup {}
-    end
+    config = function() require("which-key").setup {} end
 }
 tools["folke/trouble.nvim"] = {
     opt = true,
@@ -48,25 +53,27 @@ tools["folke/trouble.nvim"] = {
     config = conf.trouble
 }
 tools["dstein64/vim-startuptime"] = {opt = true}
-tools["sindrets/diffview.nvim"] = {opt = true, cmd = {"DiffviewFileHistory", "DiffviewOpen"}}
-tools["mbbill/undotree"] = {opt = true, cmd = "UndotreeToggle",config=conf.undotree}
+tools["sindrets/diffview.nvim"] = {
+    opt = true,
+    cmd = {"DiffviewFileHistory", "DiffviewOpen"}
+}
+tools["mbbill/undotree"] = {
+    opt = true,
+    cmd = "UndotreeToggle",
+    config = conf.undotree
+}
 tools["kdheepak/lazygit.nvim"] = {opt = true, cmd = "LazyGit"}
 tools["gelguy/wilder.nvim"] = {
     event = "CmdlineEnter",
     config = conf.wilder,
     requires = {{"romgrk/fzy-lua-native", after = "wilder.nvim"}}
 }
-tools["stevearc/aerial.nvim"] = {
-	opt=true,
-	cmd="AerialToggle",
-	config=conf.aerial
-}
+tools["stevearc/aerial.nvim"] = {opt = false, config = conf.aerial}
 tools["kristijanhusak/vim-dadbod-ui"] = {
-	opt=true,
-	cmd={"DBUIToggle"},
-	requires={{"tpope/vim-dadbod",opt=true}},
-	config = conf.dadbod
+    opt = true,
+    cmd = {"DBUIToggle"},
+    requires = {{"tpope/vim-dadbod", opt = true}},
+    config = conf.dadbod
 }
-
 
 return tools

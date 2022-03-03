@@ -30,8 +30,9 @@ completion["hrsh7th/nvim-cmp"] = {
         {"hrsh7th/cmp-path", after = "cmp-nvim-lsp"},
         {"hrsh7th/cmp-buffer", after = "cmp-path"},
         {"hrsh7th/cmp-calc", after = "cmp-path"},
-        {"kdheepak/cmp-latex-symbols", ft = {"markdown", "tex"}},
+        {"kdheepak/cmp-latex-symbols", ft = {"markdown", "tex", "lean"}},
         {"kristijanhusak/vim-dadbod-completion", ft = {"sql", "mysql"}},
+        {"hrsh7th/cmp-emoji", ft = {"markdown"}},
         --        {"hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp"},
         --        {"hrsh7th/cmp-copilot", after = "copilot.vim"},
         {

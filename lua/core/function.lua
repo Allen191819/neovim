@@ -17,7 +17,7 @@ func! CompileRunGccH()
 	elseif &filetype == 'java'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 javac % && java %<
 	elseif &filetype == 'haskell'
-		:QuickRun
+		:FloatermNew --position=bottom --wintype=split --height=0.35 runhaskell %
     elseif &filetype == 'lua'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 lua %
 	elseif &filetype == 'sh'
@@ -57,6 +57,8 @@ func! CompileRunGccF()
 		:FloatermNew javac % && java %<
     elseif &filetype == 'lua'
 		:FloatermNew lua %
+	elseif &filetype == 'haskell'
+		:FloatermNew runhaskell %
 	elseif &filetype == 'sh'
 		:FloatermNew bash %
 	elseif &filetype == 'python'

@@ -141,7 +141,7 @@ function config.makrkdown_preview()
         theme = "light"
     }
     vim.g.mkdp_markdown_css = "/home/allen/.config/nvim/color/markdown.css"
-
+    vim.g.spelllang = "nl,en-gb"
     vim.g.vmt_auto_update_on_save = 1
     vim.cmd([[
 	autocmd BufRead,BufNewFile *.md setlocal spell
@@ -184,6 +184,9 @@ function config.latex()
         sections = 1,
         styles = 1
     }
+    vim.cmd([[
+	autocmd BufRead,BufNewFile *.tex setlocal spell
+	]])
 end
 
 function config.markdown_flow()

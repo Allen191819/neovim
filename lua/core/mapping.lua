@@ -21,6 +21,7 @@ local def_map = {
     ["n|<C-l>"] = map_cmd("<C-w>l"):with_noremap(),
     ["n|<C-j>"] = map_cmd("<C-w>j"):with_noremap(),
     ["n|<C-k>"] = map_cmd("<C-w>k"):with_noremap(),
+    ["n|<C-c>"] = map_cmd("<C-w>c"):with_noremap(),
     ["n|<A-[>"] = map_cr("vertical resize -5"):with_silent(),
     ["n|<A-]>"] = map_cr("vertical resize +5"):with_silent(),
     ["n|<A-;>"] = map_cr("resize -2"):with_silent(),

@@ -138,7 +138,8 @@ function config.cmp()
             {name = "path"}, {name = "calc"}, {name = "buffer"},
             {name = "latex_symbols"}, {name = "vim_dadbod_completion"},
             {name = "cmp_tabnine"}, -- {name = "copilot"},
-            {name = "nvim_lsp_signature_help"}, {name = 'orgmode'}
+            {name = "nvim_lsp_signature_help"}, {name = 'orgmode'},
+            {name = "emoji"}
         },
         experimental = {native_menu = false, ghost_text = false},
         preselect = types.cmp.PreselectMode.Item,
@@ -160,6 +161,9 @@ function config.ultisnips()
 	]], true)
     vim.g.UltiSnipsRemoveSelectModeMappings = 0
     vim.g.UltiSnipsEditSplit = "vertical"
+    vim.cmd [[
+	let g:UltiSnipsSnippetDirectories=[$HOME."/.config/nvim/ultsnips"]
+	]]
 end
 
 function config.tabnine()

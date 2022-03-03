@@ -20,6 +20,9 @@ function config.telescope()
     if not packer_plugins["telescope-zoxide"].loaded then
         vim.cmd [[packadd telescope-zoxide]]
     end
+    if not packer_plugins["aerial.nvim"].loaded then
+        vim.cmd [[packadd aerial.nvim]]
+    end
 
     require("telescope").setup {
         defaults = {
@@ -66,6 +69,7 @@ function config.telescope()
     require("telescope").load_extension("project")
     require("telescope").load_extension("zoxide")
     require("telescope").load_extension("frecency")
+    require('telescope').load_extension('aerial')
 end
 
 function config.trouble()
@@ -205,7 +209,7 @@ function config.aerial()
     require("aerial").setup({
         -- Priority list of preferred backends for aerial.
         -- This can be a filetype map (see :help aerial-filetype-map)
-        backends = {"treesitter", "markdown"},
+        backends = {"treesitter", "lsp", "markdown"},
         close_behavior = "auto",
         default_bindings = true,
         default_direction = "prefer_right",
@@ -235,21 +239,12 @@ function config.aerial()
             nested_top = "│ ",
             whitespace = "  "
         },
-        float = {
-            border = "rounded",
-            row = 1,
-            col = 0,
-            max_height = 100,
-            min_height = 4
-        },
+        float = {border = "rounded", max_height = 100, min_height = 4},
         treesitter = {
             -- How long to wait (in ms) after a buffer change before updating
             update_delay = 300
         },
-        markdown = {
-            -- How long to wait (in ms) after a buffer change before updating
-            update_delay = 300
-        }
+        markdown = {update_delay = 300}
     })
 end
 return config
