@@ -49,5 +49,9 @@ lang["nvim-orgmode/orgmode"] = {
     config = conf.org,
     after = "nvim-treesitter"
 }
+lang['fladson/vim-kitty'] = {
+	opt=true,
+	ft="kitty"
+}
 return lang
 

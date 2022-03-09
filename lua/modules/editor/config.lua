@@ -266,21 +266,6 @@ function config.add_header()
     vim.g.header_field_timestamp_format = "%Y-%m-%d"
 end
 
-function config.headlines()
-    vim.cmd [[highlight CodeBlock guibg=#232729]]
-    vim.cmd [[highlight Dash guibg=#D19A66 gui=bold]]
-    require("headlines").setup {
-        markdown = {
-            source_pattern_start = "^```",
-            source_pattern_end = "^```$",
-            dash_pattern = "^---+$",
-            headline_pattern = false,
-            codeblock_highlight = "CodeBlock",
-            dash_highlight = "Dash"
-        }
-    }
-end
-
 function config.tabout()
 
     require("tabout").setup {

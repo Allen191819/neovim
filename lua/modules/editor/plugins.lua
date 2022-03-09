@@ -29,8 +29,7 @@ editor["romgrk/nvim-treesitter-context"] = {
 }
 editor["p00f/nvim-ts-rainbow"] = {
     opt = true,
-    after = "nvim-treesitter",
-    event = "BufRead"
+    after = "nvim-treesitter"
 }
 editor["JoosepAlviste/nvim-ts-context-commentstring"] = {
     opt = true,
@@ -138,12 +137,6 @@ editor["alpertuna/vim-header"] = {
 editor["mg979/vim-visual-multi"] = {opt = false}
 editor["Chiel92/vim-autoformat"] = {cmd = {"Autoformat"}, opt = true}
 editor["AndrewRadev/switch.vim"] = {opt = true, event = "BufRead"}
-editor["lukas-reineke/headlines.nvim"] = {
-    opt = true,
-    after = "nvim-treesitter",
-    config = conf.headlines,
-    ft = "markdown"
-}
 editor["abecodes/tabout.nvim"] = {
     opt = true,
     config = conf.tabout,
