@@ -27,10 +27,7 @@ editor["romgrk/nvim-treesitter-context"] = {
     opt = true,
     after = "nvim-treesitter"
 }
-editor["p00f/nvim-ts-rainbow"] = {
-    opt = true,
-    after = "nvim-treesitter"
-}
+editor["p00f/nvim-ts-rainbow"] = {opt = true, after = "nvim-treesitter"}
 editor["JoosepAlviste/nvim-ts-context-commentstring"] = {
     opt = true,
     after = "nvim-treesitter"
@@ -134,7 +131,7 @@ editor["alpertuna/vim-header"] = {
     },
     config = conf.add_header
 }
-editor["mg979/vim-visual-multi"] = {opt = false}
+editor["mg979/vim-visual-multi"] = {opt = false, config = conf.multi_visual}
 editor["Chiel92/vim-autoformat"] = {cmd = {"Autoformat"}, opt = true}
 editor["AndrewRadev/switch.vim"] = {opt = true, event = "BufRead"}
 editor["abecodes/tabout.nvim"] = {
@@ -144,5 +141,6 @@ editor["abecodes/tabout.nvim"] = {
 }
 editor["yianwillis/vimcdoc"] = {opt = false}
 editor["caenrique/nvim-maximize-window-toggle"] = {opt = false}
-editor["lewis6991/impatient.nvim"] = {opt=false}
+editor["lewis6991/impatient.nvim"] = {opt = false}
+editor['hkupty/iron.nvim'] = {opt = true, cmd = {"IronRepl"},config=conf.iron}
 return editor

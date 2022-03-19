@@ -108,7 +108,7 @@ local plug_map = {
     --- Plugins vim-expand-region
     ["v|v"] = map_cmd("v:lua.expand_region('v')"):with_expr(),
     ["v|V"] = map_cmd("v:lua.expand_region('V')"):with_expr(),
-	-- Toggle window
+    -- Toggle window
     ["n|<leader>f"] = map_cr("ToggleOnly"):with_noremap():with_silent(),
     -- Switch
     ["n|gs"] = map_cr("Switch"):with_noremap():with_silent(),
@@ -173,7 +173,9 @@ local plug_map = {
         :with_silent(),
     ["n|<leader>dl"] = map_cr("lua require('dap').repl.open()"):with_noremap()
         :with_silent(),
-    ["o|m"] = map_cu([[lua require('tsht').nodes()]]):with_silent()
+    ["o|m"] = map_cu([[lua require('tsht').nodes()]]):with_silent(),
+    ["v|<leader>is"] = map_cmd("<Plug>(iron-visual-send)"):with_silent(),
+    ["n|<leader>ir"] = map_cr("IronRepl"):with_silent()
 }
 
 bind.nvim_load_mapping(plug_map)

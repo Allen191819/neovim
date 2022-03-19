@@ -269,33 +269,50 @@ end
 function config.tabout()
 
     require("tabout").setup {
-
         tabkey = "<A-j>", -- key to trigger tabout, set to an empty string to disable
-
         backwards_tabkey = "<A-k>", -- key to trigger backwards tabout, set to an empty string to disable
-
         act_as_tab = false, -- shift content if tab out is not possible
-
         act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
-
         enable_backwards = true, -- well ...
-
         completion = false, -- if the tabkey is used in a completion pum
-
         tabouts = {
-
             {open = "'", close = "'"}, {open = '"', close = '"'},
-
             {open = "`", close = "`"}, {open = "(", close = ")"},
-
             {open = "[", close = "]"}, {open = "{", close = "}"}
-
         },
-
         ignore_beginning = true --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
 
     }
 
+end
+
+function config.multi()
+    vim.cmd [[
+		let g:VM_theme                      = 'ocean'
+		let g:VM_highlight_matches          = 'underline'
+		let g:VM_maps                       = {}
+		let g:VM_maps['Find Under']         = '<C-n>'
+		let g:VM_maps['Find Subword Under'] = '<C-n>'
+		let g:VM_maps['Select All']         = '<C-d>'
+		let g:VM_maps['Select h']           = '<C-Left>'
+		let g:VM_maps['Select l']           = '<C-Right>'
+		let g:VM_maps['Add Cursor Up']      = '<C-Up>'
+		let g:VM_maps['Add Cursor Down']    = '<C-Down>'
+		let g:VM_maps['Add Cursor At Pos']  = '<C-x>'
+		let g:VM_maps['Add Cursor At Word'] = '<C-w>'
+		let g:VM_maps['Remove Region']      = 'q'
+		]]
+end
+
+function config.iron()
+    local iron = require('iron')
+    iron.core.add_repl_definitions {
+        iron.core.set_config {
+            preferred = {python = "ipython", haskell = "ghci"}
+        }
+    }
+    vim.g.iron_map_default = 0
+    vim.g.iron_map_extended = 0
 end
 
 return config
