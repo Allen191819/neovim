@@ -36,11 +36,6 @@ lang["ekickx/clipboard-image.nvim"] = {
 }
 lang["h-hg/fcitx.nvim"] = {opt = false, event = "VimEnter"}
 lang["whonore/Coqtail"] = {opt = true, ft = "coq"}
-lang["jakewvincent/mkdnflow.nvim"] = {
-    opt = true,
-    ft = "markdown",
-    config = conf.markdown_flow
-}
 lang["psf/black"] = {opt = true, ft = "python"}
 lang["jalvesaq/Nvim-R"] = {opt = true, ft = "r"}
 lang["nvim-orgmode/orgmode"] = {

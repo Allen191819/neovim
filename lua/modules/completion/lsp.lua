@@ -264,7 +264,7 @@ local enhance_server_opts = {
     ["pylsp"] = function(opts)
         -- Disable `dockerls`'s format
         opts.on_attach = function(client)
-            client.resolved_capabilities.document_formatting = false
+            client.resolved_capabilities.document_formatting = true
             custom_attach(client)
         end
     end,
@@ -288,7 +288,7 @@ local enhance_server_opts = {
                 analyses = {
                     nilness = true,
                     shadow = true,
-                    unusedparams = true,
+                    --                    unusedparams = true,
                     unusewrites = true
                 }
             }
@@ -299,13 +299,18 @@ local enhance_server_opts = {
             custom_attach(client)
         end
     end,
-   ["remark_ls"] = function(opts)
+    ["remark_ls"] = function(opts)
         opts.on_attach = function(client)
             client.resolved_capabilities.document_formatting = false
             custom_attach(client)
         end
+    end,
+    ["jdtls"] = function(opts)
+        opts.on_attach = function(client)
+            client.resolved_capabilities.document_formatting = true
+            custom_attach(client)
+        end
     end
-
 }
 
 lsp_installer.on_server_ready(function(server)
@@ -365,10 +370,10 @@ local efmconfigure = function()
     local goimports = require("efmls-configs.formatters.goimports")
     local prettier = require("efmls-configs.formatters.prettier")
     local shfmt = require("efmls-configs.formatters.shfmt")
-    local alex = require "efmls-configs.linters.alex"
-    local pylint = require "efmls-configs.linters.pylint"
-    local yapf = require "efmls-configs.formatters.yapf"
-    local vulture = require "efmls-configs.linters.vulture"
+    local alex = require("efmls-configs.linters.alex")
+    local pylint = require("efmls-configs.linters.pylint")
+    local yapf = require("efmls-configs.formatters.yapf")
+    local vulture = require("efmls-configs.linters.vulture")
 
     -- Add your own config for formatter and linter here
 
@@ -393,7 +398,7 @@ local efmconfigure = function()
         cpp = {formatter = clangfmt, linter = clangtidy},
         go = {formatter = goimports, linter = staticcheck},
         latex = {linter = alex},
-        python = {formatter = yapf},
+        --      python = {formatter = yapf},
         vue = {formatter = prettier},
         typescript = {formatter = prettier, linter = eslint},
         javascript = {formatter = prettier, linter = eslint},
@@ -405,10 +410,9 @@ local efmconfigure = function()
         css = {formatter = prettier},
         scss = {formatter = prettier},
         sh = {formatter = shfmt, linter = shellcheck},
---        markdown = {formatter = prettier},
+        --        markdown = {formatter = prettier},
         rust = {formatter = rustfmt}
     }
 end
-
 
 efmconfigure()

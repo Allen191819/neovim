@@ -56,7 +56,8 @@ completion["windwp/nvim-autopairs"] = {
 }
 completion["github/copilot.vim"] = {
     opt = true,
-    cmd = "Copilot",
+    --    cmd = "Copilot",
+    event = "InsertEnter",
     config = conf.copilot
 }
 completion["Julian/lean.nvim"] = {
@@ -70,4 +71,3 @@ completion["filipdutescu/renamer.nvim"] = {
     after = "nvim-lspconfig"
 }
 return completion
-

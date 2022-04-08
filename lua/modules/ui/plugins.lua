@@ -26,9 +26,10 @@ ui["lukas-reineke/indent-blankline.nvim"] = {
     event = "BufRead",
     config = conf.indent_blankline
 }
-ui["akinsho/nvim-bufferline.lua"] = {
+ui["akinsho/bufferline.nvim"] = {
     opt = true,
     event = "BufRead",
+	tag = "*",
     config = conf.nvim_bufferline
 }
 ui["marko-cerovac/material.nvim"] = {opt = false, config = conf.material}

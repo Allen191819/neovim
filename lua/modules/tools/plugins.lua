@@ -62,7 +62,7 @@ tools["mbbill/undotree"] = {
     cmd = "UndotreeToggle",
     config = conf.undotree
 }
-tools["kdheepak/lazygit.nvim"] = {opt = true, cmd = "LazyGit"}
+tools["Allen191819/lazygit.nvim"] = {opt = true, cmd = "LazyGit"}
 tools["gelguy/wilder.nvim"] = {
     event = "CmdlineEnter",
     config = conf.wilder,

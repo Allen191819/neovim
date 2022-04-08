@@ -148,11 +148,20 @@ function config.makrkdown_preview()
 end
 
 function config.clipboard_image()
+    local filename = vim.fn.expand("%<")
     require"clipboard-image".setup {
         default = {
-            img_dir = "img",
-            img_dir_txt = "img",
-            img_name = function() return os.date("%Y-%m-%d-%H-%M-%S") end,
+            img_dir = "img/" .. filename,
+            img_dir_txt = "img/" .. filename,
+            img_name = function()
+                vim.fn.inputsave()
+                local name = vim.fn.input('Name: ')
+                vim.fn.inputrestore()
+                if name == nil or name == '' then
+                    return os.date('%y-%m-%d-%H-%M-%S')
+                end
+                return name
+            end,
             affix = "%s"
         },
         markdown = {affix = "![](%s)"},
@@ -186,27 +195,6 @@ function config.latex()
     vim.cmd([[
 	autocmd BufRead,BufNewFile *.tex setlocal spell
 	]])
-end
-
-function config.markdown_flow()
-    require("mkdnflow").setup({
-        default_mappings = false,
-        create_dirs = true,
-        links_relative_to = "first",
-        filetypes = {md = true, rmd = true, markdown = true},
-        evaluate_prefix = true,
-        new_file_prefix = [[os.date('%Y-%m-%d_')]],
-        wrap_to_beginning = false,
-        wrap_to_end = false
-    })
-    local bind = require("keymap.bind")
-    local map_cr = bind.map_cr
-    require("keymap.config")
-    local plug_map = {
-        ["n|<CR>"] = map_cr("MkdnFollowPath"):with_noremap():with_silent(),
-        ["n|<BS>"] = map_cr("MkdnGoBack"):with_noremap():with_silent()
-    }
-    bind.nvim_load_mapping(plug_map)
 end
 
 function config.org()

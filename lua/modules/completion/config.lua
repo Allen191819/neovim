@@ -2,7 +2,7 @@ local config = {}
 function config.nvim_lsp() require("modules.completion.lsp") end
 
 function config.lightbulb()
-    vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = true, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = false, text = "💡", text_unavailable = "" } }]]
+    vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = false, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = true, text = "💡", text_unavailable = "" } }]]
 end
 
 function config.lspkind()
@@ -185,7 +185,7 @@ end
 function config.copilot()
     vim.cmd [[ imap <silent><script><expr> <A-h> copilot#Accept("\<CR>") ]]
     vim.cmd [[ let g:copilot_no_tab_map = v:true ]]
-    vim.cmd [[ highlight CopilotSuggestion guifg=#555FFF ctermfg=8 ]]
+    vim.cmd [[ highlight CopilotSuggestion guifg=#EBCB8B ctermfg=8 ]]
 end
 
 function config.lean()
