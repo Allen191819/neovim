@@ -132,7 +132,7 @@ local plug_map = {
     ["n|<leader>sr"] = map_cu("RestoreSession"):with_noremap():with_silent(),
     ["n|<leader>sd"] = map_cu("DeleteSession"):with_noremap():with_silent(),
     -- Copliot
-    ["n|<F2>"] = map_cr("Copilot"):with_noremap():with_silent(),
+    ["n|<F2>"] = map_cr("lua require(\"copilot\").setup()"):with_noremap():with_silent(),
     -- QuickRun
     ["n|<A-e>"] = map_cr("QuickRun"):with_noremap():with_silent(),
     -- Plugin SnipRun

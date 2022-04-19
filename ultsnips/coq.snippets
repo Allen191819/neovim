@@ -1,0 +1,72 @@
+priority -50
+
+snippet def "Definition"
+Definition $1 : $2 := ${0:${VISUAL}}.
+endsnippet
+
+snippet fix "Fixpoint"
+Fixpoint $1 : $2 := ${0:${VISUAL}}.
+endsnippet
+
+snippet rec "Record"
+Record $1 := {
+	$0;
+}.
+endsnippet
+
+snippet lem "Lemma ... Qed"
+Lemma $1 : $2.
+Proof.
+	$0
+Qed.
+endsnippet
+
+snippet lema "Lemma ... Admitted"
+Lemma $1 : $2.
+Proof.
+	$0
+Admitted.
+endsnippet
+
+snippet ind "Inductive"
+Inductive $1 : $2 :=
+	| $0
+endsnippet
+
+snippet sec "Section"
+Section $1.
+	$0
+End $1.
+endsnippet
+
+snippet mod "Module"
+Module $1.
+	$0
+End $1.
+endsnippet
+
+snippet req "Require Import"
+Require Import ${0:${VISUAL}}.
+endsnippet
+
+snippet from "From ... Require Import"
+From $1 Require Import ${0:${VISUAL}}.
+endsnippet
+
+snippet not "Notation"
+Notation "$1" := (${2:${VISUAL}}) ${3:(at level 0)}.
+endsnippet
+
+snippet match "match"
+match $1 with
+| $2 => $3
+end
+endsnippet
+
+snippet if "if ... then ... else ..."
+if $1 then $2 else $3
+endsnippet
+
+snippet let "let ... in ..."
+let $1 := $2 in ${0:${VISUAL}}
+endsnippet

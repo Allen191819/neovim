@@ -19,7 +19,6 @@ function config.nvim_treesitter()
     vim.api.nvim_command("set foldexpr=nvim_treesitter#foldexpr()")
 
     require"nvim-treesitter.configs".setup {
-        ensure_installed = "maintained",
         highlight = {
             enable = true,
             disable = {"latex", "lean", "org"},
@@ -33,7 +32,7 @@ function config.nvim_treesitter()
         context_commentstring = {enable = true, enable_autocmd = false},
         matchup = {enable = true},
         context = {enable = true, throttle = true},
-        ensure_installed = {'org'}
+        ensure_installed = 'maintained'
     }
 end
 

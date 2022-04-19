@@ -29,7 +29,7 @@ ui["lukas-reineke/indent-blankline.nvim"] = {
 ui["akinsho/bufferline.nvim"] = {
     opt = true,
     event = "BufRead",
-	tag = "*",
+    tag = "*",
     config = conf.nvim_bufferline
 }
 ui["marko-cerovac/material.nvim"] = {opt = false, config = conf.material}
