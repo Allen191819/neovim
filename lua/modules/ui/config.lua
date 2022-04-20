@@ -41,7 +41,7 @@ function config.material()
 		lualine_style = "default",
 		custom_highlights = {}, -- Overwrite highlights with your own
 	})
-	vim.g.material_style = "palenight"
+	vim.g.material_style = "darker"
 end
 
 function config.edge()

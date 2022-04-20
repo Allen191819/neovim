@@ -77,10 +77,5 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
 	requires = { { "tpope/vim-dadbod", opt = true } },
 	config = conf.dadbod,
 }
-tools["DanielWeidinger/nvim-sshfs"] = {
-	opt = true,
-	cmd = { "SSHFSOpenHosts", "SSHFSOpenQuickConnect" },
-	config = conf.sshfs,
-}
 
 return tools

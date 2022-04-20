@@ -1,5 +1,6 @@
 local config = {}
 
+
 function config.telescope()
 	if not packer_plugins["sqlite.lua"].loaded then
 		vim.cmd([[packadd sqlite.lua]])
