@@ -243,16 +243,6 @@ function config.lean()
 	})
 end
 
-function config.renamer()
-	require("renamer").setup({
-		border = true,
-		border_chars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-		show_refs = true,
-		with_qf_list = true,
-		with_popup = true,
-	})
-end
-
 function config.copilot_cmp()
 	require("copilot").setup()
 end

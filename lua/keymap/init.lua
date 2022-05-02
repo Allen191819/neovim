@@ -28,7 +28,7 @@ local plug_map = {
 	["n|<leader>lr"] = map_cr("LspRestart"):with_noremap():with_silent():with_nowait(),
 	["n|g["] = map_cr("<cmd>lua vim.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
 	["n|g]"] = map_cr("<cmd>lua vim.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
-	["n|<leader>r"] = map_cr('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
+	["n|<leader>r"] = map_cr("<cmd>lua vim.lsp.buf.rename()<CR>"):with_noremap():with_silent(),
 	["n|K"] = map_cr("<cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
 	["n|<leader>ca"] = map_cr(":Telescope lsp_code_actions<CR>"):with_noremap():with_silent(),
 	["v|<leader>ca"] = map_cu(":Telescope lsp_range_code_actions<CR>"):with_noremap():with_silent(),
@@ -36,7 +36,7 @@ local plug_map = {
 	["n|gr"] = map_cr("lua vim.lsp.buf.references()"):with_noremap():with_silent(),
 	["n|gh"] = map_cr("lua vim.lsp.buf.signature_help()"):with_noremap():with_silent(),
 	-- Git
-	["n|<Leader>G"] = map_cu("Git"):with_noremap():with_silent(),
+	["n|<Leader>g"] = map_cu("Git"):with_noremap():with_silent(),
 	["n|gps"] = map_cr("G push"):with_noremap():with_silent(),
 	["n|gpl"] = map_cr("G pull"):with_noremap():with_silent(),
 	["n|Lg"] = map_cr("LazyGit"):with_noremap():with_silent(),
