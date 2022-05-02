@@ -95,7 +95,7 @@ editor["rcarriga/nvim-dap-ui"] = {
     config = conf.dapui,
     requires = {
         {"mfussenegger/nvim-dap", config = conf.dap}, {
-            "Pocco81/DAPInstall.nvim",
+            "Pocco81/dap-buddy.nvim",
             opt = true,
             cmd = {"DIInstall", "DIUninstall", "DIList"},
             config = conf.dapinstall

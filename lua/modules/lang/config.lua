@@ -93,7 +93,6 @@ function config.rust_tools()
 			end,
 		}, -- rust-analyer options
 	}
-
 	require("rust-tools").setup(opts)
 end
 
@@ -152,7 +151,7 @@ function config.makrkdown_preview()
 end
 
 function config.clipboard_image()
-	local filename = vim.fn.expand("%<")
+	local filename = vim.fn.expand("%:t:r")
 	require("clipboard-image").setup({
 		default = {
 			img_dir = "img/" .. filename,

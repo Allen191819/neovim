@@ -32,7 +32,7 @@ function config.nvim_treesitter()
         context_commentstring = {enable = true, enable_autocmd = false},
         matchup = {enable = true},
         context = {enable = true, throttle = true},
-        ensure_installed = 'maintained'
+        -- ensure_installed = 'maintained'
     }
 end
 

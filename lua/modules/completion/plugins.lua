@@ -81,5 +81,4 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 	config = conf.dadbod,
 	after = "nvim-lspconfig",
 }
-
 return completion

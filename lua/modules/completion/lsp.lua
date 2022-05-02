@@ -10,12 +10,16 @@ if not packer_plugins["lsp_signature.nvim"].loaded then
 	vim.cmd([[packadd lsp_signature.nvim]])
 end
 
+if not packer_plugins["cmp-nvim-lsp"].loaded then
+	vim.cmd([[packadd cmp-nvim-lsp]])
+end
+
 local nvim_lsp = require("lspconfig")
 local lsp_installer = require("nvim-lsp-installer")
 
 -- Override diagnostics symbol
 
-local signs = { Error = "✗ ", Warn = " ", Hint = " ", Info = "" }
+local signs = { Error = "✗", Warn = " ", Hint = " ", Info = "" }
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -106,7 +110,8 @@ vim.lsp.handlers["textDocument/formatting"] = function(err, result, ctx)
 	if err ~= nil or result == nil then
 		return
 	end
-	if vim.api.nvim_buf_get_var(ctx.bufnr, "init_changedtick") == vim.api.nvim_buf_get_var(ctx.bufnr, "changedtick")
+	if
+		vim.api.nvim_buf_get_var(ctx.bufnr, "init_changedtick") == vim.api.nvim_buf_get_var(ctx.bufnr, "changedtick")
 	then
 		local view = vim.fn.winsaveview()
 		vim.lsp.util.apply_text_edits(result, ctx.bufnr, "utf-16")

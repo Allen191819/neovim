@@ -77,5 +77,10 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
 	requires = { { "tpope/vim-dadbod", opt = true } },
 	config = conf.dadbod,
 }
+tools["lambdalisue/suda.vim"] = {
+	opt = true,
+	cmd = { "SudaRead", "SudaWrite" },
+	config = conf.suda,
+}
 
 return tools
