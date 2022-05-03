@@ -94,10 +94,11 @@ function config.lualine()
 		options = {
 			globalstatus = false,
 			icons_enabled = true,
-			theme = "material",
+			theme = "dracula",
 			disabled_filetypes = {},
 			component_separators = "|",
 			section_separators = { left = "", right = "" },
+			hide_inactive_statusline = false
 		},
 		sections = {
 			lualine_a = { "mode" },
@@ -115,20 +116,12 @@ function config.lualine()
 			lualine_z = { "progress", "location" },
 		},
 		inactive_sections = {
-			lualine_a = { "filename" },
-			lualine_b = { "branch", "diff" },
-			lualine_c = {
-				{
-					function()
-						return vim.api.nvim_buf_get_option(0, "filetype")
-					end,
-					icon = "%=勇",
-					color = { fg = colors.bule },
-				},
-			},
-			lualine_x = {},
+			lualine_a = {},
+			lualine_b = {},
+			lualine_c = { "filename" },
+			lualine_x = { "location" },
 			lualine_y = {},
-			lualine_z = { "location" },
+			lualine_z = {},
 		},
 		extensions = { "quickfix", "nvim-tree", "fugitive", "aerial" },
 	}

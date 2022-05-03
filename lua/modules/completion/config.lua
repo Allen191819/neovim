@@ -4,7 +4,9 @@ function config.nvim_lsp()
 end
 
 function config.lightbulb()
-	vim.cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = false, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = true, text = "💡", text_unavailable = "" } }]])
+	vim.cmd(
+		[[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = false, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = true, text = "💡", text_unavailable = "" } }]]
+	)
 end
 
 function config.lspkind()
@@ -76,6 +78,7 @@ function config.cmp()
 		latex_symbols = "[Latex]",
 		copilot = "[AI]",
 		orgmode = "[Org]",
+		look = "Dict",
 	}
 	cmp.setup({
 		sorting = {
@@ -105,6 +108,12 @@ function config.cmp()
 						menu = entry.completion_item.data.detail .. " " .. menu
 					end
 					vim_item.kind = ""
+				end
+				if entry.source.name == "look" then
+					if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+						menu = entry.completion_item.data.detail .. " " .. menu
+					end
+					vim_item.kind = "﬜"
 				end
 				if entry.source.name == "orgmode" then
 					if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
@@ -149,6 +158,15 @@ function config.cmp()
 			{ name = "copilot", group_index = 2, max_item_count = 3, priority = 500 },
 			{ name = "orgmode", group_index = 2, max_item_count = 3 },
 			{ name = "emoji", group_index = 2, max_item_count = 5 },
+			{
+				name = "look",
+				group_index = 2,
+				max_item_count = 3,
+				option = {
+					convert_case = true,
+					loud = true,
+				},
+			},
 		},
 		experimental = { native_menu = false, ghost_text = true },
 		preselect = types.cmp.PreselectMode.Item,

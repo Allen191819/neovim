@@ -32,6 +32,14 @@ tools["nvim-telescope/telescope-symbols.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",
 }
+tools["nvim-telescope/telescope-dap.nvim"] = {
+	opt = true,
+	after = "nvim-dap",
+}
+tools["nvim-telescope/telescope-live-grep-raw.nvim"] = {
+	opt = true,
+	after = "telescope.nvim",
+}
 tools["thinca/vim-quickrun"] = {
 	opt = true,
 	cmd = { "QuickRun", "Q" },

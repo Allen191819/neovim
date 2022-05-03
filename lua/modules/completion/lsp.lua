@@ -63,6 +63,7 @@ local function goto_definition(split_cmd)
 			util.jump_to_location(result)
 		end
 	end
+
 	return handler
 end
 

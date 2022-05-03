@@ -56,12 +56,13 @@ local plug_map = {
 	-- Plugin Telescope
 	["n|<Leader>fp"] = map_cu("lua require('telescope').extensions.project.project{}"):with_noremap():with_silent(),
 	["n|<Leader>fr"] = map_cu("lua require('telescope').extensions.frecency.frecency{}"):with_noremap():with_silent(),
+	["n|<Leader>fw"] = map_cu("lua require('telescope').extensions.live_grep_raw.live_grep_raw()")
+		:with_noremap()
+		:with_silent(),
 	["n|<Leader>fe"] = map_cu("DashboardFindHistory"):with_noremap():with_silent(),
 	["n|<Leader>ff"] = map_cu("DashboardFindFile"):with_noremap():with_silent(),
 	["n|<Leader>sc"] = map_cu("DashboardChangeColorscheme"):with_noremap():with_silent(),
-	["n|<Leader>fw"] = map_cu("DashboardFindWord"):with_noremap():with_silent(),
-	["n|<Leader>fn"] = map_cu("DashboardNewFile"):with_noremap():with_silent(),
-	["n|<Leader>fb"] = map_cu("Telescope file_browser"):with_noremap():with_silent(),
+	["n|<Leader>ef"] = map_cu("DashboardNewFile"):with_noremap():with_silent(),
 	["n|<Leader>fg"] = map_cu("Telescope git_files"):with_noremap():with_silent(),
 	["n|<Leader>fz"] = map_cu("Telescope zoxide list"):with_noremap():with_silent(),
 	["n|<Leader>fs"] = map_cu("Telescope symbols"):with_noremap():with_silent(),
@@ -101,8 +102,6 @@ local plug_map = {
 	["n|<leader>ss"] = map_cu("SaveSession"):with_noremap():with_silent(),
 	["n|<leader>sr"] = map_cu("RestoreSession"):with_noremap():with_silent(),
 	["n|<leader>sd"] = map_cu("DeleteSession"):with_noremap():with_silent(),
-	-- Copliot
-	["n|<F2>"] = map_cr('lua require("copilot").setup()'):with_noremap():with_silent(),
 	-- QuickRun
 	["n|<A-e>"] = map_cr("QuickRun"):with_noremap():with_silent(),
 	-- Plugin SnipRun
@@ -112,24 +111,22 @@ local plug_map = {
 	["n|<leader>mi"] = map_cr("PasteImg"):with_noremap():with_silent(),
 	["n|<leader>mt"] = map_cr("TableModeToggle"):with_noremap():with_silent(),
 	-- Plugin dap
-	["n|<F6>"] = map_cr("lua require('dap').continue()"):with_noremap():with_silent(),
-	["n|<leader>dr"] = map_cr("lua require('dap').continue()"):with_noremap():with_silent(),
 	["n|<leader>dd"] = map_cr("lua require('dap').disconnect()"):with_noremap():with_silent(),
 	["n|<leader>db"] = map_cr("lua require('dap').toggle_breakpoint()"):with_noremap():with_silent(),
 	["n|<leader>dB"] = map_cr("lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))")
 		:with_noremap()
 		:with_silent(),
+	["n|<leader>ev"] = map_cr("lua require'dapui'.eval()"):with_noremap():with_silent(),
+	["n|<leader>dl"] = map_cr("lua require('dap').repl.open()"):with_noremap():with_silent(),
 	["n|<leader>dbl"] = map_cr("lua require('dap').list_breakpoints()"):with_noremap():with_silent(),
 	["n|<leader>drc"] = map_cr("lua require('dap').run_to_cursor()"):with_noremap():with_silent(),
 	["n|<leader>drl"] = map_cr("lua require('dap').run_last()"):with_noremap():with_silent(),
-	["n|<F9>"] = map_cr("lua require('dap').step_over()"):with_noremap():with_silent(),
-	["n|<leader>dv"] = map_cr("lua require('dap').step_over()"):with_noremap():with_silent(),
-	["n|<F10>"] = map_cr("lua require('dap').step_into()"):with_noremap():with_silent(),
-	["n|<leader>di"] = map_cr("lua require('dap').step_into()"):with_noremap():with_silent(),
-	["n|<F11>"] = map_cr("lua require('dap').step_out()"):with_noremap():with_silent(),
-	["n|<leader>do"] = map_cr("lua require('dap').step_out()"):with_noremap():with_silent(),
-	["n|<leader>dl"] = map_cr("lua require('dap').repl.open()"):with_noremap():with_silent(),
-	["o|m"] = map_cu([[lua require('tsht').nodes()]]):with_silent(),
+	["n|<F4>"] = map_cr("lua require('dap').terminate()"):with_noremap():with_silent(),
+	["n|<F5>"] = map_cr("lua require('dap').continue()"):with_noremap():with_silent(),
+	["n|<F6>"] = map_cr("lua require('dap').step_over()"):with_noremap():with_silent(),
+	["n|<F7>"] = map_cr("lua require('dap').step_into()"):with_noremap():with_silent(),
+	["n|<F8>"] = map_cr("lua require('dap').step_out()"):with_noremap():with_silent(),
+	["n|<leader>ds"] = map_cr("lua require'dapui'.toggle()"):with_noremap():with_silent(),
 	--# IronRepl
 	["v|<leader>is"] = map_cmd("<Plug>(iron-visual-send)"):with_silent(),
 	["n|<leader>ir"] = map_cr("IronRepl"):with_silent(),

@@ -1,5 +1,4 @@
 local config = {}
-
 function config.telescope()
 	if not packer_plugins["sqlite.lua"].loaded then
 		vim.cmd([[packadd sqlite.lua]])
@@ -23,7 +22,19 @@ function config.telescope()
 	if not packer_plugins["aerial.nvim"].loaded then
 		vim.cmd([[packadd aerial.nvim]])
 	end
-
+	if not packer_plugins["telescope_sessions_picker.nvim"].loaded then
+		vim.cmd([[packadd telescope_sessions_picker.nvim]])
+	end
+	if not packer_plugins["nvim-dap"].loaded then
+		vim.cmd([[packadd nvim-dap]])
+	end
+	if not packer_plugins["telescope-dap.nvim"].loaded then
+		vim.cmd([[packadd telescope-dap.nvim]])
+	end
+	if not packer_plugins["telescope-live-grep-raw.nvim"].loaded then
+		vim.cmd([[packadd telescope-live-grep-raw.nvim]])
+	end
+	local sessions_dir = vim.fn.stdpath("data") .. "/sessions/"
 	require("telescope").setup({
 		defaults = {
 			prompt_prefix = "🔭 ",
@@ -36,8 +47,8 @@ function config.telescope()
 			grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
 			qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 			file_sorter = require("telescope.sorters").get_fuzzy_file,
-			file_ignore_patterns = {},
 			generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+			file_ignore_patterns = {},
 			path_display = { "absolute" },
 			winblend = 0,
 			border = {},
@@ -56,8 +67,11 @@ function config.telescope()
 			set_env = { ["COLORTERM"] = "truecolor" },
 		},
 		extensions = {
+			sessions_picker = {
+				sessions_dir = sessions_dir,
+			},
 			fzf = {
-				fuzzy = false, -- false will only do exact matching
+				fuzzy = true, -- false will only do exact matching
 				override_generic_sorter = true, -- override the generic sorter
 				override_file_sorter = true, -- override the file sorter
 				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
@@ -75,6 +89,9 @@ function config.telescope()
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("frecency")
 	require("telescope").load_extension("aerial")
+	require("telescope").load_extension("dap")
+	require("telescope").load_extension("live_grep_raw")
+	require("telescope").load_extension("sessions_picker")
 end
 
 function config.trouble()

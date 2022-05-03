@@ -33,6 +33,7 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "kdheepak/cmp-latex-symbols", ft = { "markdown", "tex", "lean" } },
 		{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql" } },
 		{ "hrsh7th/cmp-emoji", ft = { "markdown" } },
+		{ "octaltree/cmp-look", after = "nvim-cmp" },
 		--{"hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp"},
 		{
 			"tzachar/cmp-tabnine",

@@ -1,7 +1,5 @@
-vim.api.nvim_set_keymap("n", "RR", ":call CompileRunGccH()<CR>",
-                        {silent = true, noremap = true})
-vim.api.nvim_set_keymap("n", "Rf", ":call CompileRunGccF()<CR>",
-                        {silent = true, noremap = true})
+vim.api.nvim_set_keymap("n", "RR", ":call CompileRunGccH()<CR>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("n", "Rf", ":call CompileRunGccF()<CR>", { silent = true, noremap = true })
 vim.cmd([[
 func! CompileRunGccH()
 	exec "w"
