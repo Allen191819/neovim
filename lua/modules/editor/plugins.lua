@@ -108,9 +108,9 @@ editor["rcarriga/nvim-dap-ui"] = {
 			opt = false,
 			commit = "24923c3819a450a772bb8f675926d530e829665f",
 		},
-		{ "theHamsta/nvim-dap-virtual-text", opt = false, config = conf.dap_virtual_text },
 	},
 }
+editor["theHamsta/nvim-dap-virtual-text"] = { opt = false, config = conf.dap_virtual_text }
 editor["tpope/vim-fugitive"] = { opt = true, cmd = { "Git", "G" } }
 editor["famiu/bufdelete.nvim"] = {
 	opt = true,
