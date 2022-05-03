@@ -22,19 +22,9 @@ function config.telescope()
 	if not packer_plugins["aerial.nvim"].loaded then
 		vim.cmd([[packadd aerial.nvim]])
 	end
-	if not packer_plugins["telescope_sessions_picker.nvim"].loaded then
-		vim.cmd([[packadd telescope_sessions_picker.nvim]])
-	end
-	if not packer_plugins["nvim-dap"].loaded then
-		vim.cmd([[packadd nvim-dap]])
-	end
-	if not packer_plugins["telescope-dap.nvim"].loaded then
-		vim.cmd([[packadd telescope-dap.nvim]])
-	end
 	if not packer_plugins["telescope-live-grep-raw.nvim"].loaded then
 		vim.cmd([[packadd telescope-live-grep-raw.nvim]])
 	end
-	local sessions_dir = vim.fn.stdpath("data") .. "/sessions/"
 	require("telescope").setup({
 		defaults = {
 			prompt_prefix = "🔭 ",
@@ -67,9 +57,6 @@ function config.telescope()
 			set_env = { ["COLORTERM"] = "truecolor" },
 		},
 		extensions = {
-			sessions_picker = {
-				sessions_dir = sessions_dir,
-			},
 			fzf = {
 				fuzzy = true, -- false will only do exact matching
 				override_generic_sorter = true, -- override the generic sorter
@@ -89,9 +76,7 @@ function config.telescope()
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("frecency")
 	require("telescope").load_extension("aerial")
-	require("telescope").load_extension("dap")
 	require("telescope").load_extension("live_grep_raw")
-	require("telescope").load_extension("sessions_picker")
 end
 
 function config.trouble()
@@ -180,9 +165,9 @@ end
 function config.dadbod()
 	vim.g.db_ui_show_database_icon = 1
 	vim.g.db_ui_use_nerd_fonts = 1
-	vim.g.db_ui_save_localtion = "/home/allen/.local/nvim/dadbod"
+	vim.g.db_ui_save_localtion = "/home/allen/.local/shar/nvim/dadbod"
 	vim.g.db_ui_auto_execute_table_helpers = 1
-	vim.g.dbs = { Mydb = "mysql://root@localhost/mydb" }
+	vim.g.dbs = { Mydb = "mysql://root:903108759@localhost/mydb" }
 	vim.g.db_ui_table_helpers = {
 		mysql = { List = 'select * from "{table}" order by id asc' },
 	}

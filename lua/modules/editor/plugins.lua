@@ -90,12 +90,8 @@ editor["norcalli/nvim-colorizer.lua"] = {
 }
 editor["rmagatti/auto-session"] = {
 	opt = true,
-	cmd = { "SessionSave", "SessionLoad" },
+	cmd = { "SaveSession", "DeleteSession", "RestoreSession" },
 	config = conf.auto_session,
-}
-editor["JoseConseco/telescope_sessions_picker.nvim"] = {
-	opt = true,
-	after = "telescope.nvim",
 }
 editor["jdhao/better-escape.vim"] = { opt = true, event = "InsertEnter" }
 editor["rcarriga/nvim-dap-ui"] = {
@@ -110,7 +106,6 @@ editor["rcarriga/nvim-dap-ui"] = {
 		},
 	},
 }
-editor["theHamsta/nvim-dap-virtual-text"] = { opt = false, config = conf.dap_virtual_text }
 editor["tpope/vim-fugitive"] = { opt = true, cmd = { "Git", "G" } }
 editor["famiu/bufdelete.nvim"] = {
 	opt = true,

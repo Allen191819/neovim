@@ -32,10 +32,6 @@ tools["nvim-telescope/telescope-symbols.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",
 }
-tools["nvim-telescope/telescope-dap.nvim"] = {
-	opt = true,
-	after = "telescope.nvim",
-}
 tools["nvim-telescope/telescope-live-grep-raw.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",

@@ -112,7 +112,6 @@ function config.auto_session()
 		auto_restore_enabled = true,
 		auto_session_suppress_dirs = nil,
 	}
-
 	require("auto-session").setup(opts)
 end
 
@@ -191,7 +190,7 @@ function config.dap()
 			size = 40,
 			position = "left",
 		},
-		tray = { elements = { "repl" }, size = 5, position = "bottom" },
+		tray = { elements = { "repl" }, size = 10, position = "bottom" },
 		floating = {
 			max_height = nil,
 			max_width = nil,
@@ -202,12 +201,10 @@ function config.dap()
 	})
 	local debug_open = function()
 		dapui.open()
-		vim.api.nvim_command("DapVirtualTextEnable")
 	end
 	local debug_close = function()
 		dap.repl.close()
 		dapui.close()
-		vim.api.nvim_command("DapVirtualTextDisable")
 	end
 
 	dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -230,10 +227,77 @@ function config.dap()
 		installation_path = dap_dir,
 	})
 	dap_install.config("python", {})
-	dap_install.config("ccppr_vsc", {})
+	--	dap_install.config("ccppr_vsc", {})
 	dap_install.config("go", {})
 	dap_install.config("lua", {})
 	--	dap_install.config("haskell", {})
+
+	dap.adapters.cppdbg = {
+		id = "cppdbg",
+		type = "executable",
+		command = os.getenv("HOME") .. "/.config/debugger/extension/debugAdapters/bin/OpenDebugAD7",
+	}
+	dap.configurations.cpp = {
+		-- launch exe
+		{
+			name = "Launch file",
+			type = "cppdbg",
+			request = "launch",
+			program = function()
+				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			end,
+			cwd = "${workspaceFolder}",
+			stopOnEntry = true,
+			setupCommands = {
+				{
+					description = "enable pretty printing",
+					text = "-enable-pretty-printing",
+					ignoreFailures = false,
+				},
+			},
+		},
+		-- attach process
+		{
+			name = "Attach process",
+			type = "cppdbg",
+			request = "attach",
+			processId = require("dap.utils").pick_process,
+			program = function()
+				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			end,
+			cwd = "${workspaceFolder}",
+			setupCommands = {
+				{
+					description = "enable pretty printing",
+					text = "-enable-pretty-printing",
+					ignoreFailures = false,
+				},
+			},
+		},
+		-- attach server
+		{
+			name = "Attach to gdbserver :1234",
+			type = "cppdbg",
+			request = "launch",
+			MIMode = "gdb",
+			miDebuggerServerAddress = "localhost:1234",
+			miDebuggerPath = "/usr/bin/gdb",
+			cwd = "${workspaceFolder}",
+			program = function()
+				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			end,
+			setupCommands = {
+				{
+					text = "-enable-pretty-printing",
+					description = "enable pretty printing",
+					ignoreFailures = false,
+				},
+			},
+		},
+	}
+
+	-- setup other language
+	dap.configurations.c = dap.configurations.cpp
 
 	dap.adapters.haskell = {
 		type = "executable",
@@ -371,23 +435,6 @@ function config.iron()
 	})
 	vim.g.iron_map_default = 0
 	vim.g.iron_map_extended = 0
-end
-
-function config.dap_virtual_text()
-	require("nvim-dap-virtual-text").setup({
-		enabled = true, -- enable this plugin (the default)
-		enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
-		highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-		highlight_new_as_changed = true, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
-		show_stop_reason = true, -- show stop reason when stopped for exceptions
-		commented = false, -- prefix virtual text with comment string
-		-- experimental features:
-		virt_text_pos = "eol", -- position of virtual text, see `:h nvim_buf_set_extmark()`
-		all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-		virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
-		virt_text_win_col = nil, -- position the virtual text at a fixed window column (starting from the first text column) ,
-		-- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
-	})
 end
 
 return config

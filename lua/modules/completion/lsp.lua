@@ -300,13 +300,13 @@ local enhance_server_opts = {
 			custom_attach(client)
 		end
 	end,
-	["hls"] = function(opts)
-		opts.on_attach = function(client)
-			require("aerial").on_attach(client)
-			client.resolved_capabilities.document_formatting = true
-			custom_attach(client)
-		end
-	end,
+	-- ["hls"] = function(opts)
+	-- 	opts.on_attach = function(client)
+	-- 		require("aerial").on_attach(client)
+	-- 		client.resolved_capabilities.document_formatting = true
+	-- 		custom_attach(client)
+	-- 	end
+	-- end,
 	["r_language_server"] = function(opts)
 		opts.on_attach = function(client)
 			client.resolved_capabilities.document_formatting = true
@@ -374,6 +374,16 @@ nvim_lsp.html.setup({
 	capabilities = capabilities,
 	on_attach = function(client)
 		client.resolved_capabilities.document_formatting = false
+		custom_attach(client)
+	end,
+})
+nvim_lsp.hls.setup({
+	single_file_support = true,
+	flags = { debounce_text_changes = 500 },
+	capabilities = capabilities,
+	on_attach = function(client)
+		require("aerial").on_attach(client)
+		client.resolved_capabilities.document_formatting = true
 		custom_attach(client)
 	end,
 })
