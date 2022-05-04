@@ -39,8 +39,6 @@ local function goto_definition(split_cmd)
 	local util = vim.lsp.util
 	local log = require("vim.lsp.log")
 	local api = vim.api
-
-	-- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
 	local handler = function(_, result, ctx)
 		if result == nil or vim.tbl_isempty(result) then
 			local _ = log.info() and log.info(ctx.method, "No location found")
@@ -67,9 +65,44 @@ local function goto_definition(split_cmd)
 	return handler
 end
 
+local function lsp_highlight_document(client)
+	-- Set autocommands conditional on server_capabilities
+	if client.resolved_capabilities.document_highlight then
+		vim.api.nvim_exec(
+			[[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]],
+			false
+		)
+	end
+end
+
 vim.lsp.handlers["textDocument/definition"] = goto_definition("split")
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+-- Override default format setting
+vim.lsp.handlers["textDocument/formatting"] = function(err, result, ctx)
+	if err ~= nil or result == nil then
+		return
+	end
+	if
+		vim.api.nvim_buf_get_var(ctx.bufnr, "init_changedtick") == vim.api.nvim_buf_get_var(ctx.bufnr, "changedtick")
+	then
+		local view = vim.fn.winsaveview()
+		vim.lsp.util.apply_text_edits(result, ctx.bufnr, "utf-16")
+		vim.fn.winrestview(view)
+		if ctx.bufnr == vim.api.nvim_get_current_buf() then
+			vim.b.saving_format = true
+			vim.cmd([[update]])
+			vim.b.saving_format = false
+		end
+	end
+end
+
 lsp_installer.settings({
 	ui = {
 		icons = {
@@ -82,7 +115,7 @@ lsp_installer.settings({
 vim.diagnostic.config({
 	virtual_text = false,
 	signs = true,
-	underline = true,
+	underline = false,
 	update_in_insert = false,
 	severity_sort = true,
 })
@@ -105,26 +138,6 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 	properties = { "documentation", "detail", "additionalTextEdits" },
 }
 
--- Override default format setting
-
-vim.lsp.handlers["textDocument/formatting"] = function(err, result, ctx)
-	if err ~= nil or result == nil then
-		return
-	end
-	if
-		vim.api.nvim_buf_get_var(ctx.bufnr, "init_changedtick") == vim.api.nvim_buf_get_var(ctx.bufnr, "changedtick")
-	then
-		local view = vim.fn.winsaveview()
-		vim.lsp.util.apply_text_edits(result, ctx.bufnr, "utf-16")
-		vim.fn.winrestview(view)
-		if ctx.bufnr == vim.api.nvim_get_current_buf() then
-			vim.b.saving_format = true
-			vim.cmd([[update]])
-			vim.b.saving_format = false
-		end
-	end
-end
-
 local function custom_attach(client)
 	vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
 	vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
@@ -145,6 +158,7 @@ local function custom_attach(client)
 		vim.cmd([[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]])
 		vim.cmd([[augroup END]])
 	end
+	lsp_highlight_document(client)
 end
 
 local function switch_source_header_splitcmd(bufnr, splitcmd)
@@ -169,6 +183,10 @@ local enhance_server_opts = {
 		opts.cmd = { "sqls" }
 		opts.args = { "-config ~/.config/sqls/config.yml" }
 		opts.filetypes = { "sql", "mysql" }
+		opts.on_attach = function(client)
+			client.resolved_capabilities.document_formatting = true
+			custom_attach(client)
+		end
 	end,
 	["sumneko_lua"] = function(opts)
 		opts.settings = {
@@ -338,13 +356,13 @@ local enhance_server_opts = {
 		end
 	end,
 	["jdtls"] = function(opts)
+		opts.single_file_support = true
 		opts.on_attach = function(client)
 			client.resolved_capabilities.document_formatting = true
 			custom_attach(client)
 		end
 	end,
 }
-
 lsp_installer.on_server_ready(function(server)
 	local opts = {
 		capabilities = capabilities,

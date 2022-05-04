@@ -315,9 +315,9 @@ function config.dap()
 			logFile = vim.fn.stdpath("data") .. "/haskell-dap.log",
 			logLevel = "WARNING",
 			ghciEnv = vim.empty_dict(),
-			ghciPrompt = "λ: ",
+			ghciPrompt = "λ> ",
 			-- Adjust the prompt to the prompt you see when you invoke the stack ghci command below
-			ghciInitialPrompt = "λ: ",
+			ghciInitialPrompt = "λ>",
 			ghciCmd = "stack ghci --test --no-load --no-build --main-is TARGET --ghci-options -fprint-evld-with-show",
 		},
 	}
