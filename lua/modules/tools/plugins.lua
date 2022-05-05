@@ -13,11 +13,6 @@ tools["nvim-telescope/telescope.nvim"] = {
 		{ "nvim-lua/popup.nvim", opt = true },
 	},
 }
-tools["nvim-telescope/telescope-fzf-native.nvim"] = {
-	opt = true,
-	run = "make",
-	after = "telescope.nvim",
-}
 tools["nvim-telescope/telescope-project.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",
@@ -27,12 +22,15 @@ tools["nvim-telescope/telescope-frecency.nvim"] = {
 	after = "telescope.nvim",
 	requires = { { "tami5/sqlite.lua", opt = true } },
 }
-tools["jvgrootveld/telescope-zoxide"] = { opt = true, after = "telescope.nvim" }
 tools["nvim-telescope/telescope-symbols.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",
 }
 tools["nvim-telescope/telescope-live-grep-raw.nvim"] = {
+	opt = true,
+	after = "telescope.nvim",
+}
+tools["jvgrootveld/telescope-zoxide"] = {
 	opt = true,
 	after = "telescope.nvim",
 }

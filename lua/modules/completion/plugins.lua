@@ -18,6 +18,11 @@ completion["kosayoda/nvim-lightbulb"] = {
 	after = "nvim-lspconfig",
 	config = conf.lightbulb,
 }
+completion["tami5/lspsaga.nvim"] = {
+	opt = true,
+	after = "nvim-lspconfig",
+	config = conf.lspsaga,
+}
 completion["onsails/lspkind-nvim"] = { opt = false, config = conf.lspkind }
 completion["ray-x/lsp_signature.nvim"] = { opt = true, after = "nvim-lspconfig" }
 completion["hrsh7th/nvim-cmp"] = {

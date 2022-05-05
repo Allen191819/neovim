@@ -13,17 +13,20 @@ end
 if not packer_plugins["cmp-nvim-lsp"].loaded then
 	vim.cmd([[packadd cmp-nvim-lsp]])
 end
+if not packer_plugins["lspsaga.nvim"].loaded then
+	vim.cmd([[packadd lspsaga.nvim]])
+end
 
 local nvim_lsp = require("lspconfig")
 local lsp_installer = require("nvim-lsp-installer")
 
--- Override diagnostics symbol
+local signs = { Error = "✗", Warn = "", Hint = "", Info = "" }
 
-local signs = { Error = "✗", Warn = " ", Hint = " ", Info = "" }
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
 local border = {
 	{ "╭", "FloatBorder" },
 	{ "─", "FloatBorder" },
@@ -61,12 +64,10 @@ local function goto_definition(split_cmd)
 			util.jump_to_location(result)
 		end
 	end
-
 	return handler
 end
 
 local function lsp_highlight_document(client)
-	-- Set autocommands conditional on server_capabilities
 	if client.resolved_capabilities.document_highlight then
 		vim.api.nvim_exec(
 			[[
@@ -112,13 +113,7 @@ lsp_installer.settings({
 		},
 	},
 })
-vim.diagnostic.config({
-	virtual_text = false,
-	signs = true,
-	underline = false,
-	update_in_insert = false,
-	severity_sort = true,
-})
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 capabilities.textDocument.completion.completionItem.documentationFormat = {

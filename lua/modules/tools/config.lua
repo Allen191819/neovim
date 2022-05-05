@@ -4,10 +4,6 @@ function config.telescope()
 		vim.cmd([[packadd sqlite.lua]])
 	end
 
-	if not packer_plugins["telescope-fzf-native.nvim"].loaded then
-		vim.cmd([[packadd telescope-fzf-native.nvim]])
-	end
-
 	if not packer_plugins["telescope-project.nvim"].loaded then
 		vim.cmd([[packadd telescope-project.nvim]])
 	end
@@ -16,15 +12,18 @@ function config.telescope()
 		vim.cmd([[packadd telescope-frecency.nvim]])
 	end
 
-	if not packer_plugins["telescope-zoxide"].loaded then
-		vim.cmd([[packadd telescope-zoxide]])
-	end
 	if not packer_plugins["aerial.nvim"].loaded then
 		vim.cmd([[packadd aerial.nvim]])
 	end
+
 	if not packer_plugins["telescope-live-grep-raw.nvim"].loaded then
 		vim.cmd([[packadd telescope-live-grep-raw.nvim]])
 	end
+
+	if not packer_plugins["telescope-zoxide"].loaded then
+		vim.cmd([[packadd telescope-zoxide]])
+	end
+
 	require("telescope").setup({
 		defaults = {
 			prompt_prefix = "🔭 ",
@@ -57,13 +56,6 @@ function config.telescope()
 			set_env = { ["COLORTERM"] = "truecolor" },
 		},
 		extensions = {
-			fzf = {
-				fuzzy = true, -- false will only do exact matching
-				override_generic_sorter = true, -- override the generic sorter
-				override_file_sorter = true, -- override the file sorter
-				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-				-- the default case_mode is "smart_case"
-			},
 			frecency = {
 				show_scores = true,
 				show_unindexed = true,
@@ -71,12 +63,11 @@ function config.telescope()
 			},
 		},
 	})
-	require("telescope").load_extension("fzf")
 	require("telescope").load_extension("project")
-	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("frecency")
 	require("telescope").load_extension("aerial")
 	require("telescope").load_extension("live_grep_raw")
+	require("telescope").load_extension("zoxide")
 end
 
 function config.trouble()

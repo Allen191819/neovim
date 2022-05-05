@@ -3,11 +3,11 @@ function config.nvim_lsp()
 	require("modules.completion.lsp")
 end
 
-function config.lightbulb()
-	vim.cmd(
-		[[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = false, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = true, text = "💡", text_unavailable = "" } }]]
-	)
-end
+-- function config.lightbulb()
+-- 	vim.cmd(
+-- 		[[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = false, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = true, text = "💡", text_unavailable = "" } }]]
+-- 	)
+-- end
 
 function config.lspkind()
 	local lspkind = require("lspkind")
@@ -263,6 +263,59 @@ end
 
 function config.copilot_cmp()
 	require("copilot").setup()
+end
+
+function config.lspsaga()
+	local lspsaga = require("lspsaga")
+	lspsaga.setup({ -- defaults ...
+		debug = false,
+		use_saga_diagnostic_sign = false,
+		diagnostic_header_icon = "   ",
+		code_action_icon = " ",
+		code_action_prompt = {
+			enable = true,
+			sign = true,
+			sign_priority = 10,
+			virtual_text = true,
+		},
+		finder_definition_icon = "  ",
+		finder_reference_icon = "  ",
+		max_preview_lines = 10,
+		finder_action_keys = {
+			open = "o",
+			vsplit = "s",
+			split = "i",
+			quit = "q",
+			scroll_down = "<C-f>",
+			scroll_up = "<C-b>",
+		},
+		code_action_keys = {
+			quit = "q",
+			exec = "<CR>",
+		},
+		rename_action_keys = {
+			quit = "<C-c>",
+			exec = "<CR>",
+		},
+		definition_preview_icon = "  ",
+		border_style = "single",
+		rename_prompt_prefix = "➤",
+		rename_output_qflist = {
+			enable = true,
+			auto_open_qflist = true,
+		},
+		server_filetype_map = {},
+		diagnostic_prefix_format = "%d. ",
+		diagnostic_message_format = "%m %c",
+		highlight_prefix = true,
+	})
+	vim.diagnostic.config({
+		virtual_text = false,
+		signs = true,
+		underline = false,
+		update_in_insert = false,
+		severity_sort = true,
+	})
 end
 
 return config

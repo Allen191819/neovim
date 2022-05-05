@@ -181,10 +181,10 @@ function config.dap()
 				-- Provide as ID strings or tables with "id" and "size" keys
 				{
 					id = "scopes",
-					size = 0.25, -- Can be float or integer > 1
+					size = 0.35, -- Can be float or integer > 1
 				},
 				{ id = "stacks", size = 0.35 },
-				{ id = "watches", size = 0.25 },
+				{ id = "watches", size = 0.15 },
 				{ id = "breakpoints", size = 0.15 },
 			},
 			size = 40,
@@ -317,7 +317,7 @@ function config.dap()
 			ghciEnv = vim.empty_dict(),
 			ghciPrompt = "λ> ",
 			-- Adjust the prompt to the prompt you see when you invoke the stack ghci command below
-			ghciInitialPrompt = "λ>",
+			ghciInitialPrompt = "λ>>",
 			ghciCmd = "stack ghci --test --no-load --no-build --main-is TARGET --ghci-options -fprint-evld-with-show",
 		},
 	}
@@ -435,6 +435,19 @@ function config.iron()
 	})
 	vim.g.iron_map_default = 0
 	vim.g.iron_map_extended = 0
+end
+
+function config.far_vim()
+	vim.cmd([[let g:far#enable_undo=1]])
+end
+
+function config.bookmarks()
+	vim.cmd([[ 
+	highlight BookmarkSign ctermbg=NONE ctermfg=160
+	highlight BookmarkLine ctermbg=194 ctermfg=NONE
+	]])
+	vim.g.bookmark_sign = "📑"
+	vim.g.bookmark_highlight_lines = 1
 end
 
 return config

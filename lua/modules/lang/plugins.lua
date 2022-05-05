@@ -17,13 +17,13 @@ lang["simrat39/rust-tools.nvim"] = {
 	config = conf.rust_tools,
 	requires = { { "nvim-lua/plenary.nvim", opt = false } },
 }
+lang["chrisbra/csv.vim"] = { opt = true, ft = "csv" }
 lang["yaocccc/markdown-preview.nvim"] = {
 	opt = true,
 	ft = "markdown",
 	run = "cd app && yarn install",
 	config = conf.makrkdown_preview,
 }
-lang["chrisbra/csv.vim"] = { opt = true, ft = "csv" }
 lang["lervag/vimtex"] = { opt = true, ft = "tex", config = conf.latex }
 lang["dhruvasagar/vim-table-mode"] = { opt = true, ft = "markdown" }
 lang["mzlogin/vim-markdown-toc"] = { opt = true, ft = "markdown" }
