@@ -357,6 +357,13 @@ local enhance_server_opts = {
 			custom_attach(client)
 		end
 	end,
+	["phpactor"] = function(opts)
+		opts.single_file_support = true
+		opts.on_attach = function(client)
+			client.resolved_capabilities.document_formatting = true
+			custom_attach(client)
+		end
+	end,
 }
 lsp_installer.on_server_ready(function(server)
 	local opts = {
@@ -364,11 +371,9 @@ lsp_installer.on_server_ready(function(server)
 		flags = { debounce_text_changes = 500 },
 		on_attach = custom_attach,
 	}
-
 	if enhance_server_opts[server.name] then
 		enhance_server_opts[server.name](opts)
 	end
-
 	server:setup(opts)
 end)
 

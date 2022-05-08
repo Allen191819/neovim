@@ -3,20 +3,20 @@ local config = {}
 function config.material()
 	require("material").setup({
 		contrast = {
-			sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
-			floating_windows = true, -- Enable contrast for floating windows
+			sidebars = false, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+			floating_windows = false, -- Enable contrast for floating windows
 			line_numbers = false, -- Enable contrast background for line numbers
 			sign_column = false, -- Enable contrast background for the sign column
-			cursor_line = true, -- Enable darker background for the cursor line
+			cursor_line = false, -- Enable darker background for the cursor line
 			non_current_windows = false, -- Enable darker background for non-current windows
-			popup_menu = true, -- Enable lighter background for the popup menu
+			popup_menu = false, -- Enable lighter background for the popup menu
 		},
 		italics = {
 			comments = true, -- Enable italic comments
 			keywords = true, -- Enable italic keywords
 			functions = true, -- Enable italic functions
 			strings = true, -- Enable italic strings
-			variables = false, -- Enable italic variables
+			variables = true, -- Enable italic variables
 		},
 		contrast_filetypes = {
 			"terminal", -- Darker terminal background
@@ -33,7 +33,7 @@ function config.material()
 		},
 		disable = {
 			borders = false, -- Disable borders between verticaly split windows
-			background = false, -- Prevent the theme from setting the background (NeoVim then uses your teminal background)
+			background = true, -- Prevent the theme from setting the background (NeoVim then uses your teminal background)
 			term_colors = false, -- Prevent the theme from setting terminal colors
 			eob_lines = false, -- Hide the end-of-buffer lines
 		},

@@ -153,6 +153,6 @@ editor["yianwillis/vimcdoc"] = { opt = false }
 editor["caenrique/nvim-maximize-window-toggle"] = { opt = false }
 editor["lewis6991/impatient.nvim"] = { opt = false }
 editor["hkupty/iron.nvim"] = { opt = true, cmd = { "IronRepl" }, config = conf.iron }
-editor["brooth/far.vim"] = { opt = true, config = conf.far_vim }
-editor["MattesGroeger/vim-bookmarks"] = { opt = false, config = conf.bookmarks }
+editor["brooth/far.vim"] = { opt = false, config = conf.far_vim }
+editor["danymat/neogen"] = { opt = true, after = "nvim-treesitter", config = conf.neogen }
 return editor

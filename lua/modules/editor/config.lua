@@ -19,8 +19,7 @@ function config.nvim_treesitter()
 	require("nvim-treesitter.configs").setup({
 		highlight = {
 			enable = true,
-			disable = { "latex", "lean", "org" },
-			additional_vim_regex_highlighting = { "org" },
+			disable = { "latex", "lean" },
 		},
 		rainbow = {
 			enable = true,
@@ -30,7 +29,7 @@ function config.nvim_treesitter()
 		context_commentstring = { enable = true, enable_autocmd = false },
 		matchup = { enable = true },
 		context = { enable = true, throttle = true },
-		-- ensure_installed = 'maintained'
+		ensure_installed = "all",
 	})
 end
 
@@ -441,13 +440,17 @@ function config.far_vim()
 	vim.cmd([[let g:far#enable_undo=1]])
 end
 
-function config.bookmarks()
-	vim.cmd([[ 
-	highlight BookmarkSign ctermbg=NONE ctermfg=160
-	highlight BookmarkLine ctermbg=194 ctermfg=NONE
-	]])
-	vim.g.bookmark_sign = "📑"
-	vim.g.bookmark_highlight_lines = 1
+function config.neogen()
+	require("neogen").setup({
+		enabled = true,
+		languages = {
+			lua = {
+				template = {
+					annotation_convention = "emmylua",
+				},
+			},
+		},
+	})
 end
 
 return config

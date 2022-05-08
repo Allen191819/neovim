@@ -199,13 +199,39 @@ function config.latex()
 	autocmd BufRead,BufNewFile *.tex setlocal spell
 	]])
 end
-
-function config.org()
-	require("orgmode").setup_ts_grammar()
-	require("orgmode").setup({
-		org_agenda_files = { "~/Workplace/org/*", "~/my-orgs/**/*" },
-		org_default_notes_file = "~/Workplace/org/refile.org",
+function config.neorg()
+	if not packer_plugins["nvim-cmp"].loaded then
+		vim.cmd([[packadd nvim-cmp]])
+	end
+	require("neorg").setup({
+		load = {
+			["core.defaults"] = {},
+			["core.norg.dirman"] = {
+				config = {
+					workspaces = {
+						work = "~/neorg/work",
+						home = "~/neorg/home",
+					},
+				},
+			},
+			["core.norg.concealer"] = { config = { icon_preset = "diamond" } },
+			["core.norg.completion"] = { config = { engine = "nvim-cmp" } },
+		},
 	})
+	local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
+	parser_configs.norg_table = {
+		install_info = {
+			url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
+			files = { "src/parser.c" },
+			branch = "main",
+		},
+	}
+	parser_configs.norg_meta = {
+		install_info = {
+			url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
+			files = { "src/parser.c" },
+			branch = "main",
+		},
+	}
 end
-
 return config

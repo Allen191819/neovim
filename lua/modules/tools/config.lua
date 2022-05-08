@@ -29,7 +29,7 @@ function config.telescope()
 			prompt_prefix = "🔭 ",
 			selection_caret = " ",
 			layout_config = {
-				horizontal = { prompt_position = "bottom", results_width = 0.6 },
+				horizontal = { prompt_position = "top", results_width = 0.6 },
 				vertical = { mirror = false },
 			},
 			file_previewer = require("telescope.previewers").vim_buffer_cat.new,
@@ -68,6 +68,8 @@ function config.telescope()
 	require("telescope").load_extension("aerial")
 	require("telescope").load_extension("live_grep_raw")
 	require("telescope").load_extension("zoxide")
+	require("telescope").load_extension("ultisnips")
+	require("telescope").load_extension("vim_bookmarks")
 end
 
 function config.trouble()
@@ -263,6 +265,15 @@ end
 
 function config.suda()
 	vim.g.suda_smart_edit = 1
+end
+
+function config.bookmarks()
+	vim.cmd([[
+	highlight BookmarkSign ctermbg=NONE ctermfg=160
+	highlight BookmarkLine ctermbg=194 ctermfg=NONE
+	]])
+	vim.g.bookmark_sign = "📑"
+	vim.g.bookmark_highlight_lines = 1
 end
 
 return config

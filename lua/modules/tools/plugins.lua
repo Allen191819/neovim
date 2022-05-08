@@ -34,6 +34,9 @@ tools["jvgrootveld/telescope-zoxide"] = {
 	opt = true,
 	after = "telescope.nvim",
 }
+tools["fhill2/telescope-ultisnips.nvim"] = { opt = true, after = "telescope.nvim" }
+tools["tom-anders/telescope-vim-bookmarks.nvim"] = { opt = true, after = "telescope.nvim" }
+tools["MattesGroeger/vim-bookmarks"] = { opt = false, config = conf.bookmarks }
 tools["thinca/vim-quickrun"] = {
 	opt = true,
 	cmd = { "QuickRun", "Q" },

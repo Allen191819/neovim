@@ -13,11 +13,11 @@ completion["williamboman/nvim-lsp-installer"] = {
 	opt = true,
 	after = "nvim-lspconfig",
 }
-completion["kosayoda/nvim-lightbulb"] = {
-	opt = true,
-	after = "nvim-lspconfig",
-	config = conf.lightbulb,
-}
+-- completion["kosayoda/nvim-lightbulb"] = {
+-- 	opt = true,
+-- 	after = "nvim-lspconfig",
+-- 	config = conf.lightbulb,
+-- }
 completion["tami5/lspsaga.nvim"] = {
 	opt = true,
 	after = "nvim-lspconfig",
@@ -58,7 +58,8 @@ completion["zbirenbaum/copilot.lua"] = {
 	config = conf.copilot_cmp,
 }
 completion["SirVer/ultisnips"] = {
-	after = "nvim-cmp",
+	opt = false,
+	-- after = "nvim-cmp",
 	config = conf.ultisnips,
 	requires = "Allen191819/vim-snippets",
 }

@@ -79,6 +79,7 @@ function config.cmp()
 		copilot = "[AI]",
 		orgmode = "[Org]",
 		look = "Dict",
+		neorg = "Event",
 	}
 	cmp.setup({
 		sorting = {
@@ -115,7 +116,7 @@ function config.cmp()
 					end
 					vim_item.kind = "﬜"
 				end
-				if entry.source.name == "orgmode" then
+				if entry.source.name == "neorg" then
 					if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
 						menu = entry.completion_item.data.detail .. " " .. menu
 					end
@@ -134,10 +135,18 @@ function config.cmp()
 			["<CR>"] = cmp.mapping.confirm({ select = true }),
 			["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 			["<Tab>"] = cmp.mapping(function(fallback)
-				cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+				if require("neogen").jumpable() then
+					require("neogen").jump_next()
+				else
+					cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+				end
 			end, { "i", "s", "c" }),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
-				cmp_ultisnips_mappings.jump_backwards(fallback)
+				if rquire("neogen").jumpable(true) then
+					require("neogen").jump_prev()
+				else
+					cmp_ultisnips_mappings.jump_backwards(fallback)
+				end
 			end, { "i", "s", "c" }),
 		},
 		snippet = {
@@ -156,8 +165,8 @@ function config.cmp()
 			{ name = "vim_dadbod_completion", group_index = 2, max_item_count = 3 },
 			{ name = "cmp_tabnine", group_index = 2, max_item_count = 3 },
 			{ name = "copilot", group_index = 2, max_item_count = 3, priority = 500 },
-			{ name = "orgmode", group_index = 2, max_item_count = 3 },
 			{ name = "emoji", group_index = 2, max_item_count = 5 },
+			{ name = "neorg", group_index = 2, max_item_count = 5 },
 			{
 				name = "look",
 				group_index = 2,

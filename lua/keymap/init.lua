@@ -128,9 +128,14 @@ local plug_map = {
 	["n|<F7>"] = map_cr("lua require('dap').step_into()"):with_noremap():with_silent(),
 	["n|<F8>"] = map_cr("lua require('dap').step_out()"):with_noremap():with_silent(),
 	["n|<leader>ds"] = map_cr("lua require'dapui'.toggle()"):with_noremap():with_silent(),
-	--# IronRepl
+	-- IronRepl
 	["v|<leader>is"] = map_cmd("<Plug>(iron-visual-send)"):with_silent(),
 	["n|<leader>ir"] = map_cr("IronRepl"):with_silent(),
+	-- Neogen
+	["n|gnf"] = map_cr("Neogen func"):with_noremap():with_silent(),
+	["n|gnc"] = map_cr("Neogen class"):with_noremap():with_silent(),
+	["n|gnt"] = map_cr("Neogen type"):with_noremap():with_silent(),
+	["n|gnl"] = map_cr("Neogen file"):with_noremap():with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)
