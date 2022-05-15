@@ -179,7 +179,7 @@ local enhance_server_opts = {
 		opts.args = { "-config ~/.config/sqls/config.yml" }
 		opts.filetypes = { "sql", "mysql" }
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = true
+			client.resolved_capabilities.document_formatting = false
 			custom_attach(client)
 		end
 	end,
@@ -307,19 +307,20 @@ local enhance_server_opts = {
 		end
 	end,
 	["pylsp"] = function(opts)
-		-- Disable `dockerls`'s format
+		opts.settings = {
+			pylsp = {
+				pylint = { enabled = false },
+				flake8 = { enabled = false },
+				pycodestyle = { enabled = true },
+				pyflakes = { enabled = false },
+				yapf = { enabled = true },
+			},
+		}
 		opts.on_attach = function(client)
 			client.resolved_capabilities.document_formatting = true
 			custom_attach(client)
 		end
 	end,
-	-- ["hls"] = function(opts)
-	-- 	opts.on_attach = function(client)
-	-- 		require("aerial").on_attach(client)
-	-- 		client.resolved_capabilities.document_formatting = true
-	-- 		custom_attach(client)
-	-- 	end
-	-- end,
 	["r_language_server"] = function(opts)
 		opts.on_attach = function(client)
 			client.resolved_capabilities.document_formatting = true
@@ -437,6 +438,7 @@ local vulture = require("efmls-configs.linters.vulture")
 -- Add your own config for formatter and linter here
 
 local rustfmt = require("modules.completion.efm.formatters.rustfmt")
+local sqlfmt = require("modules.completion.efm.formatters.sqlfmt")
 
 -- Override default config here
 
@@ -471,4 +473,5 @@ efmls.setup({
 	sh = { formatter = shfmt, linter = shellcheck },
 	markdown = { formatter = prettier },
 	rust = { formatter = rustfmt },
+	sql = { formatter = sqlfmt },
 })

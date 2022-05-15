@@ -66,7 +66,7 @@ function config.telescope()
 	require("telescope").load_extension("project")
 	require("telescope").load_extension("frecency")
 	require("telescope").load_extension("aerial")
-	require("telescope").load_extension("live_grep_raw")
+    require("telescope").load_extension("live_grep_raw")
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("ultisnips")
 	require("telescope").load_extension("vim_bookmarks")
@@ -160,7 +160,7 @@ function config.dadbod()
 	vim.g.db_ui_use_nerd_fonts = 1
 	vim.g.db_ui_save_localtion = "/home/allen/.local/shar/nvim/dadbod"
 	vim.g.db_ui_auto_execute_table_helpers = 1
-	vim.g.dbs = { Mydb = "mysql://root:903108759@localhost/mydb" }
+	vim.g.dbs = { Mydb = "mysql://root:903108759@localhost/mydb", E1 = "mysql://root:903108759@localhost/E1" }
 	vim.g.db_ui_table_helpers = {
 		mysql = { List = 'select * from "{table}" order by id asc' },
 	}

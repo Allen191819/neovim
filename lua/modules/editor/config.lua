@@ -17,6 +17,7 @@ function config.nvim_treesitter()
 	vim.api.nvim_command("set foldexpr=nvim_treesitter#foldexpr()")
 
 	require("nvim-treesitter.configs").setup({
+		sync_install = false,
 		highlight = {
 			enable = true,
 			disable = { "latex", "lean" },
@@ -26,10 +27,30 @@ function config.nvim_treesitter()
 			extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
 			max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
 		},
-		context_commentstring = { enable = true, enable_autocmd = false },
+		context_commentstring = { enable = true, enable_autocmd = true },
 		matchup = { enable = true },
 		context = { enable = true, throttle = true },
-		ensure_installed = "all",
+		ensure_installed = {
+			"c",
+			"java",
+			"python",
+			"bash",
+			"cpp",
+			"css",
+			"html",
+			"haskell",
+			"go",
+			"lua",
+			"norg",
+			"php",
+			"fish",
+			"ruby",
+			"vim",
+			"yaml",
+			"javascript",
+			"typescript",
+			"r",
+		},
 	})
 end
 

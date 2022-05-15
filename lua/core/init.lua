@@ -128,18 +128,15 @@ local load_core = function()
 	createdir()
 	disable_distribution_plugins()
 	leader_map()
-
 	pack.ensure_plugins()
 	neovide_config()
 	dashboard_config()
-
 	require("core.options")
 	require("core.mapping")
 	require("keymap")
 	require("core.event")
 	require("core.function")
 	pack.load_compile()
-
 	vim.cmd([[colorscheme material]])
 end
 

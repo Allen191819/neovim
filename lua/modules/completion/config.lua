@@ -140,14 +140,14 @@ function config.cmp()
 				else
 					cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
 				end
-			end, { "i", "s", "c" }),
+			end, { "i", "s" }),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
 				if rquire("neogen").jumpable(true) then
 					require("neogen").jump_prev()
 				else
 					cmp_ultisnips_mappings.jump_backwards(fallback)
 				end
-			end, { "i", "s", "c" }),
+			end, { "i", "s" }),
 		},
 		snippet = {
 			expand = function(args)

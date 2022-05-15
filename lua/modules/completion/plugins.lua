@@ -1,8 +1,7 @@
 local completion = {}
 local conf = require("modules.completion.config")
 completion["neovim/nvim-lspconfig"] = {
-	opt = true,
-	event = { "BufReadPre", "BufNewFile", "BufRead" },
+	opt = false,
 	config = conf.nvim_lsp,
 }
 completion["creativenull/efmls-configs-nvim"] = {
@@ -10,14 +9,8 @@ completion["creativenull/efmls-configs-nvim"] = {
 	requires = "neovim/nvim-lspconfig",
 }
 completion["williamboman/nvim-lsp-installer"] = {
-	opt = true,
-	after = "nvim-lspconfig",
+	opt = false,
 }
--- completion["kosayoda/nvim-lightbulb"] = {
--- 	opt = true,
--- 	after = "nvim-lspconfig",
--- 	config = conf.lightbulb,
--- }
 completion["tami5/lspsaga.nvim"] = {
 	opt = true,
 	after = "nvim-lspconfig",
@@ -59,7 +52,6 @@ completion["zbirenbaum/copilot.lua"] = {
 }
 completion["SirVer/ultisnips"] = {
 	opt = false,
-	-- after = "nvim-cmp",
 	config = conf.ultisnips,
 	requires = "Allen191819/vim-snippets",
 }
@@ -67,12 +59,6 @@ completion["windwp/nvim-autopairs"] = {
 	after = "nvim-cmp",
 	config = conf.autopairs,
 }
--- completion["github/copilot.vim"] = {
---     opt = true,
---     --    cmd = "Copilot",
---     event = "InsertEnter",
---     config = conf.copilot
--- }
 completion["Julian/lean.nvim"] = {
 	opt = true,
 	config = conf.lean,
@@ -83,4 +69,17 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 	config = conf.dadbod,
 	after = "nvim-lspconfig",
 }
+
+-- completion["kosayoda/nvim-lightbulb"] = {
+-- 	opt = true,
+-- 	after = "nvim-lspconfig",
+-- 	config = conf.lightbulb,
+-- }
+-- completion["github/copilot.vim"] = {
+--     opt = true,
+--     --    cmd = "Copilot",
+--     event = "InsertEnter",
+--     config = conf.copilot
+-- }
+
 return completion

@@ -1,6 +1,5 @@
 local editor = {}
 local conf = require("modules.editor.config")
-
 editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 editor["itchyny/vim-cursorword"] = {
 	opt = true,
