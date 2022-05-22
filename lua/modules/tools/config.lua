@@ -4,11 +4,11 @@ function config.telescope()
 		vim.cmd([[packadd sqlite.lua]])
 	end
 
-	if not packer_plugins["telescope-project.nvim"].loaded then
-		vim.cmd([[packadd telescope-project.nvim]])
-	end
-
 	if not packer_plugins["telescope-frecency.nvim"].loaded then
+		vim.cmd([[packadd telescope-frecency.nvim]])
+	end
+	
+	if not packer_plugins["project.nvim"].loaded then
 		vim.cmd([[packadd telescope-frecency.nvim]])
 	end
 
@@ -23,7 +23,7 @@ function config.telescope()
 	if not packer_plugins["telescope-zoxide"].loaded then
 		vim.cmd([[packadd telescope-zoxide]])
 	end
-
+	require("project_nvim").setup()
 	require("telescope").setup({
 		defaults = {
 			prompt_prefix = "🔭 ",
@@ -63,10 +63,10 @@ function config.telescope()
 			},
 		},
 	})
-	require("telescope").load_extension("project")
+	require("telescope").load_extension("projects")
 	require("telescope").load_extension("frecency")
 	require("telescope").load_extension("aerial")
-    require("telescope").load_extension("live_grep_raw")
+	require("telescope").load_extension("live_grep_raw")
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("ultisnips")
 	require("telescope").load_extension("vim_bookmarks")

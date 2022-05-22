@@ -106,7 +106,7 @@ local dashboard_config = function()
 		},
 		find_project = {
 			description = { " Project find               leader f p " },
-			command = "Telescope project",
+			command = "Telescope projects",
 		},
 		find_file = {
 			description = { " File find                  leader f f " },

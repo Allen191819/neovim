@@ -16,6 +16,12 @@ completion["tami5/lspsaga.nvim"] = {
 	after = "nvim-lspconfig",
 	config = conf.lspsaga,
 }
+
+completion["kosayoda/nvim-lightbulb"] = {
+	opt = true,
+	after = "nvim-lspconfig",
+	config = conf.lightbulb,
+}
 completion["onsails/lspkind-nvim"] = { opt = false, config = conf.lspkind }
 completion["ray-x/lsp_signature.nvim"] = { opt = true, after = "nvim-lspconfig" }
 completion["hrsh7th/nvim-cmp"] = {
@@ -39,11 +45,8 @@ completion["hrsh7th/nvim-cmp"] = {
 			event = "InsertEnter",
 			config = conf.tabnine,
 		},
+		{ "zbirenbaum/copilot-cmp" },
 	},
-}
-completion["zbirenbaum/copilot-cmp"] = {
-	opt = true,
-	after = { "copilot.lua", "nvim-cmp" },
 }
 completion["zbirenbaum/copilot.lua"] = {
 	opt = true,
@@ -70,16 +73,11 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 	after = "nvim-lspconfig",
 }
 
--- completion["kosayoda/nvim-lightbulb"] = {
--- 	opt = true,
--- 	after = "nvim-lspconfig",
--- 	config = conf.lightbulb,
--- }
 -- completion["github/copilot.vim"] = {
---     opt = true,
---     --    cmd = "Copilot",
---     event = "InsertEnter",
---     config = conf.copilot
+-- 	opt = true,
+-- 	--    cmd = "Copilot",
+-- 	event = "InsertEnter",
+-- 	config = conf.copilot,
 -- }
 
 return completion

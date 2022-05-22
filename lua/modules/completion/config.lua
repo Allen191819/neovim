@@ -3,11 +3,11 @@ function config.nvim_lsp()
 	require("modules.completion.lsp")
 end
 
--- function config.lightbulb()
--- 	vim.cmd(
--- 		[[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = false, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = true, text = "💡", text_unavailable = "" } }]]
--- 	)
--- end
+function config.lightbulb()
+	vim.cmd(
+		[[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = false, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = true, text = "💡", text_unavailable = "" } }]]
+	)
+end
 
 function config.lspkind()
 	local lspkind = require("lspkind")
@@ -142,7 +142,7 @@ function config.cmp()
 				end
 			end, { "i", "s" }),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
-				if rquire("neogen").jumpable(true) then
+				if require("neogen").jumpable(true) then
 					require("neogen").jump_prev()
 				else
 					cmp_ultisnips_mappings.jump_backwards(fallback)
@@ -164,7 +164,7 @@ function config.cmp()
 			{ name = "latex_symbols", group_index = 2, max_item_count = 5 },
 			{ name = "vim_dadbod_completion", group_index = 2, max_item_count = 3 },
 			{ name = "cmp_tabnine", group_index = 2, max_item_count = 3 },
-			{ name = "copilot", group_index = 2, max_item_count = 3, priority = 500 },
+			{ name = "copilot", group_index = 2, max_item_count = 3 },
 			{ name = "emoji", group_index = 2, max_item_count = 5 },
 			{ name = "neorg", group_index = 2, max_item_count = 5 },
 			{
@@ -177,7 +177,7 @@ function config.cmp()
 				},
 			},
 		},
-		experimental = { native_menu = false, ghost_text = true },
+		experimental = { native_menu = false, ghost_text = false },
 		preselect = types.cmp.PreselectMode.Item,
 		completion = {
 			autocomplete = { types.cmp.TriggerEvent.TextChanged },
@@ -221,9 +221,9 @@ function config.autopairs()
 end
 
 function config.copilot()
-	vim.cmd([[ imap <silent><script><expr> <A-h> copilot#Accept("\<CR>") ]])
-	vim.cmd([[ let g:copilot_no_tab_map = v:true ]])
-	vim.cmd([[ highlight CopilotSuggestion guifg=#EBCB8B ctermfg=8 ]])
+		vim.cmd([[ imap <silent><script><expr> <A-h> copilot#Accept("\<CR>") ]])
+	 	vim.cmd([[ let g:copilot_no_tab_map = v:true ]])
+	 	vim.cmd([[ highlight CopilotSuggestion guifg=#EBCB8B ctermfg=8 ]])
 end
 
 function config.lean()
@@ -247,7 +247,7 @@ function config.lean()
 			update_in_insert = true,
 		})
 
-		if client.resolved_capabilities.document_formatting then
+		if client.server_capabilities.document_formatting then
 			vim.cmd([[augroup Format]])
 			vim.cmd([[autocmd! * <buffer>]])
 			vim.cmd([[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]])
@@ -283,9 +283,9 @@ function config.lspsaga()
 		code_action_icon = " ",
 		code_action_prompt = {
 			enable = true,
-			sign = true,
+			sign = false,
 			sign_priority = 10,
-			virtual_text = true,
+			virtual_text = false,
 		},
 		finder_definition_icon = "  ",
 		finder_reference_icon = "  ",
@@ -317,13 +317,6 @@ function config.lspsaga()
 		diagnostic_prefix_format = "%d. ",
 		diagnostic_message_format = "%m %c",
 		highlight_prefix = true,
-	})
-	vim.diagnostic.config({
-		virtual_text = false,
-		signs = true,
-		underline = false,
-		update_in_insert = false,
-		severity_sort = true,
 	})
 end
 

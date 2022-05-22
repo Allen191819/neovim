@@ -13,7 +13,7 @@ tools["nvim-telescope/telescope.nvim"] = {
 		{ "nvim-lua/popup.nvim", opt = true },
 	},
 }
-tools["nvim-telescope/telescope-project.nvim"] = {
+tools["ahmedkhalf/project.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",
 }

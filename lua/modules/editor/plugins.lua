@@ -154,4 +154,5 @@ editor["lewis6991/impatient.nvim"] = { opt = false }
 editor["hkupty/iron.nvim"] = { opt = true, cmd = { "IronRepl" }, config = conf.iron }
 editor["brooth/far.vim"] = { opt = false, config = conf.far_vim }
 editor["danymat/neogen"] = { opt = true, after = "nvim-treesitter", config = conf.neogen }
+
 return editor

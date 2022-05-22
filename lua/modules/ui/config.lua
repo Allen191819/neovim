@@ -188,6 +188,7 @@ function config.lualine()
 end
 
 function config.nvim_tree()
+	vim.g.nvim_tree_respect_buf_cwd = 1
 	local tree_cb = require("nvim-tree.config").nvim_tree_callback
 	require("nvim-tree").setup({
 		auto_reload_on_write = true,
@@ -525,5 +526,4 @@ function config.web_icons()
 		default = true,
 	})
 end
-
 return config

@@ -68,7 +68,7 @@ local function goto_definition(split_cmd)
 end
 
 local function lsp_highlight_document(client)
-	if client.resolved_capabilities.document_highlight then
+	if client.server_capabilities.document_highlight then
 		vim.api.nvim_exec(
 			[[
       augroup lsp_document_highlight
@@ -147,13 +147,20 @@ local function custom_attach(client)
 		handler_opts = { "double" },
 	})
 
-	if client.resolved_capabilities.document_formatting then
+	if client.server_capabilities.document_formatting then
 		vim.cmd([[augroup Format]])
 		vim.cmd([[autocmd! * <buffer>]])
 		vim.cmd([[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]])
 		vim.cmd([[augroup END]])
 	end
 	lsp_highlight_document(client)
+	vim.diagnostic.config({
+		virtual_text = false,
+		signs = true,
+		underline = false,
+		update_in_insert = false,
+		severity_sort = true,
+	})
 end
 
 local function switch_source_header_splitcmd(bufnr, splitcmd)
@@ -179,7 +186,7 @@ local enhance_server_opts = {
 		opts.args = { "-config ~/.config/sqls/config.yml" }
 		opts.filetypes = { "sql", "mysql" }
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = false
+			client.server_capabilities.document_formatting = false
 			custom_attach(client)
 		end
 	end,
@@ -199,7 +206,7 @@ local enhance_server_opts = {
 			},
 		}
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = false
+			client.server_capabilities.document_formatting = false
 			custom_attach(client)
 		end
 	end,
@@ -235,7 +242,7 @@ local enhance_server_opts = {
 		}
 		-- Disable `clangd`'s format
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = false
+			client.server_capabilities.document_formatting = false
 			custom_attach(client)
 		end
 	end,
@@ -291,18 +298,22 @@ local enhance_server_opts = {
 				},
 			},
 		}
+		opts.on_attach = function(client)
+			client.server_capabilities.document_formatting = false
+			custom_attach(client)
+		end
 	end,
 	["tsserver"] = function(opts)
 		-- Disable `tsserver`'s format
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = false
+			client.server_capabilities.document_formatting = false
 			custom_attach(client)
 		end
 	end,
 	["dockerls"] = function(opts)
 		-- Disable `dockerls`'s format
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = false
+			client.server_capabilities.document_formatting = false
 			custom_attach(client)
 		end
 	end,
@@ -317,13 +328,13 @@ local enhance_server_opts = {
 			},
 		}
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = true
+			client.server_capabilities.document_formatting = true
 			custom_attach(client)
 		end
 	end,
 	["r_language_server"] = function(opts)
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = true
+			client.server_capabilities.document_formatting = true
 			custom_attach(client)
 		end
 	end,
@@ -341,27 +352,27 @@ local enhance_server_opts = {
 		}
 		-- Disable `gopls`'s format
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = false
+			client.server_capabilities.document_formatting = false
 			custom_attach(client)
 		end
 	end,
 	["remark_ls"] = function(opts)
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = false
+			client.server_capabilities.document_formatting = false
 			custom_attach(client)
 		end
 	end,
 	["jdtls"] = function(opts)
 		opts.single_file_support = true
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = true
+			client.server_capabilities.document_formatting = true
 			custom_attach(client)
 		end
 	end,
 	["phpactor"] = function(opts)
 		opts.single_file_support = true
 		opts.on_attach = function(client)
-			client.resolved_capabilities.document_formatting = true
+			client.server_capabilities.document_formatting = true
 			custom_attach(client)
 		end
 	end,
@@ -382,7 +393,7 @@ end)
 
 nvim_lsp.html.setup({
 	cmd = { "vscode-html-languageserver", "--stdio" },
-	filetypes = { "html" },
+	filetypes = { "html", "htmldjango" },
 	init_options = {
 		configurationSection = { "html", "css", "javascript" },
 		embeddedLanguages = { css = true, javascript = true },
@@ -392,7 +403,7 @@ nvim_lsp.html.setup({
 	flags = { debounce_text_changes = 500 },
 	capabilities = capabilities,
 	on_attach = function(client)
-		client.resolved_capabilities.document_formatting = false
+		client.server_capabilities.document_formatting = false
 		custom_attach(client)
 	end,
 })
@@ -402,7 +413,7 @@ nvim_lsp.hls.setup({
 	capabilities = capabilities,
 	on_attach = function(client)
 		require("aerial").on_attach(client)
-		client.resolved_capabilities.document_formatting = true
+		client.server_capabilities.document_formatting = true
 		custom_attach(client)
 	end,
 })
@@ -474,4 +485,5 @@ efmls.setup({
 	markdown = { formatter = prettier },
 	rust = { formatter = rustfmt },
 	sql = { formatter = sqlfmt },
+	htmldjango = { formatter = prettier },
 })
