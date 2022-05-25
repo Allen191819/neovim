@@ -137,12 +137,7 @@ function config.makrkdown_preview()
 	vim.g.mkdp_browser = "surf"
 	vim.g.mkdp_page_title = "「${name}」"
 	vim.g.mkdp_filetypes = { "markdown" }
-	vim.g.mkdp_preview_options = {
-		hide_yaml_meta = 1,
-		disable_filename = 1,
-		theme = "light",
-	}
-	vim.g.mkdp_markdown_css = "/home/allen/.config/nvim/color/markdown.css"
+	vim.g.mkdp_theme = "dark"
 	vim.g.spelllang = "nl,en-gb"
 	vim.g.vmt_auto_update_on_save = 1
 	--vim.cmd([[

@@ -59,7 +59,6 @@ tools["folke/trouble.nvim"] = {
 	cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
 	config = conf.trouble,
 }
-tools["dstein64/vim-startuptime"] = { opt = true }
 tools["sindrets/diffview.nvim"] = {
 	opt = true,
 	cmd = { "DiffviewFileHistory", "DiffviewOpen" },

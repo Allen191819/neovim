@@ -17,7 +17,7 @@ editor["terrortylor/nvim-comment"] = {
 	end,
 }
 editor["nvim-treesitter/nvim-treesitter"] = {
-	opt = true,
+	opt = false,
 	run = ":TSUpdate",
 	event = { "BufRead", "BufNewFile" },
 	config = conf.nvim_treesitter,

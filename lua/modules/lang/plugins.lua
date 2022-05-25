@@ -18,7 +18,7 @@ lang["simrat39/rust-tools.nvim"] = {
 	requires = { { "nvim-lua/plenary.nvim", opt = false } },
 }
 lang["chrisbra/csv.vim"] = { opt = true, ft = "csv" }
-lang["yaocccc/markdown-preview.nvim"] = {
+lang["iamcco/markdown-preview.nvim"] = {
 	opt = true,
 	ft = "markdown",
 	run = "cd app && yarn install",
@@ -41,5 +41,5 @@ lang["fladson/vim-kitty"] = {
 	opt = true,
 	ft = "kitty",
 }
-lang["nvim-neorg/neorg"] = {opt = true, after="nvim-treesitter",config=conf.neorg}
+lang["nvim-neorg/neorg"] = { opt = true, after = "nvim-treesitter", config = conf.neorg }
 return lang

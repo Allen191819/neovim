@@ -1,4 +1,4 @@
-require("modules.completion.formatting")
+local formatting = require("modules.completion.formatting")
 
 vim.cmd([[packadd cmp-nvim-lsp]])
 
@@ -299,7 +299,7 @@ local enhance_server_opts = {
 			},
 		}
 		opts.on_attach = function(client)
-			client.server_capabilities.document_formatting = false
+			client.server_capabilities.document_formatting = true
 			custom_attach(client)
 		end
 	end,
@@ -487,3 +487,5 @@ efmls.setup({
 	sql = { formatter = sqlfmt },
 	htmldjango = { formatter = prettier },
 })
+
+formatting.configure_format_on_save()
