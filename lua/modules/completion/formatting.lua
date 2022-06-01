@@ -1,6 +1,6 @@
 local M = {}
 
-local format_on_save = true
+local format_on_save = false
 
 vim.cmd([[command! FormatToggle lua require'modules.completion.formatting'.toggle_format_on_save()]])
 
@@ -21,7 +21,7 @@ end
 
 function M.disable_format_on_save()
 	pcall(vim.api.nvim_del_augroup_by_name, "format_on_save")
-	vim.notify("Disabled format-on-save", vim.log.levels.INFO)
+	-- vim.notify("Disabled format-on-save", vim.log.levels.INFO)
 end
 
 function M.configure_format_on_save()
@@ -60,7 +60,7 @@ end
 function M.format(opts)
 	if vim.lsp.buf.format then
 		vim.lsp.buf.format(opts)
-		vim.notify("Format successfully!", vim.log.levels.INFO)
+		-- vim.notify("Format successfully!", vim.log.levels.INFO)
 		return
 	end
 
@@ -93,7 +93,7 @@ function M.format(opts)
 		local result, err = client.request_sync("textDocument/formatting", params, timeout_ms, bufnr)
 		if result and result.result then
 			vim.lsp.util.apply_text_edits(result.result, bufnr, client.offset_encoding)
-			vim.notify(string.format("Format successfully with %s!", client.name), vim.log.levels.INFO)
+			-- vim.notify(string.format("Format successfully with %s!", client.name), vim.log.levels.INFO)
 		elseif err then
 			vim.notify(string.format("[LSP][%s] %s", client.name, err), vim.log.levels.WARN)
 		end

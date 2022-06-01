@@ -17,6 +17,7 @@ tools["ahmedkhalf/project.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",
 }
+tools["rcarriga/nvim-notify"] = {opt=false,config=conf.notify}
 tools["nvim-telescope/telescope-frecency.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",
@@ -86,5 +87,6 @@ tools["lambdalisue/suda.vim"] = {
 	cmd = { "SudaRead", "SudaWrite" },
 	config = conf.suda,
 }
+
 
 return tools

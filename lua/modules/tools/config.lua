@@ -7,7 +7,7 @@ function config.telescope()
 	if not packer_plugins["telescope-frecency.nvim"].loaded then
 		vim.cmd([[packadd telescope-frecency.nvim]])
 	end
-	
+
 	if not packer_plugins["project.nvim"].loaded then
 		vim.cmd([[packadd telescope-frecency.nvim]])
 	end
@@ -70,6 +70,7 @@ function config.telescope()
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("ultisnips")
 	require("telescope").load_extension("vim_bookmarks")
+	require("telescope").load_extension("notify")
 end
 
 function config.trouble()
@@ -274,6 +275,27 @@ function config.bookmarks()
 	]])
 	vim.g.bookmark_sign = "📑"
 	vim.g.bookmark_highlight_lines = 1
+end
+function config.notify()
+	vim.notify = require("notify")
+	local notify = require("notify")
+	local user_config = {
+		background_colour = "#000000",
+		fps = 30,
+		icons = {
+			DEBUG = "",
+			ERROR = "",
+			INFO = "",
+			TRACE = "✎",
+			WARN = "",
+		},
+		level = "info",
+		minimum_width = 50,
+		render = "default",
+		stages = "fade_in_slide_out",
+		timeout = 3000,
+	}
+	notify.setup(user_config)
 end
 
 return config

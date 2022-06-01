@@ -12,7 +12,7 @@ function config.rust_tools()
 			handler_opts = { "double" },
 		})
 
-		if client.resolved_capabilities.document_formatting then
+		if client.server_capabilities.document_formatting then
 			vim.cmd([[augroup Format]])
 			vim.cmd([[autocmd! * <buffer>]])
 			vim.cmd([[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]])
@@ -88,7 +88,7 @@ function config.rust_tools()
 		server = {
 			standalone = false,
 			on_attach = function(client)
-				client.resolved_capabilities.document_formatting = false
+				client.server_capabilities.document_formatting = false
 				custom_attach(client)
 			end,
 		}, -- rust-analyer options
