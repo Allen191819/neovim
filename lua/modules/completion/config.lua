@@ -307,7 +307,7 @@ function config.lspsaga()
 			exec = "<CR>",
 		},
 		definition_preview_icon = "  ",
-		border_style = "single",
+		border_style = "rounded",
 		rename_prompt_prefix = "➤",
 		rename_output_qflist = {
 			enable = true,

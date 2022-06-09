@@ -120,8 +120,20 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 local function custom_attach(client)
 	vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
 	vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
-	vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]])
 
+	vim.api.nvim_create_autocmd("CursorHold", {
+		callback = function()
+			local opts = {
+				focusable = false,
+				close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+				border = "rounded",
+				source = "always",
+				prefix = " ",
+				scope = "cursor",
+			}
+			vim.diagnostic.open_float(nil, opts)
+		end,
+	})
 	require("lsp_signature").on_attach({
 		bind = true,
 		use_lspsaga = false,
@@ -130,10 +142,9 @@ local function custom_attach(client)
 		hint_enable = true,
 		hi_parameter = "Search",
 		handler_opts = {
-			border = "none",
+			border = "rounded",
 		},
 	})
-
 	if client.server_capabilities.document_formatting then
 		vim.cmd([[augroup Format]])
 		vim.cmd([[autocmd! * <buffer>]])
@@ -142,7 +153,7 @@ local function custom_attach(client)
 	end
 	lsp_highlight_document(client)
 	vim.diagnostic.config({
-		virtual_text = false,
+		virtual_text = true,
 		signs = true,
 		underline = false,
 		update_in_insert = false,

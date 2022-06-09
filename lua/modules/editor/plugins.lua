@@ -147,6 +147,6 @@ editor["caenrique/nvim-maximize-window-toggle"] = { opt = false }
 editor["lewis6991/impatient.nvim"] = { opt = false }
 editor["hkupty/iron.nvim"] = { opt = true, cmd = { "IronRepl" }, config = conf.iron }
 editor["brooth/far.vim"] = { opt = false, config = conf.far_vim }
-editor["danymat/neogen"] = { opt = true, after = "nvim-treesitter", config = conf.neogen }
+editor["Allen191819/neogen"] = { opt = true, after = "nvim-treesitter",branch="fix/ts_utils" ,config = conf.neogen }
 
 return editor
