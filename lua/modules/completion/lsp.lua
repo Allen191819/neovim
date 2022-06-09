@@ -121,6 +121,7 @@ local function custom_attach(client)
 	vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
 	vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
 	vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]])
+
 	require("lsp_signature").on_attach({
 		bind = true,
 		use_lspsaga = false,

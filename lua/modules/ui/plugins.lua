@@ -32,6 +32,5 @@ ui["akinsho/bufferline.nvim"] = {
 	config = conf.nvim_bufferline,
 }
 ui["marko-cerovac/material.nvim"] = { opt = false, config = conf.material }
-ui["folke/lsp-colors.nvim"] = {opt=false,config=conf.lsp_colors}
 
 return ui
