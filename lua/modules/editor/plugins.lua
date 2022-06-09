@@ -83,14 +83,8 @@ editor["voldikss/vim-floaterm"] = {
 	config = conf.floaterm,
 }
 editor["norcalli/nvim-colorizer.lua"] = {
-	opt = true,
-	event = "BufRead",
+	opt = false,
 	config = conf.nvim_colorizer,
-}
-editor["rmagatti/auto-session"] = {
-	opt = true,
-	cmd = { "SaveSession", "DeleteSession", "RestoreSession" },
-	config = conf.auto_session,
 }
 editor["rcarriga/nvim-dap-ui"] = {
 	opt = false,

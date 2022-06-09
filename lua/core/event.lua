@@ -44,12 +44,12 @@ function autocmd.load_autocmds()
 			{
 				"WinEnter,BufEnter,InsertLeave",
 				"*",
-				[[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]]
+				[[if ! &cursorline && &filetype !~# '^\(startify\|clap_\)' && ! &pvw | setlocal cursorline | endif]]
 			},
 			{
 				"WinLeave,BufLeave,InsertEnter",
 				"*",
-				[[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]]
+				[[if &cursorline && &filetype !~# '^\(startify\|clap_\)' && ! &pvw | setlocal nocursorline | endif]]
 			}, -- Force write shada on leaving nvim
 			{
 				"VimLeave",
@@ -66,7 +66,7 @@ function autocmd.load_autocmds()
 			{"FileType", "make", "set noexpandtab shiftwidth=8 softtabstop=0"},
 			{
 				"FileType",
-				"dashboard",
+				"startify",
 				"set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"
 			},
 			{

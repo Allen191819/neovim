@@ -1,6 +1,5 @@
 local config = {}
 local dap_dir = vim.fn.stdpath("data") .. "/dapinstall/"
-local sessions_dir = vim.fn.stdpath("data") .. "/sessions/"
 
 function config.vim_cursorwod()
 	vim.api.nvim_command("augroup user_plugin_cursorword")
@@ -120,19 +119,6 @@ function config.neoscroll()
 		pre_hook = nil, -- Function to run before the scrolling animation starts
 		post_hook = nil, -- Function to run after the scrolling animation ends
 	})
-end
-
-function config.auto_session()
-	local opts = {
-		log_level = "info",
-		auto_session_enable_last_session = true,
-		auto_session_root_dir = sessions_dir,
-		auto_session_enabled = true,
-		auto_save_enabled = true,
-		auto_restore_enabled = true,
-		auto_session_suppress_dirs = nil,
-	}
-	require("auto-session").setup(opts)
 end
 
 function config.toggleterm()

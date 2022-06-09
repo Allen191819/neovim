@@ -87,6 +87,9 @@ tools["lambdalisue/suda.vim"] = {
 	cmd = { "SudaRead", "SudaWrite" },
 	config = conf.suda,
 }
+tools["itchyny/calendar.vim"] = {
+	opt=false
+}
 
 
 return tools

@@ -4,12 +4,11 @@ local conf = require("modules.ui.config")
 ui["kyazdani42/nvim-web-devicons"] = { opt = false, config = conf.web_icons }
 ui["sainnhe/edge"] = { opt = false, config = conf.edge }
 ui["hoob3rt/lualine.nvim"] = {
-	opt = true,
-	after = "nvim-gps",
+	opt = false,
 	config = conf.lualine,
 }
 ui["arkav/lualine-lsp-progress"] = { opt = true, after = "nvim-lspconfig" }
-ui["glepnir/dashboard-nvim"] = { opt = true, event = "BufWinEnter" }
+ui["mhinz/vim-startify"] = { opt = true, event = "BufWinEnter" , config=conf.startify}
 ui["kyazdani42/nvim-tree.lua"] = {
 	opt = true,
 	cmd = { "NvimTreeToggle", "NvimTreeOpen" },
@@ -33,5 +32,6 @@ ui["akinsho/bufferline.nvim"] = {
 	config = conf.nvim_bufferline,
 }
 ui["marko-cerovac/material.nvim"] = { opt = false, config = conf.material }
+ui["folke/lsp-colors.nvim"] = {opt=false,config=conf.lsp_colors}
 
 return ui

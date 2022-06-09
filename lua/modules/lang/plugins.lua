@@ -37,9 +37,5 @@ lang["ekickx/clipboard-image.nvim"] = {
 lang["h-hg/fcitx.nvim"] = { opt = false, event = "VimEnter" }
 lang["whonore/Coqtail"] = { opt = true, ft = "coq" }
 lang["jalvesaq/Nvim-R"] = { opt = true, ft = "r" }
-lang["fladson/vim-kitty"] = {
-	opt = true,
-	ft = "kitty",
-}
 lang["nvim-neorg/neorg"] = { opt = true, after = "nvim-treesitter", config = conf.neorg }
 return lang

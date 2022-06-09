@@ -36,6 +36,7 @@ local plug_map = {
 	["n|gr"] = map_cr("lua vim.lsp.buf.references()"):with_noremap():with_silent(),
 	["n|gh"] = map_cr("Lspsaga signature_help"):with_noremap():with_silent(),
 	["n|sp"] = map_cr("Lspsaga lsp_finder"):with_noremap():with_silent(),
+	["n|gp"] = map_cr("Lspsaga preview_definition"):with_noremap():with_silent(),
 	-- Git
 	["n|<Leader>g"] = map_cu("Git"):with_noremap():with_silent(),
 	["n|gps"] = map_cr("G push"):with_noremap():with_silent(),
@@ -44,8 +45,8 @@ local plug_map = {
 	-- Plugin trouble
 	["n|gt"] = map_cr("TroubleToggle"):with_noremap():with_silent(),
 	["n|gR"] = map_cr("TroubleToggle lsp_references"):with_noremap():with_silent(),
-	["n|<leader>cd"] = map_cr("TroubleToggle lsp_document_diagnostics"):with_noremap():with_silent(),
-	["n|<leader>cw"] = map_cr("TroubleToggle lsp_workspace_diagnostics"):with_noremap():with_silent(),
+	["n|<leader>cd"] = map_cr("TroubleToggle document_diagnostics"):with_noremap():with_silent(),
+	["n|<leader>cw"] = map_cr("TroubleToggle workspace_diagnostics"):with_noremap():with_silent(),
 	["n|<leader>cq"] = map_cr("TroubleToggle quickfix"):with_noremap():with_silent(),
 	["n|<leader>cl"] = map_cr("TroubleToggle loclist"):with_noremap():with_silent(),
 	-- Plugin nvim-tree
@@ -55,19 +56,19 @@ local plug_map = {
 	-- Undotree
 	["n|<Leader>t"] = map_cr("UndotreeToggle"):with_noremap():with_silent(),
 	-- Plugin Telescope
-	["n|<Leader>fp"] = map_cu("Telescope projects"):with_noremap():with_silent(),
-	["n|<Leader>fr"] = map_cu("lua require('telescope').extensions.frecency.frecency{}"):with_noremap():with_silent(),
-	["n|<Leader>fw"] = map_cu("lua require('telescope').extensions.live_grep_raw.live_grep_raw()")
-		:with_noremap()
-		:with_silent(),
-	["n|<Leader>fe"] = map_cu("DashboardFindHistory"):with_noremap():with_silent(),
-	["n|<Leader>ff"] = map_cu("DashboardFindFile"):with_noremap():with_silent(),
-	["n|<Leader>sc"] = map_cu("DashboardChangeColorscheme"):with_noremap():with_silent(),
-	["n|<Leader>ef"] = map_cu("DashboardNewFile"):with_noremap():with_silent(),
-	["n|<Leader>fg"] = map_cu("Telescope git_files"):with_noremap():with_silent(),
-	["n|<Leader>fz"] = map_cu("Telescope zoxide list"):with_noremap():with_silent(),
-	["n|<Leader>fs"] = map_cu("Telescope symbols"):with_noremap():with_silent(),
-	["n|<Leader>fu"] = map_cu("Telescope current_buffer_fuzzy_find"):with_noremap():with_silent(),
+	["n|<Leader>fr"] = map_cu("Telescope frecency theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>fl"] = map_cu("Telescope ultisnips theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>fn"] = map_cu("Telescope notify theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>fb"] = map_cu("Telescope vim_bookmarks theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>fa"] = map_cu("Telescope aerial theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>fw"] = map_cu("Telescope live_grep_args theme=dropdown") :with_noremap() :with_silent(),
+	["n|<Leader>fp"] = map_cu("Telescope projects theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>ff"] = map_cu("Telescope find_files theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>sc"] = map_cu("Telescope colorscheme theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>fg"] = map_cu("Telescope git_files theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>fz"] = map_cu("Telescope zoxide list theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>fs"] = map_cu("Telescope symbols theme=dropdown"):with_noremap():with_silent(),
+	["n|<Leader>fu"] = map_cu("Telescope current_buffer_fuzzy_find theme=dropdown"):with_noremap():with_silent(),
 	-- Plugin accelerate-jk
 	["n|j"] = map_cmd("v:lua.enhance_jk_move('j')"):with_silent():with_expr(),
 	["n|k"] = map_cmd("v:lua.enhance_jk_move('k')"):with_silent():with_expr(),
@@ -100,9 +101,9 @@ local plug_map = {
 	["n|<leader>th"] = map_cr("Term"):with_noremap():with_silent(),
 	["n|<leader>tv"] = map_cr("VTerm"):with_noremap():with_silent(),
 	-- Plugin auto_session
-	["n|<leader>ss"] = map_cu("SaveSession"):with_noremap():with_silent(),
-	["n|<leader>sr"] = map_cu("RestoreSession"):with_noremap():with_silent(),
-	["n|<leader>sd"] = map_cu("DeleteSession"):with_noremap():with_silent(),
+	["n|<leader>ss"] = map_cu("SSave"):with_noremap():with_silent(),
+	["n|<leader>sr"] = map_cu("SLoad"):with_noremap():with_silent(),
+	["n|<leader>sd"] = map_cu("SDelete"):with_noremap():with_silent(),
 	-- QuickRun
 	["n|<A-e>"] = map_cr("QuickRun"):with_noremap():with_silent(),
 	-- Plugin SnipRun
@@ -136,6 +137,10 @@ local plug_map = {
 	["n|gnc"] = map_cr("Neogen class"):with_noremap():with_silent(),
 	["n|gnt"] = map_cr("Neogen type"):with_noremap():with_silent(),
 	["n|gnl"] = map_cr("Neogen file"):with_noremap():with_silent(),
+	-- Calender
+	["n|,uu"] = map_cr("Calendar"):with_noremap():with_silent(),
+	["n|,uc"] = map_cr("Calendar -view=clock"):with_noremap():with_silent(),
+	["n|,uy"] = map_cr("Calendar -view=year -split=vertical -width=27"):with_noremap():with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)

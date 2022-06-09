@@ -276,13 +276,13 @@ end
 
 function config.lspsaga()
 	local lspsaga = require("lspsaga")
-	lspsaga.setup({ -- defaults ...
+	lspsaga.setup({
 		debug = false,
 		use_saga_diagnostic_sign = false,
 		diagnostic_header_icon = "   ",
 		code_action_icon = " ",
 		code_action_prompt = {
-			enable = true,
+			enable = false,
 			sign = false,
 			sign_priority = 10,
 			virtual_text = false,

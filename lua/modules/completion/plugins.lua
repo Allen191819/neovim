@@ -13,6 +13,7 @@ completion["williamboman/nvim-lsp-installer"] = {
 }
 completion["tami5/lspsaga.nvim"] = {
 	opt = true,
+	branch="main",
 	after = "nvim-lspconfig",
 	config = conf.lspsaga,
 }

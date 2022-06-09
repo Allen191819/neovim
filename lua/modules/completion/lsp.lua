@@ -1,5 +1,4 @@
 local formatting = require("modules.completion.formatting")
-
 vim.cmd([[packadd cmp-nvim-lsp]])
 
 if not packer_plugins["nvim-lsp-installer"].loaded then
@@ -21,6 +20,22 @@ local nvim_lsp = require("lspconfig")
 local lsp_installer = require("nvim-lsp-installer")
 
 local signs = { Error = "✗", Warn = "", Hint = "", Info = "" }
+local lspconfig_window = require("lspconfig.ui.windows")
+
+local old_defaults = lspconfig_window.default_opts
+
+function lspconfig_window.default_opts(opts)
+	local win_opts = old_defaults(opts)
+	win_opts.border = "rounded"
+	return win_opts
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "lsp-installer",
+	callback = function()
+		vim.api.nvim_win_set_config(0, { border = "rounded" })
+	end,
+})
 
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
@@ -38,35 +53,6 @@ local border = {
 	{ "│", "FloatBorder" },
 }
 
-local function goto_definition(split_cmd)
-	local util = vim.lsp.util
-	local log = require("vim.lsp.log")
-	local api = vim.api
-	local handler = function(_, result, ctx)
-		if result == nil or vim.tbl_isempty(result) then
-			local _ = log.info() and log.info(ctx.method, "No location found")
-			return nil
-		end
-
-		if split_cmd then
-			vim.cmd(split_cmd)
-		end
-
-		if vim.tbl_islist(result) then
-			util.jump_to_location(result[1])
-
-			if #result > 1 then
-				util.set_qflist(util.locations_to_items(result))
-				api.nvim_command("copen")
-				api.nvim_command("wincmd p")
-			end
-		else
-			util.jump_to_location(result)
-		end
-	end
-	return handler
-end
-
 local function lsp_highlight_document(client)
 	if client.server_capabilities.document_highlight then
 		vim.api.nvim_exec(
@@ -82,7 +68,6 @@ local function lsp_highlight_document(client)
 	end
 end
 
-vim.lsp.handlers["textDocument/definition"] = goto_definition("split")
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 -- Override default format setting
@@ -144,7 +129,9 @@ local function custom_attach(client)
 		fix_pos = true,
 		hint_enable = true,
 		hi_parameter = "Search",
-		handler_opts = { "double" },
+		handler_opts = {
+			border = "none",
+		},
 	})
 
 	if client.server_capabilities.document_formatting then
