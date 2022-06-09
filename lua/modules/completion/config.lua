@@ -221,9 +221,9 @@ function config.autopairs()
 end
 
 function config.copilot()
-		vim.cmd([[ imap <silent><script><expr> <A-h> copilot#Accept("\<CR>") ]])
-	 	vim.cmd([[ let g:copilot_no_tab_map = v:true ]])
-	 	vim.cmd([[ highlight CopilotSuggestion guifg=#EBCB8B ctermfg=8 ]])
+	vim.cmd([[ imap <silent><script><expr> <A-h> copilot#Accept("\<CR>") ]])
+	vim.cmd([[ let g:copilot_no_tab_map = v:true ]])
+	vim.cmd([[ highlight CopilotSuggestion guifg=#EBCB8B ctermfg=8 ]])
 end
 
 function config.lean()

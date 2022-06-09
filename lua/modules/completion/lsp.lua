@@ -117,7 +117,6 @@ capabilities.textDocument.completion.completionItem.tagSupport = {
 capabilities.textDocument.completion.completionItem.resolveSupport = {
 	properties = { "documentation", "detail", "additionalTextEdits" },
 }
-
 local function custom_attach(client)
 	vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
 	vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
