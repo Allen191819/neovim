@@ -17,7 +17,6 @@ completion["tami5/lspsaga.nvim"] = {
 	after = "nvim-lspconfig",
 	config = conf.lspsaga,
 }
-
 completion["kosayoda/nvim-lightbulb"] = {
 	opt = true,
 	after = "nvim-lspconfig",
