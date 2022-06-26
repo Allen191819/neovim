@@ -76,7 +76,7 @@ function config.cmp()
 		calc = "[Calc]",
 		vim_dadbod_completion = "[DB]",
 		latex_symbols = "[Latex]",
-		copilot = "[AI]",
+		-- copilot = "[AI]",
 		orgmode = "[Org]",
 		look = "Dict",
 		neorg = "Event",
@@ -104,12 +104,12 @@ function config.cmp()
 					end
 					vim_item.kind = ""
 				end
-				if entry.source.name == "copilot" then
-					if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-						menu = entry.completion_item.data.detail .. " " .. menu
-					end
-					vim_item.kind = ""
-				end
+				-- if entry.source.name == "copilot" then
+				-- 	if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+				-- 		menu = entry.completion_item.data.detail .. " " .. menu
+				-- 	end
+				-- 	vim_item.kind = ""
+				-- end
 				if entry.source.name == "look" then
 					if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
 						menu = entry.completion_item.data.detail .. " " .. menu
@@ -164,7 +164,7 @@ function config.cmp()
 			{ name = "latex_symbols", group_index = 2, max_item_count = 5 },
 			{ name = "vim_dadbod_completion", group_index = 2, max_item_count = 3 },
 			{ name = "cmp_tabnine", group_index = 2, max_item_count = 3 },
-			{ name = "copilot", group_index = 2, max_item_count = 3 },
+			--{ name = "copilot", group_index = 2, max_item_count = 3 },
 			{ name = "emoji", group_index = 2, max_item_count = 5 },
 			{ name = "neorg", group_index = 2, max_item_count = 5 },
 			{
@@ -219,11 +219,11 @@ function config.autopairs()
 	cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 end
 
-function config.copilot()
-	vim.cmd([[ imap <silent><script><expr> <A-h> copilot#Accept("\<CR>") ]])
-	vim.cmd([[ let g:copilot_no_tab_map = v:true ]])
-	vim.cmd([[ highlight CopilotSuggestion guifg=#EBCB8B ctermfg=8 ]])
-end
+-- function config.copilot()
+-- 	vim.cmd([[ imap <silent><script><expr> <A-h> copilot#Accept("\<CR>") ]])
+-- 	vim.cmd([[ let g:copilot_no_tab_map = v:true ]])
+-- 	vim.cmd([[ highlight CopilotSuggestion guifg=#EBCB8B ctermfg=8 ]])
+-- end
 
 function config.lean()
 	vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])

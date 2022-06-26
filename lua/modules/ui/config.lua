@@ -557,6 +557,12 @@ function config.web_icons()
 				cterm_color = "65",
 				name = "org",
 			},
+			norg = {
+				icon = "",
+				color = "#77A997",
+				cterm_color = "65",
+				name = "norg",
+			},
 			snippets = {
 				icon = "",
 				color = "#ec5f67",

@@ -13,7 +13,7 @@ completion["williamboman/nvim-lsp-installer"] = {
 }
 completion["tami5/lspsaga.nvim"] = {
 	opt = true,
-	branch="main",
+	branch = "main",
 	after = "nvim-lspconfig",
 	config = conf.lspsaga,
 }
@@ -38,21 +38,21 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql" } },
 		{ "hrsh7th/cmp-emoji", ft = { "markdown" } },
 		{ "octaltree/cmp-look", after = "nvim-cmp" },
-		--{"hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp"},
 		{
 			"tzachar/cmp-tabnine",
 			run = "./install.sh",
 			event = "InsertEnter",
 			config = conf.tabnine,
 		},
-		{ "zbirenbaum/copilot-cmp" },
+		--{"hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp"},
+		--{ "zbirenbaum/copilot-cmp" },
 	},
 }
-completion["zbirenbaum/copilot.lua"] = {
-	opt = true,
-	event = { "VimEnter" },
-	config = conf.copilot_cmp,
-}
+-- completion["zbirenbaum/copilot.lua"] = {
+-- 	opt = true,
+-- 	event = { "VimEnter" },
+-- 	config = conf.copilot_cmp,
+-- }
 completion["SirVer/ultisnips"] = {
 	opt = false,
 	config = conf.ultisnips,
