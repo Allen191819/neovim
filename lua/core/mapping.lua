@@ -56,10 +56,10 @@ local def_map = {
 	-- Toggle format
 	["n|<A-f>"] = map_cr("FormatToggle"):with_noremap():with_silent(),
 	-- Resize windows
-    ["n|<up>"] = map_cmd(":res +5<CR>"),
-    ["n|<down>"] = map_cmd(":res -5<CR>"),
-    ["n|<left>"] = map_cmd(":vertical resize-5<CR>"),
-    ["n|<right>"] = map_cmd(":vertical resize+5<CR>"),
+    ["n|<up>"] = map_cmd(":res +5<CR>"):with_noremap():with_silent(),
+    ["n|<down>"] = map_cmd(":res -5<CR>"):with_noremap():with_silent(),
+    ["n|<left>"] = map_cmd(":vertical resize-5<CR>"):with_noremap():with_silent(),
+    ["n|<right>"] = map_cmd(":vertical resize+5<CR>"):with_noremap():with_silent(),
 }
 
 bind.nvim_load_mapping(def_map)

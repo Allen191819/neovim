@@ -70,7 +70,6 @@ end
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
--- Override default format setting
 vim.lsp.handlers["textDocument/formatting"] = function(err, result, ctx)
 	if err ~= nil or result == nil then
 		return
@@ -153,7 +152,7 @@ local function custom_attach(client)
 	end
 	lsp_highlight_document(client)
 	vim.diagnostic.config({
-		virtual_text = true,
+		virtual_text = false,
 		signs = true,
 		underline = false,
 		update_in_insert = false,
