@@ -70,6 +70,7 @@ end
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+-- Override default format setting
 vim.lsp.handlers["textDocument/formatting"] = function(err, result, ctx)
 	if err ~= nil or result == nil then
 		return
@@ -335,24 +336,23 @@ local enhance_server_opts = {
 			custom_attach(client)
 		end
 	end,
-	["gopls"] = function(opts)
-		opts.settings = {
-			gopls = {
-				usePlaceholders = true,
-				analyses = {
-					nilness = true,
-					shadow = true,
-					unusedparams = true,
-					unusewrites = true,
-				},
-			},
-		}
-		-- Disable `gopls`'s format
-		opts.on_attach = function(client)
-			client.server_capabilities.document_formatting = false
-			custom_attach(client)
-		end
-	end,
+-- 	["gopls"] = function(opts)
+-- 		opts.settings = {
+-- 			gopls = {
+-- 				usePlaceholders = true,
+-- 				analyses = {
+-- 					nilness = true,
+-- 					shadow = true,
+-- 					unusedparams = true,
+-- 					unusewrites = true,
+-- 				},
+-- 			},
+-- 		}
+-- 		opts.on_attach = function(client)
+-- 			client.server_capabilities.document_formatting = false
+-- 			custom_attach(client)
+-- 		end
+-- 	end,
 	["remark_ls"] = function(opts)
 		opts.on_attach = function(client)
 			client.server_capabilities.document_formatting = false
@@ -465,7 +465,7 @@ efmls.setup({
 	lua = { formatter = luafmt },
 	c = { formatter = clangfmt, linter = clangtidy },
 	cpp = { formatter = clangfmt, linter = clangtidy },
-	go = { formatter = goimports, linter = staticcheck },
+	-- go = { formatter = goimports, linter = staticcheck },
 	latex = { linter = alex },
 	-- python = {formatter = yapf},
 	vue = { formatter = prettier },
@@ -480,7 +480,7 @@ efmls.setup({
 	scss = { formatter = prettier },
 	sh = { formatter = shfmt, linter = shellcheck },
 	markdown = { formatter = prettier },
-	rust = { formatter = rustfmt },
+	-- rust = { formatter = rustfmt },
 	sql = { formatter = sqlfmt },
 	htmldjango = { formatter = prettier },
 })

@@ -10,12 +10,10 @@ lang["ray-x/go.nvim"] = {
 		after = "go.nvim",
 	},
 }
-lang["rust-lang/rust.vim"] = { opt = true, ft = "rust" }
 lang["simrat39/rust-tools.nvim"] = {
 	opt = true,
 	ft = "rust",
 	config = conf.rust_tools,
-	requires = { { "nvim-lua/plenary.nvim", opt = false } },
 }
 lang["chrisbra/csv.vim"] = { opt = true, ft = "csv" }
 lang["iamcco/markdown-preview.nvim"] = {
@@ -38,4 +36,9 @@ lang["h-hg/fcitx.nvim"] = { opt = false, event = "VimEnter" }
 lang["whonore/Coqtail"] = { opt = true, ft = "coq" }
 lang["jalvesaq/Nvim-R"] = { opt = true, ft = "r" }
 lang["nvim-neorg/neorg"] = { opt = true, after = "nvim-treesitter", config = conf.neorg }
+lang["Julian/lean.nvim"] = {
+	opt = true,
+	config = conf.lean,
+	after = { "nvim-treesitter", "nvim-lspconfig" },
+}
 return lang

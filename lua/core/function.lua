@@ -10,8 +10,7 @@ func! CompileRunGccH()
 		exec "!g++ -std=c++11 % -Wall -o %< -g"
 		:FloatermNew --position=bottom --wintype=split --height=0.35 time ./%<
 	elseif &filetype == 'rust'
-		exec "!rustc %"
-		:FloatermNew --position=bottom --wintype=split --height=0.35 time ./%<
+		:RustRunnable
 	elseif &filetype == 'java'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 javac % && java %<
 	elseif &filetype == 'haskell'

@@ -62,11 +62,6 @@ completion["windwp/nvim-autopairs"] = {
 	after = "nvim-cmp",
 	config = conf.autopairs,
 }
-completion["Julian/lean.nvim"] = {
-	opt = true,
-	config = conf.lean,
-	after = { "nvim-treesitter", "nvim-lspconfig" },
-}
 completion["kristijanhusak/vim-dadbod-completion"] = {
 	opt = true,
 	config = conf.dadbod,

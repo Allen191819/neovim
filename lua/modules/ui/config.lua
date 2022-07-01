@@ -448,7 +448,7 @@ function config.gitsigns()
 					gs.next_hunk()
 				end)
 				return "<Ignore>"
-			end, { expr = true ,silent = true})
+			end, { expr = true, silent = true })
 
 			map("n", "[c", function()
 				if vim.wo.diff then
@@ -458,7 +458,7 @@ function config.gitsigns()
 					gs.prev_hunk()
 				end)
 				return "<Ignore>"
-			end, { expr = true ,silent = true})
+			end, { expr = true, silent = true })
 
 			-- Actions
 			map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>")
@@ -581,5 +581,16 @@ function config.startify()
 	]]
 end
 
+function config.popui()
+	vim.ui.select = require("popui.ui-overrider")
+	vim.ui.input = require("popui.input-overrider")
+	vim.g.popui_border_style = "rounded"
+end
+
+function config.guihua()
+	require("guihua.maps").setup({
+		maps = {},
+	})
+end
 
 return config

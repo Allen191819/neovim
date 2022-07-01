@@ -8,7 +8,8 @@ ui["hoob3rt/lualine.nvim"] = {
 	config = conf.lualine,
 }
 ui["arkav/lualine-lsp-progress"] = { opt = true, after = "nvim-lspconfig" }
-ui["mhinz/vim-startify"] = { opt = true, event = "BufWinEnter" , config=conf.startify}
+ui["mhinz/vim-startify"] = { opt = true, event = "BufWinEnter", config = conf.startify }
+ui["hood/popui.nvim"] = { opt = false, config = conf.popui }
 ui["kyazdani42/nvim-tree.lua"] = {
 	opt = true,
 	cmd = { "NvimTreeToggle", "NvimTreeOpen" },
@@ -32,5 +33,6 @@ ui["akinsho/bufferline.nvim"] = {
 	config = conf.nvim_bufferline,
 }
 ui["marko-cerovac/material.nvim"] = { opt = false, config = conf.material }
+ui['ray-x/guihua.lua']={opt=false, run = 'cd lua/fzy && make',config=conf.guihua}
 
 return ui

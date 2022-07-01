@@ -1,10 +1,24 @@
 local config = {}
 
 function config.rust_tools()
+	local function lsp_highlight_document(client)
+		if client.server_capabilities.document_highlight then
+			vim.api.nvim_exec(
+				[[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]],
+				false
+			)
+		end
+	end
+
 	local function custom_attach(client)
 		vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
 		vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
-
 		vim.api.nvim_create_autocmd("CursorHold", {
 			callback = function()
 				local opts = {
@@ -45,22 +59,20 @@ function config.rust_tools()
 		})
 	end
 
+	local extension_path = vim.env.HOME .. "/.local/share/nvim/rust-debug/codelldb-x86_64-linux/extension/"
+	local codelldb_path = extension_path .. "adapter/codelldb"
+	local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
 	local opts = {
 		tools = {
 			autoSetHints = true,
 			hover_with_actions = true,
-			runnables = {
-				use_telescope = true,
-			},
-			debuggables = {
-				use_telescope = true,
-			},
+			executor = require("rust-tools/executors").termopen,
 			inlay_hints = {
 				only_current_line = false,
 				only_current_line_autocmd = "CursorHold",
 				show_parameter_hints = true,
-				parameter_hints_prefix = "<- ",
-				other_hints_prefix = " » ",
+				parameter_hints_prefix = "  ",
+				other_hints_prefix = "  » ",
 				max_len_align = false,
 				max_len_align_padding = 1,
 				right_align = false,
@@ -83,44 +95,113 @@ function config.rust_tools()
 		server = {
 			standalone = false,
 			on_attach = function(client)
-				client.server_capabilities.document_formatting = false
+				client.server_capabilities.document_formatting = true
 				custom_attach(client)
 			end,
 		}, -- rust-analyer options
+		dap = {
+			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+		},
 	}
 	require("rust-tools").setup(opts)
 end
 
 function config.lang_go()
-	local path = require("nvim-lsp-installer.path")
-	local install_root_dir = path.concat({ vim.fn.stdpath("data"), "lsp_servers" })
+	local function lsp_highlight_document(client)
+		if client.server_capabilities.document_highlight then
+			vim.api.nvim_exec(
+				[[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]],
+				false
+			)
+		end
+	end
 
+	local function custom_attach(client)
+		vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
+		vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
+		vim.api.nvim_create_autocmd("CursorHold", {
+			callback = function()
+				local opts = {
+					focusable = false,
+					close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+					border = "rounded",
+					source = "always",
+					prefix = " ",
+					scope = "cursor",
+				}
+				vim.diagnostic.open_float(nil, opts)
+			end,
+		})
+		require("lsp_signature").on_attach({
+			bind = true,
+			use_lspsaga = false,
+			floating_window = true,
+			fix_pos = true,
+			hint_enable = true,
+			hi_parameter = "Search",
+			handler_opts = {
+				border = "rounded",
+			},
+		})
+		if client.server_capabilities.document_formatting then
+			vim.cmd([[augroup Format]])
+			vim.cmd([[autocmd! * <buffer>]])
+			vim.cmd([[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]])
+			vim.cmd([[augroup END]])
+		end
+		lsp_highlight_document(client)
+		vim.diagnostic.config({
+			virtual_text = false,
+			signs = true,
+			underline = false,
+			update_in_insert = false,
+			severity_sort = true,
+		})
+	end
+
+	local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 	require("go").setup({
 		go = "go", -- go command, can be go[default] or go1.18beta1
-		goimport = "gopls", -- goimport command, can be gopls[default] or goimport
-		fillstruct = "gopls", -- can be nil (use fillstruct, slower) and gopls
-		gofmt = "gofumpt", -- gofmt cmd,
-		gopls_cmd = { install_root_dir .. "/go/gopls" },
+		goimport = "goimport", -- goimport command, can be gopls[default] or goimport
+		gopls_cmd = { "gopls" },
 		max_line_len = 120, -- max line length in goline format
-		tag_transform = false, -- tag_transfer  check gomodifytags for details
-		comment_placeholder = "ﳑ ", -- comment_placeholder your cool placeholder e.g. ﳑ       
-		icons = { breakpoint = "🧘", currentpos = "🏃" },
+		tag_transform = true, -- tag_transfer  check gomodifytags for details
+		fillstruct = "gopls", -- can be nil (use fillstruct, slower) and gopls
+		gofmt = "gofumpt", --gofmt cmd,
+		comment_placeholder = "",
+		icons = { breakpoint = "🧘", currentpos = "🏃" }, -- setup to `false` to disable icons setup
 		verbose = false, -- output loginf in messages
-		lsp_cfg = true, -- true: use non-default gopls setup specified in go/lsp.lua
-		lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
-		lsp_codelens = true, -- set to false to disable codelens, true by default
+		lsp_cfg = {
+			capabilities = capabilities,
+			on_attach = function(client)
+				client.server_capabilities.document_formatting = true
+				custom_attach(client)
+			end,
+		},
+		lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
+		lsp_keymaps = false, -- set to false to disable gopls/lsp keymap
+		lsp_codelens = false, -- set to false to disable codelens, true by default, you can use a function
 		lsp_diag_hdlr = true, -- hook lsp diag handler
+		lsp_diag_virtual_text = { space = 0, prefix = "" },
+		lsp_diag_signs = true,
+		lsp_diag_update_in_insert = false,
 		lsp_document_formatting = true,
 		gopls_remote_auto = true, -- add -remote=auto to gopls
 		dap_debug = true, -- set to false to disable dap
-		dap_debug_keymap = false, -- true: use keymap for debugger defined in go/dap.lua
+		dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
 		dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
 		dap_debug_vt = false, -- set to true to enable dap virtual text
 		build_tags = "tag1,tag2", -- set default build tags
 		textobjects = false, -- enable default text jobects through treesittter-text-objects
-		test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
-		run_in_floaterm = true, -- set to true to run in float window.
-		filstruct = "gopls",
+		test_runner = "go", -- one of {`go`, `richgo`, `dlv`, `ginkgo`}
+		verbose_tests = true, -- set to add verbose flag to tests
+		run_in_floaterm = true, -- set to true to run in float window. :GoTermClose closes the floatterm
 	})
 end
 
@@ -189,6 +270,7 @@ function config.latex()
 	autocmd BufRead,BufNewFile *.tex setlocal spell
 	]])
 end
+
 function config.neorg()
 	if not packer_plugins["nvim-cmp"].loaded then
 		vim.cmd([[packadd nvim-cmp]])
@@ -224,4 +306,49 @@ function config.neorg()
 		},
 	}
 end
+
+function config.lean()
+	vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
+	vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
+	local function custom_attach_lean(client)
+		require("lsp_signature").on_attach({
+			bind = true,
+			use_lspsaga = false,
+			floating_window = true,
+			fix_pos = true,
+			hint_enable = true,
+			hi_parameter = "Search",
+			handler_opts = { "double" },
+		})
+
+		vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+			signs = false,
+			underline = false,
+			virtual_text = { spacing = 15, prefix = "" },
+			update_in_insert = true,
+		})
+
+		if client.server_capabilities.document_formatting then
+			vim.cmd([[augroup Format]])
+			vim.cmd([[autocmd! * <buffer>]])
+			vim.cmd([[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]])
+			vim.cmd([[augroup END]])
+		end
+	end
+	require("lean").setup({
+		abbreviations = { builtin = true, extra = { wknight = "♘" } },
+		lsp = { on_attach = custom_attach_lean },
+		lsp3 = { on_attach = custom_attach_lean },
+		mappings = true,
+		infoview = {
+			autoopen = true,
+			width = 40,
+			height = 20,
+			indicators = "always",
+		},
+		progress_bars = { enable = true, priority = 10 },
+		stderr = { enable = true },
+	})
+end
+
 return config
