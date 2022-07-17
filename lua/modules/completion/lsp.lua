@@ -238,7 +238,6 @@ local enhance_server_opts = {
 				description = "Open source/header in a new split",
 			},
 		}
-		-- Disable `clangd`'s format
 		opts.on_attach = function(client)
 			client.server_capabilities.document_formatting = false
 			custom_attach(client)
@@ -302,14 +301,12 @@ local enhance_server_opts = {
 		end
 	end,
 	["tsserver"] = function(opts)
-		-- Disable `tsserver`'s format
 		opts.on_attach = function(client)
 			client.server_capabilities.document_formatting = false
 			custom_attach(client)
 		end
 	end,
 	["dockerls"] = function(opts)
-		-- Disable `dockerls`'s format
 		opts.on_attach = function(client)
 			client.server_capabilities.document_formatting = false
 			custom_attach(client)
@@ -336,23 +333,6 @@ local enhance_server_opts = {
 			custom_attach(client)
 		end
 	end,
--- 	["gopls"] = function(opts)
--- 		opts.settings = {
--- 			gopls = {
--- 				usePlaceholders = true,
--- 				analyses = {
--- 					nilness = true,
--- 					shadow = true,
--- 					unusedparams = true,
--- 					unusewrites = true,
--- 				},
--- 			},
--- 		}
--- 		opts.on_attach = function(client)
--- 			client.server_capabilities.document_formatting = false
--- 			custom_attach(client)
--- 		end
--- 	end,
 	["remark_ls"] = function(opts)
 		opts.on_attach = function(client)
 			client.server_capabilities.document_formatting = false
@@ -367,6 +347,13 @@ local enhance_server_opts = {
 		end
 	end,
 	["phpactor"] = function(opts)
+		opts.single_file_support = true
+		opts.on_attach = function(client)
+			client.server_capabilities.document_formatting = true
+			custom_attach(client)
+		end
+	end,
+	["vimls"] = function(opts)
 		opts.single_file_support = true
 		opts.on_attach = function(client)
 			client.server_capabilities.document_formatting = true

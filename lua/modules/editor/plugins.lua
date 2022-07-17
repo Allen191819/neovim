@@ -7,7 +7,8 @@ editor["itchyny/vim-cursorword"] = {
 	config = conf.vim_cursorwod,
 }
 editor["terrortylor/nvim-comment"] = {
-	opt = false,
+	opt = true,
+	event = { "VimEnter" },
 	config = function()
 		require("nvim_comment").setup({
 			hook = function()
@@ -17,9 +18,9 @@ editor["terrortylor/nvim-comment"] = {
 	end,
 }
 editor["nvim-treesitter/nvim-treesitter"] = {
-	opt = false,
+	opt = true,
 	run = ":TSUpdate",
-	event = { "BufRead", "BufNewFile" },
+	event = { "BufRead", "BufNewFile","InsertEnter" },
 	config = conf.nvim_treesitter,
 }
 editor["romgrk/nvim-treesitter-context"] = {
@@ -111,6 +112,7 @@ editor["edluffy/specs.nvim"] = {
 editor["tpope/vim-surround"] = { opt = true, event = "BufRead" }
 editor["Allen191819/vim-expand-region"] = {
 	opt = false,
+ 	event = { "VimEnter" },
 	requires = {
 		{ "kana/vim-textobj-user", opt = false },
 		{ "sgur/vim-textobj-parameter", opt = false },
@@ -134,7 +136,7 @@ editor["alpertuna/vim-header"] = {
 	},
 	config = conf.add_header,
 }
-editor["mg979/vim-visual-multi"] = { opt = false, config = conf.multi_visual }
+editor["mg979/vim-visual-multi"] = { opt = true,event = { "VimEnter" }, config = conf.multi_visual }
 editor["Chiel92/vim-autoformat"] = { cmd = { "Autoformat" }, opt = true }
 editor["AndrewRadev/switch.vim"] = { opt = true, event = "BufRead" }
 editor["abecodes/tabout.nvim"] = {
@@ -146,7 +148,7 @@ editor["yianwillis/vimcdoc"] = { opt = false }
 editor["caenrique/nvim-maximize-window-toggle"] = { opt = false }
 editor["lewis6991/impatient.nvim"] = { opt = false }
 editor["hkupty/iron.nvim"] = { opt = true, cmd = { "IronRepl" }, config = conf.iron }
-editor["brooth/far.vim"] = { opt = false, config = conf.far_vim }
+editor["brooth/far.vim"] = { opt = true,event = { "VimEnter" }, config = conf.far_vim }
 editor["Allen191819/neogen"] = { opt = true, after = "nvim-treesitter",branch="fix/ts_utils" ,config = conf.neogen }
 
 return editor

@@ -90,6 +90,4 @@ tools["lambdalisue/suda.vim"] = {
 tools["itchyny/calendar.vim"] = {
 	opt=false
 }
-
-
 return tools

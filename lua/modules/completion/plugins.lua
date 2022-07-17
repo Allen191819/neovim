@@ -10,6 +10,7 @@ completion["creativenull/efmls-configs-nvim"] = {
 }
 completion["williamboman/nvim-lsp-installer"] = {
 	opt = false,
+	requires = "neovim/nvim-lspconfig",
 }
 completion["tami5/lspsaga.nvim"] = {
 	opt = true,
@@ -26,6 +27,7 @@ completion["onsails/lspkind-nvim"] = { opt = false, config = conf.lspkind }
 completion["ray-x/lsp_signature.nvim"] = { opt = true, after = "nvim-lspconfig" }
 completion["hrsh7th/nvim-cmp"] = {
 	config = conf.cmp,
+ 	event = { "VimEnter" },
 	requires = {
 		{ "lukas-reineke/cmp-under-comparator" },
 		{ "quangnguyen30192/cmp-nvim-ultisnips" },
@@ -55,6 +57,7 @@ completion["hrsh7th/nvim-cmp"] = {
 -- }
 completion["SirVer/ultisnips"] = {
 	opt = false,
+ 	event = { "VimEnter" },
 	config = conf.ultisnips,
 	requires = "Allen191819/vim-snippets",
 }
@@ -65,7 +68,7 @@ completion["windwp/nvim-autopairs"] = {
 completion["kristijanhusak/vim-dadbod-completion"] = {
 	opt = true,
 	config = conf.dadbod,
-	after = "nvim-lspconfig",
+	after = "nvim-cmp",
 }
 
 -- completion["github/copilot.vim"] = {
