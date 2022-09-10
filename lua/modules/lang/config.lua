@@ -216,6 +216,7 @@ function config.makrkdown_preview()
 	vim.g.mkdp_theme = "dark"
 	vim.g.spelllang = "nl,en-gb"
 	vim.g.vmt_auto_update_on_save = 1
+	vim.g.mkdp_markdown_css = "/home/allen/.config/nvim/color/markdown.css"
 	--vim.cmd([[
 	--autocmd BufRead,BufNewFile *.md setlocal spell
 	--]])

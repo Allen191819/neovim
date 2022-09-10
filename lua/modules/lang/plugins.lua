@@ -38,7 +38,7 @@ lang["jalvesaq/Nvim-R"] = { opt = true, ft = "r" }
 lang["nvim-neorg/neorg"] = { opt = true, after = "nvim-treesitter", config = conf.neorg }
 lang["Julian/lean.nvim"] = {
 	opt = true,
-	event={VimEnter},
+	event={"VimEnter"},
 	config = conf.lean,
 	after = { "nvim-treesitter", "nvim-lspconfig" },
 }

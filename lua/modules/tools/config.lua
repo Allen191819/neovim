@@ -222,7 +222,7 @@ function config.aerial()
 		-- Priority list of preferred backends for aerial.
 		-- This can be a filetype map (see :help aerial-filetype-map)
 		backends = { "treesitter", "lsp", "markdown" },
-		close_behavior = "auto",
+		close_automatic_events = {"unfocus"},
 		default_bindings = true,
 		default_direction = "prefer_right",
 		disable_max_lines = 1000,

@@ -574,11 +574,16 @@ function config.web_icons()
 	})
 end
 
-function config.startify()
-	--[[	vim.cmd[[
-    let g:startify_custom_header =
-            \ startify#pad(split(system('fortune | cowsay -f tux'), '\n'))
-	]]
+function config.alpha()
+	local alpha = require("alpha")
+	local startify = require("alpha.themes.startify")
+	startify.section.top_buttons.val = {
+		startify.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+		startify.button("f", "  Find file", ":Telescope find_files theme=dropdown<CR>"),
+		startify.button("r", "  Recent file", ":Telescope frecency theme=dropdown<CR>"),
+		startify.button("p", "  Find Project", ":Telescope projects theme=dropdown<CR>"),
+	}
+	alpha.setup(startify.config)
 end
 
 function config.popui()
