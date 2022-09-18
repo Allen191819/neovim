@@ -34,7 +34,6 @@ lang["ekickx/clipboard-image.nvim"] = {
 }
 lang["h-hg/fcitx.nvim"] = { opt = false, event = "VimEnter" }
 lang["whonore/Coqtail"] = { opt = true, ft = "coq" }
-lang["jalvesaq/Nvim-R"] = { opt = true, ft = "r" }
 lang["nvim-neorg/neorg"] = { opt = true, after = "nvim-treesitter", config = conf.neorg }
 -- lang["Julian/lean.nvim"] = {
 -- 	opt = true,

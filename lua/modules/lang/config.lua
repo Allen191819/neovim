@@ -1,21 +1,6 @@
 local config = {}
 
 function config.rust_tools()
-	local function lsp_highlight_document(client)
-		if client.server_capabilities.document_highlight then
-			vim.api.nvim_exec(
-				[[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-				false
-			)
-		end
-	end
-
 	local function custom_attach(client)
 		vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
 		vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
@@ -49,7 +34,6 @@ function config.rust_tools()
 			vim.cmd([[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]])
 			vim.cmd([[augroup END]])
 		end
-		lsp_highlight_document(client)
 		vim.diagnostic.config({
 			virtual_text = false,
 			signs = true,
@@ -60,9 +44,6 @@ function config.rust_tools()
 	end
 
 	local navic = require("nvim-navic")
-	local extension_path = vim.env.HOME .. "/.local/share/nvim/rust-debug/codelldb-x86_64-linux/extension/"
-	local codelldb_path = extension_path .. "adapter/codelldb"
-	local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
 	local opts = {
 		tools = {
 			autoSetHints = true,
@@ -94,35 +75,24 @@ function config.rust_tools()
 		},
 		server = {
 			standalone = false,
-			on_attach = function(client,bufnr)
+			on_attach = function(client, bufnr)
 				client.server_capabilities.document_formatting = false
 				custom_attach(client)
-				navic.attach(client,bufnr)
+				navic.attach(client, bufnr)
 			end,
 		}, -- rust-analyer options
 		dap = {
-			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+			adapter = {
+				type = "executable",
+				command = "lldb-vscode",
+				name = "rt_lldb",
+			},
 		},
 	}
 	require("rust-tools").setup(opts)
 end
 
 function config.lang_go()
-	local function lsp_highlight_document(client)
-		if client.server_capabilities.document_highlight then
-			vim.api.nvim_exec(
-				[[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-				false
-			)
-		end
-	end
-
 	local function custom_attach(client)
 		vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
 		vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
@@ -156,7 +126,6 @@ function config.lang_go()
 			vim.cmd([[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]])
 			vim.cmd([[augroup END]])
 		end
-		lsp_highlight_document(client)
 		vim.diagnostic.config({
 			virtual_text = false,
 			signs = true,
@@ -181,10 +150,10 @@ function config.lang_go()
 		verbose = false, -- output loginf in messages
 		lsp_cfg = {
 			capabilities = capabilities,
-			on_attach = function(client,bufnr)
+			on_attach = function(client, bufnr)
 				client.server_capabilities.document_formatting = false
 				custom_attach(client)
-				navic.attach(client,bufnr)
+				navic.attach(client, bufnr)
 			end,
 		},
 		lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt

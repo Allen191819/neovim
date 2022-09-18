@@ -23,9 +23,10 @@ mason_lsp.setup({
 		"bash-language-server",
 		"lua-language-server",
 		"clangd",
-		"pyright",
+		"pylsp",
 		"vimls",
 		"sqls",
+		"jsonls"
 	},
 })
 
@@ -215,6 +216,15 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 				},
 			},
 		})
+	elseif server == "hls" then
+		nvim_lsp.hls.setup({
+			flags = { debounce_text_changes = 500 },
+			capabilities = capabilities,
+			on_attach = function(client)
+				require("aerial").on_attach(client)
+				custom_attach(client)
+			end,
+		})
 	elseif server == "jsonls" then
 		nvim_lsp.jsonls.setup({
 			flags = { debounce_text_changes = 500 },
@@ -302,20 +312,8 @@ nvim_lsp.html.setup({
 	flags = { debounce_text_changes = 500 },
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
-		client.server_capabilities.document_formatting = false
 		custom_attach(client)
 		require("nvim-navic").attach(client, bufnr)
-	end,
-})
-
-nvim_lsp.hls.setup({
-	cmd = { "haskell-language-server-wrapper-1.8.0.0", "--lsp" },
-	flags = { debounce_text_changes = 500 },
-	capabilities = capabilities,
-	on_attach = function(client)
-		require("aerial").on_attach(client)
-		client.server_capabilities.document_formatting = true
-		custom_attach(client)
 	end,
 })
 

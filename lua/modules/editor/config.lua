@@ -275,28 +275,7 @@ function config.dap()
 			runInTerminal = false,
 		},
 	}
-
 	dap.configurations.c = dap.configurations.cpp
-	dap.configurations.rust = dap.configurations.cpp
-
-	dap.configurations.go = {
-		{ type = "go", name = "Debug", request = "launch", program = "${file}" },
-		{
-			type = "go",
-			name = "Debug test", -- configuration for debugging test files
-			request = "launch",
-			mode = "test",
-			program = "${file}",
-		}, -- works with go.mod packages and sub packages
-		{
-			type = "go",
-			name = "Debug test (go.mod)",
-			request = "launch",
-			mode = "test",
-			program = "./${relativeFileDirname}",
-		},
-	}
-
 	dap.adapters.python = {
 		type = "executable",
 		command = os.getenv("HOME") .. "/.virtualenvs/debugpy/bin/python",
@@ -326,7 +305,6 @@ function config.dap()
 			end,
 		},
 	}
-
 	dap.adapters.haskell = {
 		type = "executable",
 		command = "haskell-debug-adapter",
