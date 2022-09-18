@@ -36,7 +36,6 @@ tools["jvgrootveld/telescope-zoxide"] = {
 	after = "telescope.nvim",
 }
 tools["fhill2/telescope-ultisnips.nvim"] = { opt = true, after = "telescope.nvim" }
-tools["tom-anders/telescope-vim-bookmarks.nvim"] = { opt = true, after = "telescope.nvim" }
 tools["MattesGroeger/vim-bookmarks"] = { opt = false, config = conf.bookmarks }
 tools["thinca/vim-quickrun"] = {
 	opt = true,
@@ -89,5 +88,9 @@ tools["lambdalisue/suda.vim"] = {
 }
 tools["itchyny/calendar.vim"] = {
 	opt=false
+}
+tools["uga-rosa/translate.nvim"] = {
+	opt=false,
+	config = conf.translate
 }
 return tools

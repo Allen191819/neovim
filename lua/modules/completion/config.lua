@@ -3,12 +3,6 @@ function config.nvim_lsp()
 	require("modules.completion.lsp")
 end
 
-function config.lightbulb()
-	vim.cmd(
-		[[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ float = { enabled = false, text = "💡", win_opts = {}, }, virtual_text = { enabled = true, text = "💡", hl_mode = "replace", }, status_text = { enabled = true, text = "💡", text_unavailable = "" } }]]
-	)
-end
-
 function config.lspkind()
 	local lspkind = require("lspkind")
 	lspkind.init({
@@ -45,6 +39,17 @@ function config.lspkind()
 end
 
 function config.cmp()
+	if not packer_plugins["nvim-cmp"].loaded then
+		vim.cmd([[packadd nvim-cmp]])
+	end
+
+	if not packer_plugins["cmp-nvim-ultisnips"].loaded then
+		vim.cmd([[packadd cmp-nvim-ultisnips]])
+	end
+
+	if not packer_plugins["cmp-tabnine"].loaded then
+		vim.cmd([[packadd cmp-tabnine]])
+	end
 	vim.cmd([[highlight CmpItemAbbrDeprecated guifg=#D8DEE9 guibg=NONE gui=strikethrough]])
 	vim.cmd([[highlight CmpItemKindSnippet guifg=#BF616A guibg=NONE]])
 	vim.cmd([[highlight CmpItemKindUnit guifg=#D08770 guibg=NONE]])
@@ -84,7 +89,7 @@ function config.cmp()
 	cmp.setup({
 		sorting = {
 			comparators = {
-				require('cmp_tabnine.compare'),
+				require("cmp_tabnine.compare"),
 				cmp.config.compare.offset,
 				cmp.config.compare.exact,
 				cmp.config.compare.score,
@@ -100,10 +105,14 @@ function config.cmp()
 				vim_item.kind = lspkind.presets.default[vim_item.kind]
 				local menu = source_menu[entry.source.name]
 				if entry.source.name == "cmp_tabnine" then
-					if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-						menu = entry.completion_item.data.detail .. " " .. menu
+					local detail = (entry.completion_item.data or {}).detail
+					vim_item.kind = ""
+					if detail and detail:find(".*%%.*") then
+						vim_item.kind = vim_item.kind .. " " .. detail
 					end
-					vim_item.kind = ""
+					if (entry.completion_item.data or {}).multiline then
+						vim_item.kind = vim_item.kind .. " " .. "[ML]"
+					end
 				end
 				-- if entry.source.name == "copilot" then
 				-- 	if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
@@ -210,6 +219,7 @@ function config.tabnine()
 	local tabnine = require("cmp_tabnine.config")
 	tabnine:setup({ max_line = 200, max_num_results = 20, sort = true })
 end
+
 function config.autopairs()
 	local npairs = require("nvim-autopairs")
 	local Rule = require("nvim-autopairs.rule")
@@ -217,7 +227,20 @@ function config.autopairs()
 	npairs.add_rule(Rule("$$", "$$", "tex"))
 	local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 	local cmp = require("cmp")
-	cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+	-- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({
+	-- 		filetypes = {
+	-- 			["*"] = {
+	-- 				["("] = {
+	-- 					kind = {
+	-- 						cmp.lsp.CompletionItemKind.Function,
+	-- 						cmp.lsp.CompletionItemKind.Method,
+	-- 					},
+	-- 					handler = handlers["*"],
+	-- 				},
+	-- 			},
+	-- 			tex = false,
+	-- 		},
+	-- ))
 end
 
 -- function config.copilot()
@@ -273,6 +296,26 @@ function config.lspsaga()
 		diagnostic_prefix_format = "%d. ",
 		diagnostic_message_format = "%m %c",
 		highlight_prefix = true,
+	})
+end
+
+function config.nvim_lsp()
+	require("modules.completion.lsp")
+end
+
+function config.mason_install()
+	require("mason-tool-installer").setup({
+		ensure_installed = {
+			"editorconfig-checker",
+			"stylua",
+			"black",
+			"prettier",
+			"shellcheck",
+			"shfmt",
+			"vint",
+		},
+		auto_update = false,
+		run_on_start = true,
 	})
 end
 

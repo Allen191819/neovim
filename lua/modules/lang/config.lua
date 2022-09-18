@@ -59,13 +59,13 @@ function config.rust_tools()
 		})
 	end
 
+	local navic = require("nvim-navic")
 	local extension_path = vim.env.HOME .. "/.local/share/nvim/rust-debug/codelldb-x86_64-linux/extension/"
 	local codelldb_path = extension_path .. "adapter/codelldb"
 	local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
 	local opts = {
 		tools = {
 			autoSetHints = true,
-			hover_with_actions = true,
 			executor = require("rust-tools/executors").termopen,
 			inlay_hints = {
 				only_current_line = false,
@@ -94,9 +94,10 @@ function config.rust_tools()
 		},
 		server = {
 			standalone = false,
-			on_attach = function(client)
-				client.server_capabilities.document_formatting = true
+			on_attach = function(client,bufnr)
+				client.server_capabilities.document_formatting = false
 				custom_attach(client)
+				navic.attach(client,bufnr)
 			end,
 		}, -- rust-analyer options
 		dap = {
@@ -166,6 +167,7 @@ function config.lang_go()
 	end
 
 	local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+	local navic = require("nvim-navic")
 	require("go").setup({
 		go = "go", -- go command, can be go[default] or go1.18beta1
 		goimport = "goimport", -- goimport command, can be gopls[default] or goimport
@@ -179,9 +181,10 @@ function config.lang_go()
 		verbose = false, -- output loginf in messages
 		lsp_cfg = {
 			capabilities = capabilities,
-			on_attach = function(client)
-				client.server_capabilities.document_formatting = true
+			on_attach = function(client,bufnr)
+				client.server_capabilities.document_formatting = false
 				custom_attach(client)
+				navic.attach(client,bufnr)
 			end,
 		},
 		lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt

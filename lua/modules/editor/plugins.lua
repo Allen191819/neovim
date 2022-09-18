@@ -36,9 +36,9 @@ editor["mfussenegger/nvim-ts-hint-textobject"] = {
 	opt = true,
 	after = "nvim-treesitter",
 }
-editor["SmiteshP/nvim-gps"] = {
+editor["SmiteshP/nvim-navic"] = {
 	opt = true,
-	after = "nvim-treesitter",
+	after = "nvim-lspconfig",
 	config = conf.nvim_gps,
 }
 editor["windwp/nvim-ts-autotag"] = {
@@ -92,11 +92,6 @@ editor["rcarriga/nvim-dap-ui"] = {
 	config = conf.dap,
 	requires = {
 		{ "mfussenegger/nvim-dap", opt = false },
-		{
-			"Pocco81/dap-buddy.nvim",
-			opt = false,
-			commit = "24923c3819a450a772bb8f675926d530e829665f",
-		},
 	},
 }
 editor["tpope/vim-fugitive"] = { opt = true, cmd = { "Git", "G" } }

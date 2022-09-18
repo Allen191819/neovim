@@ -4,24 +4,23 @@ completion["neovim/nvim-lspconfig"] = {
 	opt = false,
 	config = conf.nvim_lsp,
 }
-completion["creativenull/efmls-configs-nvim"] = {
+completion["Allen191819/efmls-configs-nvim"] = {
 	opt = false,
 	requires = "neovim/nvim-lspconfig",
 }
-completion["williamboman/nvim-lsp-installer"] = {
-	opt = false,
-	requires = "neovim/nvim-lspconfig",
+completion["williamboman/mason.nvim"] = {
+	requires = {
+		{
+			"williamboman/mason-lspconfig.nvim",
+		},
+		{ "WhoIsSethDaniel/mason-tool-installer.nvim", config = conf.mason_install },
+	},
 }
 completion["tami5/lspsaga.nvim"] = {
 	opt = true,
 	branch = "main",
 	after = "nvim-lspconfig",
 	config = conf.lspsaga,
-}
-completion["kosayoda/nvim-lightbulb"] = {
-	opt = true,
-	after = "nvim-lspconfig",
-	config = conf.lightbulb,
 }
 completion["onsails/lspkind-nvim"] = { opt = false, config = conf.lspkind }
 completion["ray-x/lsp_signature.nvim"] = { opt = true, after = "nvim-lspconfig" }
@@ -30,7 +29,7 @@ completion["hrsh7th/nvim-cmp"] = {
  	event = { "VimEnter" },
 	requires = {
 		{ "lukas-reineke/cmp-under-comparator" },
-		{ "quangnguyen30192/cmp-nvim-ultisnips" },
+		{ "quangnguyen30192/cmp-nvim-ultisnips" ,after="nvim-cmp"},
 		{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-nvim-lua", after = "cmp-nvim-lsp" },
 		{ "hrsh7th/cmp-path", after = "cmp-nvim-lsp" },

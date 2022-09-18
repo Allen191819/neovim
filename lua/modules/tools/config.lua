@@ -9,7 +9,7 @@ function config.telescope()
 	end
 
 	if not packer_plugins["project.nvim"].loaded then
-		vim.cmd([[packadd telescope-frecency.nvim]])
+		vim.cmd([[packadd project.nvim]])
 	end
 
 	if not packer_plugins["aerial.nvim"].loaded then
@@ -22,6 +22,10 @@ function config.telescope()
 
 	if not packer_plugins["telescope-zoxide"].loaded then
 		vim.cmd([[packadd telescope-zoxide]])
+	end
+
+	if not packer_plugins["telescope-ultisnips.nvim"].loaded then
+		vim.cmd([[packadd telescope-ultisnips.nvim]])
 	end
 
 	require("project_nvim").setup()
@@ -70,7 +74,6 @@ function config.telescope()
 	require("telescope").load_extension("live_grep_args")
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("ultisnips")
-	require("telescope").load_extension("vim_bookmarks")
 	require("telescope").load_extension("notify")
 end
 
@@ -222,7 +225,7 @@ function config.aerial()
 		-- Priority list of preferred backends for aerial.
 		-- This can be a filetype map (see :help aerial-filetype-map)
 		backends = { "treesitter", "lsp", "markdown" },
-		close_automatic_events = {"unfocus"},
+		close_automatic_events = { "unfocus" },
 		default_bindings = true,
 		default_direction = "prefer_right",
 		disable_max_lines = 1000,
@@ -299,6 +302,14 @@ function config.notify()
 		timeout = 3000,
 	}
 	notify.setup(user_config)
+end
+
+function config.translate()
+	require("translate").setup({
+		default = {
+			output = "floating",
+		},
+	})
 end
 
 return config

@@ -141,6 +141,7 @@ local plug_map = {
 	["n|,uu"] = map_cr("Calendar"):with_noremap():with_silent(),
 	["n|,uc"] = map_cr("Calendar -view=clock"):with_noremap():with_silent(),
 	["n|,uy"] = map_cr("Calendar -view=year -split=vertical -width=27"):with_noremap():with_silent(),
+	["v|<leader>tw"] = map_cr("Translate ZH"):with_noremap():with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)

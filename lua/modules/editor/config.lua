@@ -1,5 +1,4 @@
 local config = {}
-local dap_dir = vim.fn.stdpath("data") .. "/dapinstall/"
 
 function config.vim_cursorwod()
 	vim.api.nvim_command("augroup user_plugin_cursorword")
@@ -58,24 +57,39 @@ function config.matchup()
 end
 
 function config.nvim_gps()
-	require("nvim-gps").setup({
+	require("nvim-navic").setup({
 		icons = {
-			["class-name"] = " ", -- Classes and class-like objects
-			["function-name"] = " ", -- Functions
-			["method-name"] = " ", -- Methods (functions inside class-like objects)
+			File = " ",
+			Module = " ",
+			Namespace = " ",
+			Package = " ",
+			Class = " ",
+			Method = " ",
+			Property = " ",
+			Field = " ",
+			Constructor = " ",
+			Enum = "練",
+			Interface = "練",
+			Function = " ",
+			Variable = " ",
+			Constant = " ",
+			String = " ",
+			Number = " ",
+			Boolean = "◩ ",
+			Array = " ",
+			Object = " ",
+			Key = " ",
+			Null = "ﳠ ",
+			EnumMember = " ",
+			Struct = " ",
+			Event = " ",
+			Operator = " ",
+			TypeParameter = " ",
 		},
-		languages = {
-			-- You can disable any language individually here
-			["c"] = true,
-			["cpp"] = true,
-			["go"] = true,
-			["java"] = true,
-			["javascript"] = true,
-			["lua"] = true,
-			["python"] = true,
-			["rust"] = true,
-		},
+		highlight = false,
 		separator = " > ",
+		depth_limit = 0,
+		depth_limit_indicator = "..",
 	})
 end
 
@@ -240,82 +254,78 @@ function config.dap()
 	dap.defaults.fallback.terminal_win_cmd = "30vsplit new" -- this will be overrided by dapui
 	dap.set_log_level("DEBUG")
 
-	local dap_install = require("dap-install")
-	dap_install.setup({
-		installation_path = dap_dir,
-	})
-	dap_install.config("python", {})
-	--	dap_install.config("ccppr_vsc", {})
-	dap_install.config("go", {})
-	dap_install.config("lua", {})
-	--	dap_install.config("haskell", {})
-
-	dap.adapters.cppdbg = {
-		id = "cppdbg",
+	dap.adapters.lldb = {
 		type = "executable",
-		command = os.getenv("HOME") .. "/.config/debugger/extension/debugAdapters/bin/OpenDebugAD7",
+		command = "/usr/bin/lldb-vscode",
+		name = "lldb",
 	}
+
 	dap.configurations.cpp = {
-		-- launch exe
 		{
-			name = "Launch file",
-			type = "cppdbg",
+			name = "Launch",
+			type = "lldb",
 			request = "launch",
 			program = function()
 				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 			end,
 			cwd = "${workspaceFolder}",
-			stopOnEntry = true,
-			setupCommands = {
-				{
-					description = "enable pretty printing",
-					text = "-enable-pretty-printing",
-					ignoreFailures = false,
-				},
-			},
-		},
-		-- attach process
-		{
-			name = "Attach process",
-			type = "cppdbg",
-			request = "attach",
-			processId = require("dap.utils").pick_process,
-			program = function()
-				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-			end,
-			cwd = "${workspaceFolder}",
-			setupCommands = {
-				{
-					description = "enable pretty printing",
-					text = "-enable-pretty-printing",
-					ignoreFailures = false,
-				},
-			},
-		},
-		-- attach server
-		{
-			name = "Attach to gdbserver :1234",
-			type = "cppdbg",
-			request = "launch",
-			MIMode = "gdb",
-			miDebuggerServerAddress = "localhost:1234",
-			miDebuggerPath = "/usr/bin/gdb",
-			cwd = "${workspaceFolder}",
-			program = function()
-				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-			end,
-			setupCommands = {
-				{
-					text = "-enable-pretty-printing",
-					description = "enable pretty printing",
-					ignoreFailures = false,
-				},
-			},
+			stopOnEntry = false,
+			args = {},
+
+			runInTerminal = false,
 		},
 	}
 
-	-- setup other language
 	dap.configurations.c = dap.configurations.cpp
+	dap.configurations.rust = dap.configurations.cpp
+
+	dap.configurations.go = {
+		{ type = "go", name = "Debug", request = "launch", program = "${file}" },
+		{
+			type = "go",
+			name = "Debug test", -- configuration for debugging test files
+			request = "launch",
+			mode = "test",
+			program = "${file}",
+		}, -- works with go.mod packages and sub packages
+		{
+			type = "go",
+			name = "Debug test (go.mod)",
+			request = "launch",
+			mode = "test",
+			program = "./${relativeFileDirname}",
+		},
+	}
+
+	dap.adapters.python = {
+		type = "executable",
+		command = os.getenv("HOME") .. "/.virtualenvs/debugpy/bin/python",
+		args = { "-m", "debugpy.adapter" },
+	}
+	dap.configurations.python = {
+		{
+			-- The first three options are required by nvim-dap
+			type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
+			request = "launch",
+			name = "Launch file",
+			-- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+
+			program = "${file}", -- This configuration will launch the current file if used.
+			pythonPath = function()
+				-- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
+				-- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
+				-- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+				local cwd = vim.fn.getcwd()
+				if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
+					return cwd .. "/venv/bin/python"
+				elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
+					return cwd .. "/.venv/bin/python"
+				else
+					return "/usr/bin/python"
+				end
+			end,
+		},
+	}
 
 	dap.adapters.haskell = {
 		type = "executable",

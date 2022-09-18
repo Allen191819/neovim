@@ -56,10 +56,10 @@ function config.edge()
 end
 
 function config.lualine()
-	if not packer_plugins["nvim-gps"].loaded then
-		vim.cmd([[packadd nvim-gps]])
+	if not packer_plugins["nvim-navic"].loaded then
+		vim.cmd([[packadd nvim-navic]])
 	end
-	local gps = require("nvim-gps")
+	local gps = require("nvim-navic")
 	local function gps_content()
 		if gps.is_available() then
 			return gps.get_location()
