@@ -97,7 +97,7 @@ function M.toggle_format_on_save()
 		event = "BufWritePre",
 	})
 	if not status then
-		M.enable_format_on_save(false)
+		M.enable_format_on_save()
 	else
 		M.disable_format_on_save()
 	end

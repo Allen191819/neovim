@@ -26,7 +26,7 @@ mason_lsp.setup({
 		"pylsp",
 		"vimls",
 		"sqls",
-		"jsonls"
+		"jsonls",
 	},
 })
 
@@ -216,15 +216,6 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 				},
 			},
 		})
-	elseif server == "hls" then
-		nvim_lsp.hls.setup({
-			flags = { debounce_text_changes = 500 },
-			capabilities = capabilities,
-			on_attach = function(client)
-				require("aerial").on_attach(client)
-				custom_attach(client)
-			end,
-		})
 	elseif server == "jsonls" then
 		nvim_lsp.jsonls.setup({
 			flags = { debounce_text_changes = 500 },
@@ -298,6 +289,16 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 	end
 end
 
+nvim_lsp.hls.setup({
+	cmd = { "haskell-language-server-9.0.2~1.8.0.0", "--lsp" },
+	flags = { debounce_text_changes = 500 },
+	capabilities = capabilities,
+	on_attach = function(client)
+		require("aerial").on_attach(client)
+		custom_attach(client)
+	end,
+})
+
 -- https://github.com/vscode-langservers/vscode-html-languageserver-bin
 
 nvim_lsp.html.setup({
@@ -326,21 +327,21 @@ efmls.init({
 
 -- Require `efmls-configs-nvim`'s config here
 
-local vint = require("efmls-configs.linters.vint")
+-- local vint = require("efmls-configs.linters.vint")
 local clangtidy = require("efmls-configs.linters.clang_tidy")
 local eslint = require("efmls-configs.linters.eslint")
 local flake8 = require("efmls-configs.linters.flake8")
 local shellcheck = require("efmls-configs.linters.shellcheck")
-local staticcheck = require("efmls-configs.linters.staticcheck")
+-- local staticcheck = require("efmls-configs.linters.staticcheck")
 local luafmt = require("efmls-configs.formatters.stylua")
 local clangfmt = require("efmls-configs.formatters.clang_format")
-local goimports = require("efmls-configs.formatters.goimports")
+-- local goimports = require("efmls-configs.formatters.goimports")
 local prettier = require("efmls-configs.formatters.prettier")
 local shfmt = require("efmls-configs.formatters.shfmt")
 local alex = require("efmls-configs.linters.alex")
-local pylint = require("efmls-configs.linters.pylint")
-local yapf = require("efmls-configs.formatters.yapf")
-local vulture = require("efmls-configs.linters.vulture")
+-- local pylint = require("efmls-configs.linters.pylint")
+-- local yapf = require("efmls-configs.formatters.yapf")
+-- local vulture = require("efmls-configs.linters.vulture")
 
 -- Add your own config for formatter and linter here
 

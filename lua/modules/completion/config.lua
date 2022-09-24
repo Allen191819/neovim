@@ -1,7 +1,4 @@
 local config = {}
-function config.nvim_lsp()
-	require("modules.completion.lsp")
-end
 
 function config.lspkind()
 	local lspkind = require("lspkind")
@@ -50,6 +47,7 @@ function config.cmp()
 	if not packer_plugins["cmp-tabnine"].loaded then
 		vim.cmd([[packadd cmp-tabnine]])
 	end
+
 	vim.cmd([[highlight CmpItemAbbrDeprecated guifg=#D8DEE9 guibg=NONE gui=strikethrough]])
 	vim.cmd([[highlight CmpItemKindSnippet guifg=#BF616A guibg=NONE]])
 	vim.cmd([[highlight CmpItemKindUnit guifg=#D08770 guibg=NONE]])
@@ -223,24 +221,28 @@ end
 function config.autopairs()
 	local npairs = require("nvim-autopairs")
 	local Rule = require("nvim-autopairs.rule")
-	npairs.setup()
-	npairs.add_rule(Rule("$$", "$$", "tex"))
 	local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 	local cmp = require("cmp")
-	-- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({
-	-- 		filetypes = {
-	-- 			["*"] = {
-	-- 				["("] = {
-	-- 					kind = {
-	-- 						cmp.lsp.CompletionItemKind.Function,
-	-- 						cmp.lsp.CompletionItemKind.Method,
-	-- 					},
-	-- 					handler = handlers["*"],
-	-- 				},
-	-- 			},
-	-- 			tex = false,
-	-- 		},
-	-- ))
+	local handlers = require("nvim-autopairs.completion.handlers")
+	npairs.setup()
+	npairs.add_rule(Rule("$$", "$$", "tex"))
+	cmp.event:on(
+		"confirm_done",
+		cmp_autopairs.on_confirm_done({
+			filetypes = {
+				["*"] = {
+					["("] = {
+						kind = {
+							cmp.lsp.CompletionItemKind.Function,
+							cmp.lsp.CompletionItemKind.Method,
+						},
+						handler = handlers["*"],
+					},
+				},
+				tex = false,
+			},
+		})
+	)
 end
 
 -- function config.copilot()
