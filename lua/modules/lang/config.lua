@@ -244,84 +244,27 @@ function config.latex()
 	]])
 end
 
-function config.neorg()
+function config.norg()
 	if not packer_plugins["nvim-cmp"].loaded then
 		vim.cmd([[packadd nvim-cmp]])
 	end
-	require("neorg").setup({
-		load = {
-			["core.defaults"] = {},
-			["core.norg.dirman"] = {
-				config = {
-					workspaces = {
-						work = "~/neorg/work",
-						home = "~/neorg/home",
-					},
-				},
-			},
-			["core.norg.concealer"] = { config = { icon_preset = "diamond" } },
-			["core.norg.completion"] = { config = { engine = "nvim-cmp" } },
-		},
-	})
-	local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-	parser_configs.norg_table = {
-		install_info = {
-			url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
-			files = { "src/parser.c" },
-			branch = "main",
-		},
-	}
-	parser_configs.norg_meta = {
-		install_info = {
-			url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
-			files = { "src/parser.c" },
-			branch = "main",
-		},
-	}
-end
-
-function config.lean()
-	vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
-	vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
-	local function custom_attach_lean(client)
-		require("lsp_signature").on_attach({
-			bind = true,
-			use_lspsaga = false,
-			floating_window = true,
-			fix_pos = true,
-			hint_enable = true,
-			hi_parameter = "Search",
-			handler_opts = { "double" },
-		})
-
-		vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-			signs = false,
-			underline = false,
-			virtual_text = { spacing = 15, prefix = "" },
-			update_in_insert = true,
-		})
-
-		if client.server_capabilities.document_formatting then
-			vim.cmd([[augroup Format]])
-			vim.cmd([[autocmd! * <buffer>]])
-			vim.cmd([[autocmd BufWritePost <buffer> lua require'modules.completion.formatting'.format()]])
-			vim.cmd([[augroup END]])
-		end
-	end
-	require("lean").setup({
-		abbreviations = { builtin = true, extra = { wknight = "♘" } },
-		lsp = { on_attach = custom_attach_lean },
-		lsp3 = { on_attach = custom_attach_lean },
-		mappings = true,
-		infoview = {
-			autoopen = true,
-			width = 40,
-			height = 20,
-			indicators = "always",
-		},
-		progress_bars = { enable = true, priority = 10 },
-		stderr = { enable = true },
-	})
+	require('neorg').setup {
+    load = {
+        ["core.defaults"] = {},
+		["core.norg.completion"] = {config={
+			engine = "nvim-cmp"
+		}},
+		["core.norg.concealer"] = {},
+        ["core.norg.dirman"] = {
+            config = {
+                workspaces = {
+                    work = "~/norg/work",
+                    home = "~/norg/home",
+                }
+            }
+        }
+    }
+}
 end
 
 return config

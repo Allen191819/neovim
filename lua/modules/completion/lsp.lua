@@ -299,6 +299,20 @@ nvim_lsp.hls.setup({
 	end,
 })
 
+-- https://github.com/jeapostrophe/racket-langserver
+
+nvim_lsp.racket_langserver.setup({
+	cmd = {"racket", "--lib", "racket-langserver"},
+	filetypes = { "racket", "scheme" },
+	single_file_support = true,
+	capabilities = capabilities,
+	on_attach = function(client,bufnr)
+		require("nvim-navic").attach(client, bufnr)
+		require("aerial").on_attach(client)
+		custom_attach(client)
+	end,
+})
+
 -- https://github.com/vscode-langservers/vscode-html-languageserver-bin
 
 nvim_lsp.html.setup({
@@ -364,9 +378,7 @@ efmls.setup({
 	lua = { formatter = luafmt },
 	c = { formatter = clangfmt, linter = clangtidy },
 	cpp = { formatter = clangfmt, linter = clangtidy },
-	-- go = { formatter = goimports, linter = staticcheck },
 	latex = { linter = alex },
-	-- python = {formatter = yapf},
 	vue = { formatter = prettier },
 	typescript = { formatter = prettier, linter = eslint },
 	javascript = { formatter = prettier, linter = eslint },
@@ -379,9 +391,11 @@ efmls.setup({
 	scss = { formatter = prettier },
 	sh = { formatter = shfmt, linter = shellcheck },
 	markdown = { formatter = prettier },
-	-- rust = { formatter = rustfmt },
 	sql = { formatter = sqlfmt },
 	htmldjango = { formatter = prettier },
+	-- rust = { formatter = rustfmt },
+	-- python = {formatter = yapf},
+	-- go = { formatter = goimports, linter = staticcheck },
 })
 
 formatting.configure_format_on_save()

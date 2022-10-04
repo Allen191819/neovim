@@ -100,10 +100,6 @@ local plug_map = {
 	["n|<F12>"] = map_cr("FloatermToggle"):with_noremap():with_silent(),
 	["n|<leader>th"] = map_cr("Term"):with_noremap():with_silent(),
 	["n|<leader>tv"] = map_cr("VTerm"):with_noremap():with_silent(),
-	-- Plugin auto_session
-	["n|<leader>ss"] = map_cu("SSave"):with_noremap():with_silent(),
-	["n|<leader>sr"] = map_cu("SLoad"):with_noremap():with_silent(),
-	["n|<leader>sd"] = map_cu("SDelete"):with_noremap():with_silent(),
 	-- QuickRun
 	["n|<A-e>"] = map_cr("QuickRun"):with_noremap():with_silent(),
 	-- Plugin SnipRun

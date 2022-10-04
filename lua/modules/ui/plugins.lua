@@ -32,7 +32,7 @@ ui["akinsho/bufferline.nvim"] = {
 	tag = "*",
 	config = conf.nvim_bufferline,
 }
-ui["marko-cerovac/material.nvim"] = { opt = false, config = conf.material }
+-- ui["marko-cerovac/material.nvim"] = { opt = false, config = conf.material }
 ui["ray-x/guihua.lua"] = { opt = false, run = "cd lua/fzy && make", config = conf.guihua }
-
+ui["folke/tokyonight.nvim"] = { opt = false, config = conf.tokyonight }
 return ui

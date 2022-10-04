@@ -1,48 +1,35 @@
 local config = {}
 
-function config.material()
-	require("material").setup({
-		contrast = {
-			sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
-			floating_windows = true, -- Enable contrast for floating windows
-			line_numbers = false, -- Enable contrast background for line numbers
-			sign_column = false, -- Enable contrast background for the sign column
-			cursor_line = false, -- Enable darker background for the cursor line
-			non_current_windows = true, -- Enable darker background for non-current windows
-			popup_menu = true, -- Enable lighter background for the popup menu
+function config.tokyonight()
+	require("tokyonight").setup({
+		style = "night", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+		light_style = "day", -- The theme is used when the background is set to light
+		transparent = false, -- Enable this to disable setting the background color
+		terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+		styles = {
+			comments = { italic = true },
+			keywords = { italic = true },
+			functions = {},
+			variables = {},
+			sidebars = "dark", -- style for sidebars, see below
+			floats = "dark", -- style for floating windows
 		},
-		italics = {
-			comments = true, -- Enable italic comments
-			keywords = false, -- Enable italic keywords
-			functions = true, -- Enable italic functions
-			strings = true, -- Enable italic strings
-			variables = true, -- Enable italic variables
-		},
-		contrast_filetypes = {
-			"terminal", -- Darker terminal background
-			"packer", -- Darker packer background
-			"qf", -- Darker qf list background
+		sidebars = {
+			"qf",
+			"help",
 			"undotree",
 			"NvimTree",
 			"dbui",
 			"leaninfo",
 			"calendar",
-		},
-		high_visibility = {
-			lighter = true, -- Enable higher contrast text for lighter style
-			darker = true, -- Enable higher contrast text for darker style
-		},
-		disable = {
-			borders = false, -- Disable borders between verticaly split windows
-			background = false, -- Prevent the theme from setting the background (NeoVim then uses your teminal background)
-			term_colors = false, -- Prevent the theme from setting terminal colors
-			eob_lines = false, -- Hide the end-of-buffer lines
-		},
-		async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
-		lualine_style = "default",
-		custom_highlights = {}, -- Overwrite highlights with your own
+		}, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+		day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+		hide_inactive_statusline = false,
+		dim_inactive = false,
+		lualine_bold = true,
+		on_colors = function(colors) end,
+		on_highlights = function(highlights, colors) end,
 	})
-	vim.g.material_style = "palenight"
 end
 
 function config.edge()
@@ -98,7 +85,7 @@ function config.lualine()
 		options = {
 			globalstatus = false,
 			icons_enabled = true,
-			theme = "dracula",
+			theme = "tokyonight",
 			disabled_filetypes = {},
 			component_separators = "|",
 			section_separators = { left = "", right = "" },
@@ -153,12 +140,12 @@ function config.lualine()
 
 	ins_right({ "filetype", color = { fg = colors.blue } })
 
-	ins_right({
-		function()
-			return ""
-		end,
-		color = { fg = colors.blue },
-	})
+	-- ins_right({
+	-- 	function()
+	-- 		return ""
+	-- 	end,
+	-- 	color = { fg = colors.blue },
+	-- })
 
 	ins_right({
 		function()

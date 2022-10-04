@@ -87,7 +87,6 @@ function config.cmp()
 	cmp.setup({
 		sorting = {
 			comparators = {
-				require("cmp_tabnine.compare"),
 				cmp.config.compare.offset,
 				cmp.config.compare.exact,
 				cmp.config.compare.score,
@@ -165,7 +164,7 @@ function config.cmp()
 		sources = {
 			{ name = "nvim_lsp", group_index = 2, max_item_count = 4 },
 			{ name = "nvim_lua", group_index = 2, max_item_count = 2 },
-			{ name = "ultisnips", group_index = 2, max_item_count = 3 },
+			{ name = "ultisnips", group_index = 1, max_item_count = 3 },
 			{ name = "path", group_index = 2, max_item_count = 3 },
 			{ name = "calc", group_index = 2, max_item_count = 1 },
 			{ name = "buffer", group_index = 2, max_item_count = 3 },
@@ -251,9 +250,9 @@ end
 -- 	vim.cmd([[ highlight CopilotSuggestion guifg=#EBCB8B ctermfg=8 ]])
 -- end
 
-function config.copilot_cmp()
-	require("copilot").setup()
-end
+-- function config.copilot_cmp()
+-- 	require("copilot").setup()
+-- end
 
 function config.lspsaga()
 	local lspsaga = require("lspsaga")

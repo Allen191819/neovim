@@ -136,7 +136,7 @@ local load_core = function()
 	require("core.event")
 	require("core.function")
 	pack.load_compile()
-	vim.cmd([[colorscheme material]])
+	vim.cmd([[colorscheme tokyonight]])
 end
 
 load_core()

@@ -93,4 +93,8 @@ tools["uga-rosa/translate.nvim"] = {
 	opt=false,
 	config = conf.translate
 }
+tools["jbyuki/venn.nvim"]={
+	opt = false,
+	config = conf.venn
+}
 return tools
