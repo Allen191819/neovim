@@ -305,28 +305,29 @@ function config.dap()
 			end,
 		},
 	}
-	-- dap.adapters.haskell = {
-	-- 	type = "executable",
-	-- 	command = "haskell-debug-adapter",
-	-- 	args = { "--hackage-version=0.0.33.0" },
-	-- }
-	-- dap.configurations.haskell = {
-	-- 	{
-	-- 		type = "haskell",
-	-- 		request = "launch",
-	-- 		name = "Debug",
-	-- 		workspace = "${workspaceFolder}",
-	-- 		startup = "${file}",
-	-- 		stopOnEntry = true,
-	-- 		logFile = vim.fn.stdpath("data") .. "/haskell-dap.log",
-	-- 		logLevel = "INFO",
-	-- 		ghciEnv = vim.empty_dict(),
-	-- 		ghciPrompt = "λ>>",
-	-- 		-- Adjust the prompt to the prompt you see when you invoke the stack ghci command below
-	-- 		ghciInitialPrompt = "λ>>",
-	-- 		ghciCmd = "stack ghci --test --no-load --no-build --main-is TARGET --ghci-options -fprint-evld-with-show",
-	-- 	},
-	-- }
+	dap.adapters.haskell = {
+		type = "executable",
+		command = "haskell-debug-adapter",
+		args = { "--hackage-version=0.0.33.0" },
+	}
+	dap.configurations.haskell = {
+		{
+			type = "haskell",
+			request = "launch",
+			name = "Debug",
+			workspace = "${workspaceFolder}",
+			startup = "${file}",
+			stopOnEntry = true,
+			logFile = vim.fn.stdpath("data") .. "/haskell-dap.log",
+			logLevel = "DEBUG",
+			ghciEnv = vim.empty_dict(),
+			ghciPrompt = "λ> ",
+			ghciInitialPrompt = "λ>>",
+			ghciCmd = "stack ghci --test --no-load --no-build "
+				.. "--main-is TARGET "
+				.. "--ghci-options -fprint-evld-with-show",
+		},
+	}
 end
 
 function config.specs()
@@ -433,14 +434,41 @@ function config.multi()
 end
 
 function config.iron()
-	local iron = require("iron")
-	iron.core.add_repl_definitions({
-		iron.core.set_config({
-			preferred = { python = "ipython", haskell = "ghci" },
-		}),
+	local iron = require("iron.core")
+	iron.setup({
+		config = {
+			scratch_repl = true,
+			repl_definition = {
+				sh = {
+					command = { "zsh" },
+				},
+				python = {
+					command = { "ipython" },
+				},
+				haskell = {
+					command = { "ghci" },
+				},
+			},
+			repl_open_cmd = require("iron.view").split.vertical.botright(70),
+		},
+		keymaps = {
+			send_motion = "<space>is",
+			visual_send = "<space>is",
+			send_file = "<space>sf",
+			send_line = "<space>sl",
+			send_mark = "<space>sm",
+			mark_motion = "<space>mc",
+			mark_visual = "<space>mc",
+			remove_mark = "<space>md",
+			cr = "<space>s<cr>",
+			interrupt = "<space>s<space>",
+			exit = "<space>sq",
+			clear = "<space>cl",
+		},
+		highlight = {
+			italic = true,
+		},
 	})
-	vim.g.iron_map_default = 0
-	vim.g.iron_map_extended = 0
 end
 
 function config.far_vim()

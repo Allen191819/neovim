@@ -278,7 +278,8 @@ function config.bookmarks()
 	highlight BookmarkSign ctermbg=NONE ctermfg=160
 	highlight BookmarkLine ctermbg=194 ctermfg=NONE
 	]])
-	vim.g.bookmark_sign = "📑"
+	vim.g.bookmark_sign = "🔖"
+	vim.g.bookmark_no_default_key_mappings = 1
 	vim.g.bookmark_highlight_lines = 1
 end
 

@@ -137,7 +137,18 @@ local plug_map = {
 	["n|,uu"] = map_cr("Calendar"):with_noremap():with_silent(),
 	["n|,uc"] = map_cr("Calendar -view=clock"):with_noremap():with_silent(),
 	["n|,uy"] = map_cr("Calendar -view=year -split=vertical -width=27"):with_noremap():with_silent(),
+	-- Translate
 	["v|<leader>tw"] = map_cr("Translate ZH"):with_noremap():with_silent(),
+	-- Bookmark
+	["n|mm"] = map_cr("BookmarkToggle"):with_noremap():with_silent(),
+	["n|mn"] = map_cr("BookmarkNext"):with_noremap():with_silent(),
+	["n|mp"] = map_cr("BookmarkPrev"):with_noremap():with_silent(),
+	["n|ma"] = map_cr("BookmarkShowAll"):with_noremap():with_silent(),
+	["n|mx"] = map_cr("BookmarkClear"):with_noremap():with_silent(),
+	-- Cheat.sh
+	["n|<leader>sh"] = map_cr("CheatList"):with_noremap():with_silent(),
+	-- Neorg
+	["n|<leader>sn"] = map_cr("Neorg gtd"):with_noremap():with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)

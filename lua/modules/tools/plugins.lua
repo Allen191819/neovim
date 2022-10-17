@@ -97,4 +97,7 @@ tools["jbyuki/venn.nvim"]={
 	opt = false,
 	config = conf.venn
 }
+tools["RishabhRD/nvim-cheat.sh"] = {
+	opt = false,
+}
 return tools

@@ -248,23 +248,33 @@ function config.norg()
 	if not packer_plugins["nvim-cmp"].loaded then
 		vim.cmd([[packadd nvim-cmp]])
 	end
-	require('neorg').setup {
-    load = {
-        ["core.defaults"] = {},
-		["core.norg.completion"] = {config={
-			engine = "nvim-cmp"
-		}},
-		["core.norg.concealer"] = {},
-        ["core.norg.dirman"] = {
-            config = {
-                workspaces = {
-                    work = "~/norg/work",
-                    home = "~/norg/home",
-                }
-            }
-        }
-    }
-}
+	require("neorg").setup({
+		load = {
+			["core.defaults"] = {},
+			["core.norg.completion"] = { config = {
+				engine = "nvim-cmp",
+			} },
+			["core.norg.concealer"] = {},
+			["core.norg.dirman"] = {
+				config = {
+					workspaces = {
+						work = "~/norg/work",
+						home = "~/norg/home",
+						gtd = "~/norg/gtd",
+					},
+				},
+			},
+			["core.export"] = { config = {} },
+			["core.export.markdown"] = {},
+			["core.keybinds"] = {},
+			["core.gtd.base"] = {
+				config = {
+					workspace = "gtd",
+				},
+			},
+			["core.norg.qol.todo_items"] = { config = {} },
+		},
+	})
 end
 
 return config
