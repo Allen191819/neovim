@@ -15,6 +15,10 @@ lang["simrat39/rust-tools.nvim"] = {
 	ft = "rust",
 	config = conf.rust_tools,
 }
+lang["mattn/webapi-vim"] = {
+	opt = true,
+	ft = "rust",
+}
 lang["chrisbra/csv.vim"] = { opt = true, ft = "csv" }
 lang["iamcco/markdown-preview.nvim"] = {
 	opt = true,
@@ -32,7 +36,7 @@ lang["ekickx/clipboard-image.nvim"] = {
 	ft = "markdown",
 	config = conf.clipboard_image,
 }
-lang["nvim-neorg/neorg"] = { opt = true,cmd="Neorg",ft="norg", config = conf.norg }
+lang["nvim-neorg/neorg"] = { opt = true, cmd = "Neorg", ft = "norg", config = conf.norg }
 lang["h-hg/fcitx.nvim"] = { opt = false, event = "VimEnter" }
 lang["whonore/Coqtail"] = { opt = true, ft = "coq" }
 return lang

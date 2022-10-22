@@ -90,6 +90,7 @@ function config.rust_tools()
 		},
 	}
 	require("rust-tools").setup(opts)
+	vim.g.rust_clip_command = "xclip -selection clipboard"
 end
 
 function config.lang_go()
@@ -276,5 +277,6 @@ function config.norg()
 		},
 	})
 end
+
 
 return config
