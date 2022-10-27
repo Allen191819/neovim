@@ -25,6 +25,10 @@ mason_lsp.setup({
 		"vimls",
 		"sqls",
 		"jsonls",
+		"sumneko_lua",
+		"bashls",
+		"jdtls",
+		"texlab",
 	},
 })
 
@@ -167,7 +171,6 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 			cmd = { "sqls" },
 			args = { "-config ~/.config/sqls/config.yml" },
 			filetypes = { "sql", "mysql" },
-
 			on_attach = custom_attach,
 		})
 	elseif server == "clangd" then
@@ -300,11 +303,11 @@ nvim_lsp.hls.setup({
 -- https://github.com/jeapostrophe/racket-langserver
 
 nvim_lsp.racket_langserver.setup({
-	cmd = {"racket", "--lib", "racket-langserver"},
+	cmd = { "racket", "--lib", "racket-langserver" },
 	filetypes = { "racket", "scheme" },
 	single_file_support = true,
 	capabilities = capabilities,
-	on_attach = function(client,bufnr)
+	on_attach = function(client, bufnr)
 		require("nvim-navic").attach(client, bufnr)
 		require("aerial").on_attach(client)
 		custom_attach(client)

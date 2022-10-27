@@ -319,7 +319,7 @@ function config.dap()
 			startup = "${file}",
 			stopOnEntry = true,
 			logFile = vim.fn.stdpath("data") .. "/haskell-dap.log",
-			logLevel = "DEBUG",
+			logLevel = "WARNING",
 			ghciEnv = vim.empty_dict(),
 			ghciPrompt = "λ> ",
 			ghciInitialPrompt = "λ>>",
