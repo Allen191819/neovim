@@ -29,6 +29,7 @@ mason_lsp.setup({
 		"bashls",
 		"jdtls",
 		"texlab",
+		"yamlls",
 	},
 })
 
