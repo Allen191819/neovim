@@ -217,34 +217,6 @@ function config.clipboard_image()
 	})
 end
 
-function config.latex()
-	vim.g.vimtex_view_method = "zathura"
-	vim.g.vimtex_quickfix_mode = 0
-	vim.g.tex_flavor = "latex"
-	vim.g.conceallevel = 2
-	vim.g.tex_conceal = "abdmg"
-	vim.g.vimtex_compliler_progname = "nvr"
-	vim.g.vimtex_mappings_enabled = 0
-	vim.g.vimtex_text_obj_enabled = 0
-	vim.g.vimtex_motion_enabled = 0
-	vim.g.vimtex_syntax_conceal = {
-		accents = 1,
-		cites = 1,
-		fancy = 1,
-		greek = 1,
-		math_bounds = 1,
-		math_delimiters = 1,
-		math_fracs = 1,
-		math_super_sub = 1,
-		math_symbols = 1,
-		sections = 1,
-		styles = 1,
-	}
-	vim.cmd([[
-	autocmd BufRead,BufNewFile *.tex setlocal spell
-	]])
-end
-
 function config.norg()
 	if not packer_plugins["nvim-cmp"].loaded then
 		vim.cmd([[packadd nvim-cmp]])
@@ -288,14 +260,14 @@ function config.knap()
 		mdtohtml = "pandoc --standalone %docroot% -o %outputfile%",
 		mdtohtmlviewerlaunch = "surf %outputfile%",
 		mdtohtmlviewerrefresh = "none",
-		mdtopdf = "pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V mainfont='Source Han Serif CN' %docroot% -o %outputfile%",
+		mdtopdf = "pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile%",
 		mdtopdfviewerlaunch = "zathura %outputfile%",
 		mdtopdfviewerrefresh = "none",
 		markdownoutputext = "pdf",
 		markdowntohtml = "pandoc --standalone %docroot% -o %outputfile%",
 		markdowntohtmlviewerlaunch = "surf %outputfile%",
 		markdowntohtmlviewerrefresh = "none",
-		markdowntopdf = "pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V mainfont='Source Han Serif CN' %docroot% -o %outputfile%",
+		markdowntopdf = "pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile%",
 		markdowntopdfviewerlaunch = "zathura %outputfile%",
 		markdowntopdfviewerrefresh = "none",
 		texoutputext = "pdf",
@@ -307,6 +279,9 @@ function config.knap()
 		delay = 250,
 	}
 	vim.g.knap_settings = gknapsettings
+	vim.cmd([[
+	autocmd BufRead,BufNewFile *.tex setlocal spell
+	]])
 end
 
 return config
