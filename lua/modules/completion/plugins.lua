@@ -5,6 +5,7 @@ completion["neovim/nvim-lspconfig"] = {
 	config = conf.nvim_lsp,
 }
 completion["Allen191819/efmls-configs-nvim"] = {
+	branch="vim.health",
 	opt = false,
 	requires = "neovim/nvim-lspconfig",
 }

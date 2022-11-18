@@ -18,7 +18,7 @@ function config.nvim_treesitter()
 		sync_install = false,
 		highlight = {
 			enable = true,
-			disable = { "latex", "lean" },
+			disable = { "lean" },
 		},
 		rainbow = {
 			enable = true,
@@ -45,6 +45,7 @@ function config.nvim_treesitter()
 			"ruby",
 			"vim",
 			"yaml",
+			"latex",
 			"javascript",
 			"typescript",
 			"r",

@@ -172,7 +172,6 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 			cmd = { "sqls" },
 			args = { "-config ~/.config/sqls/config.yml" },
 			filetypes = { "sql", "mysql" },
-
 			on_attach = custom_attach,
 		})
 	elseif server == "clangd" then
@@ -297,7 +296,6 @@ nvim_lsp.hls.setup({
 	flags = { debounce_text_changes = 500 },
 	capabilities = capabilities,
 	on_attach = function(client)
-		require("aerial").on_attach(client)
 		custom_attach(client)
 	end,
 })
@@ -311,7 +309,6 @@ nvim_lsp.racket_langserver.setup({
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		require("nvim-navic").attach(client, bufnr)
-		require("aerial").on_attach(client)
 		custom_attach(client)
 	end,
 })

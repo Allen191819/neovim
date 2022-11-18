@@ -227,7 +227,6 @@ function config.aerial()
 		backends = { "treesitter", "lsp", "markdown" },
 		close_automatic_events = { "unfocus" },
 		default_bindings = true,
-		default_direction = "prefer_right",
 		disable_max_lines = 1000,
 		filter_kind = {
 			"Class",
@@ -245,12 +244,17 @@ function config.aerial()
 		link_folds_to_tree = false,
 		link_tree_to_folds = true,
 		manage_folds = false,
-		max_width = 40,
-		min_width = 20,
+		layout = {
+			max_width = { 40, 0.2 },
+			width = nil,
+			min_width = 10,
+			win_opts = {},
+			default_direction = "prefer_right",
+			placement_editor_edge = true,
+		},
 		nerd_font = "auto",
 		on_attach = nil,
 		open_automatic = false,
-		placement_editor_edge = true,
 		post_jump_cmd = "normal! zz",
 		close_on_select = false,
 		show_guides = true,
@@ -262,7 +266,6 @@ function config.aerial()
 		},
 		float = { border = "rounded", max_height = 100, min_height = 4 },
 		treesitter = {
-			-- How long to wait (in ms) after a buffer change before updating
 			update_delay = 300,
 		},
 		markdown = { update_delay = 300 },

@@ -186,7 +186,7 @@ function config.makrkdown_preview()
 	vim.g.mkdp_browser = "surf"
 	vim.g.mkdp_page_title = "「${name}」"
 	vim.g.mkdp_filetypes = { "markdown" }
-	vim.g.mkdp_theme = "dark"
+	vim.g.mkdp_theme = "light"
 	vim.g.spelllang = "nl,en-gb"
 	vim.g.vmt_auto_update_on_save = 1
 	vim.g.mkdp_markdown_css = "/home/allen/.config/nvim/color/markdown.css"
@@ -278,5 +278,35 @@ function config.norg()
 	})
 end
 
+function config.knap()
+	local gknapsettings = {
+		htmloutputext = "html",
+		htmltohtml = "none",
+		htmltohtmlviewerlaunch = "surf %outputfile%",
+		htmltohtmlviewerrefresh = "none",
+		mdoutputext = "pdf",
+		mdtohtml = "pandoc --standalone %docroot% -o %outputfile%",
+		mdtohtmlviewerlaunch = "surf %outputfile%",
+		mdtohtmlviewerrefresh = "none",
+		mdtopdf = "pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V mainfont='Source Han Serif CN' %docroot% -o %outputfile%",
+		mdtopdfviewerlaunch = "zathura %outputfile%",
+		mdtopdfviewerrefresh = "none",
+		markdownoutputext = "pdf",
+		markdowntohtml = "pandoc --standalone %docroot% -o %outputfile%",
+		markdowntohtmlviewerlaunch = "surf %outputfile%",
+		markdowntohtmlviewerrefresh = "none",
+		markdowntopdf = "pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V mainfont='Source Han Serif CN' %docroot% -o %outputfile%",
+		markdowntopdfviewerlaunch = "zathura %outputfile%",
+		markdowntopdfviewerrefresh = "none",
+		texoutputext = "pdf",
+		textopdf = "xelatex -interaction=batchmode -halt-on-error -synctex=1 %docroot%",
+		textopdfviewerlaunch = "zathura --synctex-editor-command 'nvim --headless -es --cmd \"lua require('\"'\"'knaphelper'\"'\"').relayjump('\"'\"'%servername%'\"'\"','\"'\"'%{input}'\"'\"',%{line},0)\"' %outputfile%",
+		textopdfviewerrefresh = "none",
+		textopdfforwardjump = "zathura --synctex-forward=%line%:%column%:%srcfile% %outputfile%",
+		textopdfshorterror = 'A=%outputfile% ; LOGFILE="${A%.pdf}.log" ; rubber-info "$LOGFILE" 2>&1 | head -n 1',
+		delay = 250,
+	}
+	vim.g.knap_settings = gknapsettings
+end
 
 return config

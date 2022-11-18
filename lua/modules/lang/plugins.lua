@@ -26,7 +26,7 @@ lang["iamcco/markdown-preview.nvim"] = {
 	run = "cd app && yarn install",
 	config = conf.makrkdown_preview,
 }
-lang["lervag/vimtex"] = { opt = true, ft = "tex", config = conf.latex }
+--lang["lervag/vimtex"] = { opt = true, ft = "tex", config = conf.latex }
 lang["dhruvasagar/vim-table-mode"] = { opt = true, ft = "markdown" }
 lang["mzlogin/vim-markdown-toc"] = { opt = true, ft = "markdown" }
 lang["ekickx/clipboard-image.nvim"] = {
@@ -39,4 +39,5 @@ lang["ekickx/clipboard-image.nvim"] = {
 lang["nvim-neorg/neorg"] = { opt = true, cmd = "Neorg", ft = "norg", config = conf.norg }
 lang["h-hg/fcitx.nvim"] = { opt = false, event = "VimEnter" }
 lang["whonore/Coqtail"] = { opt = true, ft = "coq" }
+lang["frabjous/knap"] = {opt=true, ft={ "markdown","tex" },config=conf.knap, require={"savq/paq-nvim"}}
 return lang

@@ -26,8 +26,7 @@ func! CompileRunGccH()
 	elseif &filetype == 'markdown'
 		exec "MarkdownPreview"
 	elseif &filetype == 'tex'
-        silent! exec "VimtexStopAll"
-        silent! exec "VimtexCompile"
+		:lua require("knap").toggle_autopreviewing()
 	elseif &filetype == 'html'
 		silent! exec "!chromium % &"
 	elseif &filetype == 'javascript'
@@ -62,6 +61,10 @@ func! CompileRunGccF()
 		:FloatermNew python3 %
 	elseif &filetype == 'r'
 		:FloatermNew Rscript %
+	elseif &filetype == 'markdown'
+		:lua require("knap").toggle_autopreviewing()
+	elseif &filetype == 'html'
+		:lua require("knap").toggle_autopreviewing()
 	elseif &filetype == 'javascript'
 		:FloatermNew export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
 	elseif &filetype == 'go'
