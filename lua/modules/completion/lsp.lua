@@ -20,7 +20,6 @@ local mason_lsp = require("mason-lspconfig")
 mason.setup()
 mason_lsp.setup({
 	ensure_installed = {
-		"clangd",
 		"pylsp",
 		"vimls",
 		"sqls",
@@ -353,6 +352,8 @@ local clangfmt = require("efmls-configs.formatters.clang_format")
 local prettier = require("efmls-configs.formatters.prettier")
 local shfmt = require("efmls-configs.formatters.shfmt")
 local alex = require("efmls-configs.linters.alex")
+local uncrustify = require("efmls-configs.formatters.uncrustify")
+local gcc = require("efmls-configs.linters.gcc")
 -- local pylint = require("efmls-configs.linters.pylint")
 -- local yapf = require("efmls-configs.formatters.yapf")
 -- local vulture = require("efmls-configs.linters.vulture")
@@ -376,8 +377,8 @@ flake8 = vim.tbl_extend("force", flake8, {
 
 efmls.setup({
 	lua = { formatter = luafmt },
-	c = { formatter = clangfmt, linter = clangtidy },
-	cpp = { formatter = clangfmt, linter = clangtidy },
+--	c = { formatter = clangfmt, linter = clangtidy },
+--	cpp = { formatter = clangfmt, linter = clangtidy },
 	latex = { linter = alex },
 	vue = { formatter = prettier },
 	typescript = { formatter = prettier, linter = eslint },
@@ -393,7 +394,7 @@ efmls.setup({
 	markdown = { formatter = prettier },
 	sql = { formatter = sqlfmt },
 	htmldjango = { formatter = prettier },
-	-- rust = { formatter = rustfmt },
+	rust = { formatter = rustfmt },
 	-- python = {formatter = yapf},
 	-- go = { formatter = goimports, linter = staticcheck },
 })
