@@ -16,6 +16,7 @@ end
 local nvim_lsp = require("lspconfig")
 local mason = require("mason")
 local mason_lsp = require("mason-lspconfig")
+local util = require('lspconfig.util')
 
 mason.setup()
 mason_lsp.setup({
@@ -304,6 +305,7 @@ nvim_lsp.hls.setup({
 nvim_lsp.racket_langserver.setup({
 	cmd = { "racket", "--lib", "racket-langserver" },
 	filetypes = { "racket", "scheme" },
+	root_dir = util.find_git_ancestor,
 	single_file_support = true,
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
@@ -311,6 +313,19 @@ nvim_lsp.racket_langserver.setup({
 		custom_attach(client)
 	end,
 })
+
+-- https://github.com/ufo5260987423/scheme-langserver 
+
+-- nvim_lsp.scheme_langserver.setup({
+-- 	cmd = {"scheme-langserver"},
+-- 	filetypes = {"scheme"},
+-- 	single_file_support = true,
+-- 	capabilities = capabilities,
+-- 	on_attach = function(client, bufnr)
+-- 		require("nvim-navic").attach(client, bufnr)
+-- 		custom_attach(client)
+-- 	end,
+-- })
 
 -- https://github.com/vscode-langservers/vscode-html-languageserver-bin
 
