@@ -17,7 +17,7 @@ tools["ahmedkhalf/project.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",
 }
-tools["rcarriga/nvim-notify"] = {opt=false,config=conf.notify}
+tools["rcarriga/nvim-notify"] = { opt = false, config = conf.notify }
 tools["nvim-telescope/telescope-frecency.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",
@@ -59,10 +59,6 @@ tools["folke/trouble.nvim"] = {
 	cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
 	config = conf.trouble,
 }
-tools["sindrets/diffview.nvim"] = {
-	opt = true,
-	cmd = { "DiffviewFileHistory", "DiffviewOpen" },
-}
 tools["mbbill/undotree"] = {
 	opt = true,
 	cmd = "UndotreeToggle",
@@ -75,29 +71,13 @@ tools["gelguy/wilder.nvim"] = {
 	requires = { { "romgrk/fzy-lua-native", after = "wilder.nvim" } },
 }
 tools["stevearc/aerial.nvim"] = { opt = false, config = conf.aerial }
-tools["kristijanhusak/vim-dadbod-ui"] = {
-	opt = true,
-	cmd = { "DBUIToggle" },
-	requires = { { "tpope/vim-dadbod", opt = true } },
-	config = conf.dadbod,
-}
 tools["lambdalisue/suda.vim"] = {
 	opt = true,
 	cmd = { "SudaRead", "SudaWrite" },
 	config = conf.suda,
 }
 tools["itchyny/calendar.vim"] = {
-	opt=false
-}
-tools["uga-rosa/translate.nvim"] = {
-	opt=false,
-	config = conf.translate
-}
-tools["jbyuki/venn.nvim"]={
-	opt = false,
-	config = conf.venn
-}
-tools["RishabhRD/nvim-cheat.sh"] = {
 	opt = false,
 }
+tools["h-hg/fcitx.nvim"] = { opt = false, event = "VimEnter" }
 return tools

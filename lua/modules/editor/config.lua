@@ -1,13 +1,30 @@
 local config = {}
 
-function config.vim_cursorwod()
-	vim.api.nvim_command("augroup user_plugin_cursorword")
-	vim.api.nvim_command("autocmd!")
-	vim.api.nvim_command("autocmd FileType NvimTree,dashboard let b:cursorword = 0")
-	vim.api.nvim_command("autocmd WinEnter * if &diff || &pvw | let b:cursorword = 0 | endif")
-	vim.api.nvim_command("autocmd InsertEnter * let b:cursorword = 0")
-	vim.api.nvim_command("autocmd InsertLeave * let b:cursorword = 1")
-	vim.api.nvim_command("augroup END")
+function config.illuminate()
+	require("illuminate").configure({
+		providers = {
+			"lsp",
+			"treesitter",
+			"regex",
+		},
+		delay = 100,
+		filetypes_denylist = {
+			"alpha",
+			"dashboard",
+			"DoomInfo",
+			"fugitive",
+			"help",
+			"norg",
+			"NvimTree",
+			"Outline",
+			"packer",
+			"toggleterm",
+			"undotree",
+			"leaninfo",
+			"calendar",
+		},
+		under_cursor = false,
+	})
 end
 
 function config.nvim_treesitter()
@@ -28,6 +45,37 @@ function config.nvim_treesitter()
 		context_commentstring = { enable = true },
 		matchup = { enable = true },
 		context = { enable = true, throttle = true },
+		textobjects = {
+			select = {
+				enable = true,
+				keymaps = {
+					["af"] = "@function.outer",
+					["if"] = "@function.inner",
+					["ac"] = "@class.outer",
+					["ic"] = "@class.inner",
+				},
+			},
+			move = {
+				enable = true,
+				set_jumps = true, -- whether to set jumps in the jumplist
+				goto_next_start = {
+					["]["] = "@function.outer",
+					["]m"] = "@class.outer",
+				},
+				goto_next_end = {
+					["]]"] = "@function.outer",
+					["]M"] = "@class.outer",
+				},
+				goto_previous_start = {
+					["[["] = "@function.outer",
+					["[m"] = "@class.outer",
+				},
+				goto_previous_end = {
+					["[]"] = "@function.outer",
+					["[M"] = "@class.outer",
+				},
+			},
+		},
 		ensure_installed = {
 			"c",
 			"java",
@@ -55,43 +103,6 @@ end
 
 function config.matchup()
 	vim.cmd([[let g:matchup_matchparen_offscreen = {'method': 'popup'}]])
-end
-
-function config.nvim_gps()
-	require("nvim-navic").setup({
-		icons = {
-			File = " ",
-			Module = " ",
-			Namespace = " ",
-			Package = " ",
-			Class = " ",
-			Method = " ",
-			Property = " ",
-			Field = " ",
-			Constructor = " ",
-			Enum = "練",
-			Interface = "練",
-			Function = " ",
-			Variable = " ",
-			Constant = " ",
-			String = " ",
-			Number = " ",
-			Boolean = "◩ ",
-			Array = " ",
-			Object = " ",
-			Key = " ",
-			Null = "ﳠ ",
-			EnumMember = " ",
-			Struct = " ",
-			Event = " ",
-			Operator = " ",
-			TypeParameter = " ",
-		},
-		highlight = false,
-		separator = " > ",
-		depth_limit = 0,
-		depth_limit_indicator = "..",
-	})
 end
 
 function config.autotag()
@@ -160,35 +171,14 @@ function config.toggleterm()
 	})
 end
 
-function config.dap()
-	local dap = require("dap")
-	local dapui = require("dapui")
-	local dap_breakpoint = {
-		error = {
-			text = "🛑",
-			texthl = "LspDiagnosticsSignError",
-			linehl = "",
-			numhl = "",
-		},
-		rejected = {
-			text = "",
-			texthl = "LspDiagnosticsSignHint",
-			linehl = "",
-			numhl = "",
-		},
-		stopped = {
-			text = "⭐️",
-			texthl = "LspDiagnosticsSignInformation",
-			linehl = "DiagnosticUnderlineInfo",
-			numhl = "LspDiagnosticsSignInformation",
-		},
+function config.dapui()
+	local icons = {
+		ui = require("modules.ui.icons").get("ui"),
+		dap = require("modules.ui.icons").get("dap"),
 	}
-	vim.fn.sign_define("DapBreakpoint", dap_breakpoint.error)
-	vim.fn.sign_define("DapStopped", dap_breakpoint.stopped)
-	vim.fn.sign_define("DapBreakpointRejected", dap_breakpoint.rejected)
 
 	require("dapui").setup({
-		icons = { expanded = "▾", collapsed = "▸" },
+		icons = { expanded = icons.ui.ArrowOpen, collapsed = icons.ui.ArrowClosed, current_frame = icons.ui.Indicator },
 		mappings = {
 			-- Use a table to apply multiple mappings
 			expand = { "<CR>", "<2-LeftMouse>" },
@@ -203,57 +193,79 @@ function config.dap()
 					-- Provide as ID strings or tables with "id" and "size" keys
 					{
 						id = "scopes",
-						size = 0.35, -- Can be float or integer > 1
+						size = 0.25, -- Can be float or integer > 1
 					},
-					{ id = "stacks", size = 0.35 },
-					{ id = "watches", size = 0.15 },
-					{ id = "breakpoints", size = 0.15 },
+					{ id = "breakpoints", size = 0.25 },
+					{ id = "stacks", size = 0.25 },
+					{ id = "watches", size = 0.25 },
 				},
 				size = 40,
 				position = "left",
 			},
-			{
-				elements = {
-					"repl",
-					"console",
-				},
-				size = 10,
-				position = "bottom",
-			},
+			{ elements = { "repl" }, size = 10, position = "bottom" },
 		},
-		render = {
-			max_type_length = 15, -- Can be integer or nil.
+		-- Requires Nvim version >= 0.8
+		controls = {
+			enabled = true,
+			-- Display controls in this session
+			element = "repl",
+			icons = {
+				pause = icons.dap.Pause,
+				play = icons.dap.Play,
+				step_into = icons.dap.StepInto,
+				step_over = icons.dap.StepOver,
+				step_out = icons.dap.StepOut,
+				step_back = icons.dap.StepBack,
+				run_last = icons.dap.RunLast,
+				terminate = icons.dap.Terminate,
+			},
 		},
 		floating = {
 			max_height = nil,
 			max_width = nil,
-			border = "single",
 			mappings = { close = { "q", "<Esc>" } },
 		},
 		windows = { indent = 1 },
 	})
-	local debug_open = function()
+end
+
+function config.dap()
+	local icons = { dap = require("modules.ui.icons").get("dap") }
+
+	vim.api.nvim_command([[packadd nvim-dap-ui]])
+	local dap = require("dap")
+	local dapui = require("dapui")
+
+	dap.listeners.after.event_initialized["dapui_config"] = function()
 		dapui.open()
 	end
-	local debug_close = function()
-		dap.repl.close()
+	dap.listeners.after.event_terminated["dapui_config"] = function()
+		dapui.close()
+	end
+	dap.listeners.after.event_exited["dapui_config"] = function()
 		dapui.close()
 	end
 
-	dap.listeners.after.event_initialized["dapui_config"] = function()
-		debug_open()
-	end
-	dap.listeners.before.event_terminated["dapui_config"] = function()
-		debug_close()
-	end
-	dap.listeners.before.event_exited["dapui_config"] = function()
-		debug_close()
-	end
-	dap.listeners.before.disconnect["dapui_config"] = function()
-		debug_close()
-	end
-	dap.defaults.fallback.terminal_win_cmd = "30vsplit new" -- this will be overrided by dapui
-	dap.set_log_level("DEBUG")
+	-- We need to override nvim-dap's default highlight groups, AFTER requiring nvim-dap for catppuccin.
+	vim.api.nvim_set_hl(0, "DapStopped", { fg = "#ABE9B3" })
+
+	vim.fn.sign_define(
+		"DapBreakpoint",
+		{ text = icons.dap.Breakpoint, texthl = "DapBreakpoint", linehl = "", numhl = "" }
+	)
+	vim.fn.sign_define(
+		"DapBreakpointCondition",
+		{ text = icons.dap.BreakpointCondition, texthl = "DapBreakpoint", linehl = "", numhl = "" }
+	)
+	vim.fn.sign_define("DapStopped", { text = icons.dap.Stopped, texthl = "DapStopped", linehl = "", numhl = "" })
+	vim.fn.sign_define(
+		"DapBreakpointRejected",
+		{ text = icons.dap.BreakpointRejected, texthl = "DapBreakpoint", linehl = "", numhl = "" }
+	)
+	vim.fn.sign_define("DapLogPoint", { text = icons.dap.LogPoint, texthl = "DapLogPoint", linehl = "", numhl = "" })
+
+	dap.configurations.c = dap.configurations.cpp
+	dap.configurations.rust = dap.configurations.cpp
 
 	dap.adapters.lldb = {
 		type = "executable",
@@ -306,6 +318,60 @@ function config.dap()
 			end,
 		},
 	}
+	dap.adapters.go = function(callback)
+		local stdout = vim.loop.new_pipe(false)
+		local handle
+		local pid_or_err
+		local port = 38697
+		local opts = {
+			stdio = { nil, stdout },
+			args = { "dap", "-l", "127.0.0.1:" .. port },
+			detached = true,
+		}
+		handle, pid_or_err = vim.loop.spawn("dlv", opts, function(code)
+			stdout:close()
+			handle:close()
+			if code ~= 0 then
+				vim.notify(
+					string.format('"dlv" exited with code: %d, please check your configs for correctness.', code),
+					vim.log.levels.WARN,
+					{ title = "[go] DAP Warning!" }
+				)
+			end
+		end)
+		assert(handle, "Error running dlv: " .. tostring(pid_or_err))
+		stdout:read_start(function(err, chunk)
+			assert(not err, err)
+			if chunk then
+				vim.schedule(function()
+					require("dap.repl").append(chunk)
+				end)
+			end
+		end)
+		-- Wait for delve to start
+		vim.defer_fn(function()
+			callback({ type = "server", host = "127.0.0.1", port = port })
+		end, 100)
+	end
+	-- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
+	dap.configurations.go = {
+		{ type = "go", name = "Debug", request = "launch", program = "${file}" },
+		{
+			type = "go",
+			name = "Debug test", -- configuration for debugging test files
+			request = "launch",
+			mode = "test",
+			program = "${file}",
+		}, -- works with go.mod packages and sub packages
+		{
+			type = "go",
+			name = "Debug test (go.mod)",
+			request = "launch",
+			mode = "test",
+			program = "./${relativeFileDirname}",
+		},
+	}
+
 	dap.adapters.haskell = {
 		type = "executable",
 		command = "haskell-debug-adapter",
@@ -480,6 +546,31 @@ function config.neogen()
 	require("neogen").setup({
 		enabled = true,
 		languages = {},
+	})
+end
+
+function config.smartyank()
+	require("smartyank").setup({
+		highlight = {
+			enabled = false, -- highlight yanked text
+			higroup = "IncSearch", -- highlight group of yanked text
+			timeout = 2000, -- timeout for clearing the highlight
+		},
+		clipboard = {
+			enabled = true,
+		},
+		tmux = {
+			enabled = true,
+			-- remove `-w` to disable copy to host client's clipboard
+			cmd = { "tmux", "set-buffer", "-w" },
+		},
+		osc52 = {
+			enabled = true,
+			escseq = "tmux", -- use tmux escape sequence, only enable if you're using remote tmux and have issues (see #4)
+			ssh_only = true, -- false to OSC52 yank also in local sessions
+			silent = false, -- true to disable the "n chars copied" echo
+			echo_hl = "Directory", -- highlight group of the OSC52 echo message
+		},
 	})
 end
 

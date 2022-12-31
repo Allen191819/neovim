@@ -1,92 +1,156 @@
 local config = {}
 
-function config.lspkind()
-	local lspkind = require("lspkind")
-	lspkind.init({
-		mode = "symbol_text",
-		preset = "codicons",
-		symbol_map = {
-			Text = "",
-			Method = "",
-			Function = "",
-			Constructor = "",
-			Field = "ﰠ",
-			Variable = "",
-			Class = "𝓒",
-			Interface = "ﰮ",
-			Module = "",
-			Property = "ﰠ",
-			Unit = "塞",
-			Value = "",
-			Enum = "",
-			Keyword = "",
-			Snippet = "",
-			Color = "",
-			File = "",
-			Reference = "",
-			Folder = "",
-			EnumMember = "",
-			Constant = "",
-			Struct = "פּ",
-			Event = "",
-			Operator = "",
-			TypeParameter = "𝙏",
+function config.lspsaga()
+	local icons = {
+		diagnostics = require("modules.ui.icons").get("diagnostics", true),
+		kind = require("modules.ui.icons").get("kind", true),
+		type = require("modules.ui.icons").get("type", true),
+		ui = require("modules.ui.icons").get("ui", true),
+	}
+
+	local function set_sidebar_icons()
+		-- Set icons for sidebar.
+		local diagnostic_icons = {
+			Error = icons.diagnostics.Error_alt,
+			Warn = icons.diagnostics.Warning_alt,
+			Info = icons.diagnostics.Information_alt,
+			Hint = icons.diagnostics.Hint_alt,
+		}
+		for type, icon in pairs(diagnostic_icons) do
+			local hl = "DiagnosticSign" .. type
+			vim.fn.sign_define(hl, { text = icon, texthl = hl })
+		end
+	end
+
+	local function get_palette()
+		if vim.g.colors_name == "catppuccin" then
+			-- If the colorscheme is catppuccin then use the palette.
+			return require("catppuccin.palettes").get_palette()
+		else
+			-- Default behavior: return lspsaga's default palette.
+			local palette = require("lspsaga.lspkind").colors
+			palette.peach = palette.orange
+			palette.flamingo = palette.orange
+			palette.rosewater = palette.yellow
+			palette.mauve = palette.violet
+			palette.sapphire = palette.blue
+			palette.maroon = palette.orange
+
+			return palette
+		end
+	end
+
+	set_sidebar_icons()
+
+	local colors = get_palette()
+
+	require("lspsaga").init_lsp_saga({
+		diagnostic_header = {
+			icons.diagnostics.Error_alt,
+			icons.diagnostics.Warning_alt,
+			icons.diagnostics.Information_alt,
+			icons.diagnostics.Hint_alt,
+		},
+		custom_kind = {
+			-- Kind
+			Class = { icons.kind.Class, colors.yellow },
+			Constant = { icons.kind.Constant, colors.peach },
+			Constructor = { icons.kind.Constructor, colors.sapphire },
+			Enum = { icons.kind.Enum, colors.yellow },
+			EnumMember = { icons.kind.EnumMember, colors.teal },
+			Event = { icons.kind.Event, colors.yellow },
+			Field = { icons.kind.Field, colors.teal },
+			File = { icons.kind.File, colors.rosewater },
+			Function = { icons.kind.Function, colors.blue },
+			Interface = { icons.kind.Interface, colors.yellow },
+			Key = { icons.kind.Keyword, colors.red },
+			Method = { icons.kind.Method, colors.blue },
+			Module = { icons.kind.Module, colors.blue },
+			Namespace = { icons.kind.Namespace, colors.blue },
+			Number = { icons.kind.Number, colors.peach },
+			Operator = { icons.kind.Operator, colors.sky },
+			Package = { icons.kind.Package, colors.blue },
+			Property = { icons.kind.Property, colors.teal },
+			Struct = { icons.kind.Struct, colors.yellow },
+			TypeParameter = { icons.kind.TypeParameter, colors.maroon },
+			Variable = { icons.kind.Variable, colors.peach },
+			-- Type
+			Array = { icons.type.Array, colors.peach },
+			Boolean = { icons.type.Boolean, colors.peach },
+			Null = { icons.type.Null, colors.yellow },
+			Object = { icons.type.Object, colors.yellow },
+			String = { icons.type.String, colors.green },
+			-- ccls-specific iconss.
+			TypeAlias = { icons.kind.TypeAlias, colors.green },
+			Parameter = { icons.kind.Parameter, colors.blue },
+			StaticMethod = { icons.kind.StaticMethod, colors.peach },
+		},
+		code_action_lightbulb = {
+			enable = false,
+			enable_in_insert = true,
+			cache_code_action = true,
+			sign = true,
+			update_time = 150,
+			sign_priority = 20,
+			virtual_text = true,
+		},
+		symbol_in_winbar = {
+			enable = true,
+			in_custom = false,
+			separator = " " .. icons.ui.Separator,
+			show_file = false,
+			-- define how to customize filename, eg: %:., %
+			-- if not set, use default value `%:t`
+			-- more information see `vim.fn.expand` or `expand`
+			-- ## only valid after set `show_file = true`
+			file_formatter = "",
+			click_support = function(node, clicks, button, modifiers)
+				-- To see all avaiable details: vim.pretty_print(node)
+				local st = node.range.start
+				local en = node.range["end"]
+				if button == "l" then
+					if clicks == 2 then
+					-- double left click to do nothing
+					else -- jump to node's starting line+char
+						vim.fn.cursor(st.line + 1, st.character + 1)
+					end
+				elseif button == "r" then
+					if modifiers == "s" then
+						print("lspsaga") -- shift right click to print "lspsaga"
+					end -- jump to node's ending line+char
+					vim.fn.cursor(en.line + 1, en.character + 1)
+				elseif button == "m" then
+					-- middle click to visual select node
+					vim.fn.cursor(st.line + 1, st.character + 1)
+					vim.api.nvim_command([[normal v]])
+					vim.fn.cursor(en.line + 1, en.character + 1)
+				end
+			end,
 		},
 	})
 end
 
 function config.cmp()
-	if not packer_plugins["nvim-cmp"].loaded then
-		vim.cmd([[packadd nvim-cmp]])
-	end
-
-	if not packer_plugins["cmp-nvim-ultisnips"].loaded then
-		vim.cmd([[packadd cmp-nvim-ultisnips]])
-	end
-
-	if not packer_plugins["cmp-tabnine"].loaded then
-		vim.cmd([[packadd cmp-tabnine]])
-	end
-
-	vim.cmd([[highlight CmpItemAbbrDeprecated guifg=#D8DEE9 guibg=NONE gui=strikethrough]])
-	vim.cmd([[highlight CmpItemKindSnippet guifg=#BF616A guibg=NONE]])
-	vim.cmd([[highlight CmpItemKindUnit guifg=#D08770 guibg=NONE]])
-	vim.cmd([[highlight CmpItemKindProperty guifg=#A3BE8C guibg=NONE]])
-	vim.cmd([[highlight CmpItemKindKeyword guifg=#EBCB8B guibg=NONE]])
-	vim.cmd([[highlight CmpItemAbbrMatch guifg=#5E81AC guibg=NONE]])
-	vim.cmd([[highlight CmpItemAbbrMatchFuzzy guifg=#5E81AC guibg=NONE]])
-	vim.cmd([[highlight CmpItemKindVariable guifg=#8FBCBB guibg=NONE]])
-	vim.cmd([[highlight CmpItemKindInterface guifg=#88C0D0 guibg=NONE]])
-	vim.cmd([[highlight CmpItemKindText guifg=#81A1C1 guibg=NONE]])
-	vim.cmd([[highlight CmpItemKindFunction guifg=#B48EAD guibg=NONE]])
-	vim.cmd([[highlight CmpItemKindMethod guifg=#B48EAD guibg=NONE]])
+	local icons = {
+		kind = require("modules.ui.icons").get("kind", false),
+		type = require("modules.ui.icons").get("type", false),
+		cmp = require("modules.ui.icons").get("cmp", false),
+	}
+	vim.cmd([[packadd nvim-cmp]])
+	vim.cmd([[packadd cmp-nvim-ultisnips]])
+	vim.cmd([[packadd cmp-tabnine]])
 
 	require("cmp_nvim_ultisnips").setup({ show_snippets = "all" })
+
 	local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+
 	local types = require("cmp.types")
 	local cmp = require("cmp")
 	local lspkind = require("lspkind")
-	local source_menu = {
-		cmp_tabnine = "[TN]",
-		buffer = "[BUF]",
-		nvim_lsp = "[LSP]",
-		nvim_lua = "[LUA]",
-		path = "[PATH]",
-		tmux = "[TMUX]",
-		ultisnips = "[SNIP]",
-		spell = "[SPELL]",
-		emoji = "[Emoji]",
-		calc = "[Calc]",
-		vim_dadbod_completion = "[DB]",
-		latex_symbols = "[Latex]",
-		-- copilot = "[AI]",
-		orgmode = "[Org]",
-		look = "Dict",
-		neorg = "Event",
-	}
 	cmp.setup({
 		sorting = {
 			comparators = {
+				require("cmp_tabnine.compare"),
 				cmp.config.compare.offset,
 				cmp.config.compare.exact,
 				cmp.config.compare.score,
@@ -98,39 +162,17 @@ function config.cmp()
 			},
 		},
 		formatting = {
+			fields = { "kind", "abbr", "menu" },
 			format = function(entry, vim_item)
-				vim_item.kind = lspkind.presets.default[vim_item.kind]
-				local menu = source_menu[entry.source.name]
-				if entry.source.name == "cmp_tabnine" then
-					local detail = (entry.completion_item.data or {}).detail
-					vim_item.kind = ""
-					if detail and detail:find(".*%%.*") then
-						vim_item.kind = vim_item.kind .. " " .. detail
-					end
-					if (entry.completion_item.data or {}).multiline then
-						vim_item.kind = vim_item.kind .. " " .. "[ML]"
-					end
-				end
-				-- if entry.source.name == "copilot" then
-				-- 	if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-				-- 		menu = entry.completion_item.data.detail .. " " .. menu
-				-- 	end
-				-- 	vim_item.kind = ""
-				-- end
-				if entry.source.name == "look" then
-					if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-						menu = entry.completion_item.data.detail .. " " .. menu
-					end
-					vim_item.kind = "﬜"
-				end
-				if entry.source.name == "neorg" then
-					if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-						menu = entry.completion_item.data.detail .. " " .. menu
-					end
-					vim_item.kind = ""
-				end
-				vim_item.menu = menu
-				return vim_item
+				local kind = lspkind.cmp_format({
+					mode = "symbol_text",
+					maxwidth = 50,
+					symbol_map = vim.tbl_deep_extend("force", icons.kind, icons.type, icons.cmp),
+				})(entry, vim_item)
+				local strings = vim.split(kind.kind, "%s", { trimempty = true })
+				kind.kind = " " .. strings[1] .. " "
+				kind.menu = "    (" .. strings[2] .. ")"
+				return kind
 			end,
 		},
 		mapping = {
@@ -171,7 +213,6 @@ function config.cmp()
 			{ name = "latex_symbols", group_index = 2, max_item_count = 5 },
 			{ name = "vim_dadbod_completion", group_index = 2, max_item_count = 3 },
 			{ name = "cmp_tabnine", group_index = 2, max_item_count = 3 },
-			--{ name = "copilot", group_index = 2, max_item_count = 3 },
 			{ name = "emoji", group_index = 2, max_item_count = 5 },
 			{ name = "neorg", group_index = 2, max_item_count = 5 },
 			{
@@ -242,62 +283,6 @@ function config.autopairs()
 			},
 		})
 	)
-end
-
--- function config.copilot()
--- 	vim.cmd([[ imap <silent><script><expr> <A-h> copilot#Accept("\<CR>") ]])
--- 	vim.cmd([[ let g:copilot_no_tab_map = v:true ]])
--- 	vim.cmd([[ highlight CopilotSuggestion guifg=#EBCB8B ctermfg=8 ]])
--- end
-
--- function config.copilot_cmp()
--- 	require("copilot").setup()
--- end
-
-function config.lspsaga()
-	local lspsaga = require("lspsaga")
-	lspsaga.setup({
-		debug = false,
-		use_saga_diagnostic_sign = false,
-		diagnostic_header_icon = "   ",
-		code_action_icon = " ",
-		code_action_prompt = {
-			enable = false,
-			sign = false,
-			sign_priority = 10,
-			virtual_text = false,
-		},
-		finder_definition_icon = "  ",
-		finder_reference_icon = "  ",
-		max_preview_lines = 10,
-		finder_action_keys = {
-			open = "o",
-			vsplit = "s",
-			split = "i",
-			quit = "q",
-			scroll_down = "<C-f>",
-			scroll_up = "<C-b>",
-		},
-		code_action_keys = {
-			quit = "q",
-			exec = "<CR>",
-		},
-		rename_action_keys = {
-			quit = "<C-c>",
-			exec = "<CR>",
-		},
-		definition_preview_icon = "  ",
-		border_style = "rounded",
-		rename_prompt_prefix = "➤",
-		rename_output_qflist = {
-			enable = true,
-			auto_open_qflist = true,
-		},
-		server_filetype_map = {},
-		diagnostic_prefix_format = "%d. ",
-		diagnostic_message_format = "%m %c",
-		highlight_prefix = true,
-	})
 end
 
 function config.nvim_lsp()

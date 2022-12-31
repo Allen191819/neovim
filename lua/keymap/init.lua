@@ -2,7 +2,9 @@ local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local map_cu = bind.map_cu
 local map_cmd = bind.map_cmd
+
 require("keymap.config")
+
 local plug_map = {
 	-- Bufferline
 	["n|<Leader>p"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
@@ -61,7 +63,7 @@ local plug_map = {
 	["n|<Leader>fn"] = map_cu("Telescope notify theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fb"] = map_cu("Telescope vim_bookmarks theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fa"] = map_cu("Telescope aerial theme=dropdown"):with_noremap():with_silent(),
-	["n|<Leader>fw"] = map_cu("Telescope live_grep_args theme=dropdown") :with_noremap() :with_silent(),
+	["n|<Leader>fw"] = map_cu("Telescope live_grep_args theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fp"] = map_cu("Telescope projects theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>ff"] = map_cu("Telescope find_files theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>sc"] = map_cu("Telescope colorscheme theme=dropdown"):with_noremap():with_silent(),
@@ -109,22 +111,24 @@ local plug_map = {
 	["n|<leader>mi"] = map_cr("PasteImg"):with_noremap():with_silent(),
 	["n|<leader>mt"] = map_cr("TableModeToggle"):with_noremap():with_silent(),
 	-- Plugin dap
-	["n|<leader>dd"] = map_cr("lua require('dap').disconnect()"):with_noremap():with_silent(),
+	["n|<F6>"] = map_cr("lua require('dap').continue()"):with_noremap():with_silent(),
+	["n|<leader>dr"] = map_cr("lua require('dap').continue()"):with_noremap():with_silent(),
+	["n|<leader>dd"] = map_cr("lua require('dap').terminate() require('dapui').close()"):with_noremap():with_silent(),
 	["n|<leader>db"] = map_cr("lua require('dap').toggle_breakpoint()"):with_noremap():with_silent(),
 	["n|<leader>dB"] = map_cr("lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))")
 		:with_noremap()
 		:with_silent(),
-	["n|<leader>ev"] = map_cr("lua require'dapui'.eval()"):with_noremap():with_silent(),
-	["n|<leader>dl"] = map_cr("lua require('dap').repl.open()"):with_noremap():with_silent(),
 	["n|<leader>dbl"] = map_cr("lua require('dap').list_breakpoints()"):with_noremap():with_silent(),
 	["n|<leader>drc"] = map_cr("lua require('dap').run_to_cursor()"):with_noremap():with_silent(),
 	["n|<leader>drl"] = map_cr("lua require('dap').run_last()"):with_noremap():with_silent(),
-	["n|<F4>"] = map_cr("lua require('dap').terminate()"):with_noremap():with_silent(),
-	["n|<F5>"] = map_cr("lua require('dap').continue()"):with_noremap():with_silent(),
-	["n|<F6>"] = map_cr("lua require('dap').step_over()"):with_noremap():with_silent(),
-	["n|<F7>"] = map_cr("lua require('dap').step_into()"):with_noremap():with_silent(),
-	["n|<F8>"] = map_cr("lua require('dap').step_out()"):with_noremap():with_silent(),
-	["n|<leader>ds"] = map_cr("lua require'dapui'.toggle()"):with_noremap():with_silent(),
+	["n|<F7>"] = map_cr("lua require('dap').step_over()"):with_noremap():with_silent(),
+	["n|<leader>dv"] = map_cr("lua require('dap').step_over()"):with_noremap():with_silent(),
+	["n|<F8>"] = map_cr("lua require('dap').step_into()"):with_noremap():with_silent(),
+	["n|<leader>di"] = map_cr("lua require('dap').step_into()"):with_noremap():with_silent(),
+	["n|<F9>"] = map_cr("lua require('dap').step_out()"):with_noremap():with_silent(),
+	["n|<leader>do"] = map_cr("lua require('dap').step_out()"):with_noremap():with_silent(),
+	["n|<leader>dl"] = map_cr("lua require('dap').repl.open()"):with_noremap():with_silent(),
+	["o|m"] = map_cu([[lua require('tsht').nodes()]]):with_silent(),
 	-- IronRepl
 	["v|<leader>is"] = map_cmd("<Plug>(iron-visual-send)"):with_silent(),
 	["n|<leader>ir"] = map_cr("IronRepl"):with_silent(),
@@ -137,16 +141,12 @@ local plug_map = {
 	["n|,uu"] = map_cr("Calendar"):with_noremap():with_silent(),
 	["n|,uc"] = map_cr("Calendar -view=clock"):with_noremap():with_silent(),
 	["n|,uy"] = map_cr("Calendar -view=year -split=vertical -width=27"):with_noremap():with_silent(),
-	-- Translate
-	["v|<leader>tw"] = map_cr("Translate ZH"):with_noremap():with_silent(),
 	-- Bookmark
 	["n|mm"] = map_cr("BookmarkToggle"):with_noremap():with_silent(),
 	["n|mn"] = map_cr("BookmarkNext"):with_noremap():with_silent(),
 	["n|mp"] = map_cr("BookmarkPrev"):with_noremap():with_silent(),
 	["n|ma"] = map_cr("BookmarkShowAll"):with_noremap():with_silent(),
 	["n|mx"] = map_cr("BookmarkClear"):with_noremap():with_silent(),
-	-- Cheat.sh
-	["n|<leader>sh"] = map_cr("CheatList"):with_noremap():with_silent(),
 	-- Neorg
 	["n|<leader>sn"] = map_cr("Neorg gtd"):with_noremap():with_silent(),
 }

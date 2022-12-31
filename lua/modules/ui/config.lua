@@ -43,17 +43,6 @@ function config.edge()
 end
 
 function config.lualine()
-	if not packer_plugins["nvim-navic"].loaded then
-		vim.cmd([[packadd nvim-navic]])
-	end
-	local gps = require("nvim-navic")
-	local function gps_content()
-		if gps.is_available() then
-			return gps.get_location()
-		else
-			return ""
-		end
-	end
 	local conditions = {
 		buffer_not_empty = function()
 			return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
@@ -129,8 +118,6 @@ function config.lualine()
 		cond = conditions.buffer_not_empty,
 	})
 
-	ins_left({ gps_content, cond = gps.is_available })
-
 	ins_right({
 		"o:encoding", -- option component same as &encoding in viml
 		fmt = string.upper, -- I'm not sure why it's upper case either ;)
@@ -180,76 +167,103 @@ function config.lualine()
 end
 
 function config.nvim_tree()
-	local tree_cb = require("nvim-tree.config").nvim_tree_callback
+	local icons = {
+		diagnostics = require("modules.ui.icons").get("diagnostics"),
+		documents = require("modules.ui.icons").get("documents"),
+		git = require("modules.ui.icons").get("git"),
+		ui = require("modules.ui.icons").get("ui"),
+	}
 	require("nvim-tree").setup({
+		create_in_closed_folder = false,
+		respect_buf_cwd = false,
 		auto_reload_on_write = true,
 		disable_netrw = false,
-		hijack_cursor = false,
+		hijack_cursor = true,
 		hijack_netrw = true,
 		hijack_unnamed_buffer_when_opening = false,
 		ignore_buffer_on_setup = false,
-		open_on_setup = true,
+		open_on_setup = false,
 		open_on_setup_file = false,
 		open_on_tab = false,
 		sort_by = "name",
-		update_cwd = true,
+		sync_root_with_cwd = true,
 		view = {
-			width = 25,
-			hide_root_folder = false,
+			adaptive_size = false,
+			centralize_selection = false,
+			width = 30,
 			side = "left",
 			preserve_window_proportions = false,
 			number = false,
 			relativenumber = false,
 			signcolumn = "yes",
-			mappings = {
-				custom_only = true,
-				list = {
-					{ key = { "<CR>", "o", "<2-LeftMouse>" }, cb = tree_cb("edit") },
-					{ key = { "<2-RightMouse>", "<C-]>" }, cb = tree_cb("cd") },
-					{ key = "<C-v>", cb = tree_cb("vsplit") },
-					{ key = "<C-x>", cb = tree_cb("split") },
-					{ key = "<C-t>", cb = tree_cb("tabnew") },
-					{ key = "<", cb = tree_cb("prev_sibling") },
-					{ key = ">", cb = tree_cb("next_sibling") },
-					{ key = "P", cb = tree_cb("parent_node") },
-					{ key = "<BS>", cb = tree_cb("close_node") },
-					{ key = "<S-CR>", cb = tree_cb("close_node") },
-					{ key = "<Tab>", cb = tree_cb("preview") },
-					{ key = "K", cb = tree_cb("first_sibling") },
-					{ key = "J", cb = tree_cb("last_sibling") },
-					{ key = "I", cb = tree_cb("toggle_ignored") },
-					{ key = "H", cb = tree_cb("toggle_dotfiles") },
-					{ key = "R", cb = tree_cb("refresh") },
-					{ key = "m", cb = tree_cb("create") },
-					{ key = "d", cb = tree_cb("remove") },
-					{ key = "a", cb = tree_cb("rename") },
-					{ key = "<C-r>", cb = tree_cb("full_rename") },
-					{ key = "x", cb = tree_cb("cut") },
-					{ key = "yy", cb = tree_cb("copy") },
-					{ key = "p", cb = tree_cb("paste") },
-					{ key = "yn", cb = tree_cb("copy_name") },
-					{ key = "yp", cb = tree_cb("copy_path") },
-					{ key = "gy", cb = tree_cb("copy_absolute_path") },
-					{ key = "[c", cb = tree_cb("prev_git_item") },
-					{ key = "]c", cb = tree_cb("next_git_item") },
-					{ key = "-", cb = tree_cb("dir_up") },
-					{ key = "s", cb = tree_cb("system_open") },
-					{ key = "q", cb = tree_cb("close") },
-					{ key = "?", cb = tree_cb("toggle_help") },
+			hide_root_folder = false,
+			float = {
+				enable = false,
+				open_win_config = {
+					relative = "editor",
+					border = "rounded",
+					width = 30,
+					height = 30,
+					row = 1,
+					col = 1,
 				},
 			},
 		},
 		renderer = {
+			add_trailing = false,
+			group_empty = true,
+			highlight_git = false,
+			full_name = false,
+			highlight_opened_files = "none",
+			special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md", "CMakeLists.txt" },
+			symlink_destination = true,
 			indent_markers = {
 				enable = true,
 				icons = {
 					corner = "└ ",
 					edge = "│ ",
+					item = "│ ",
 					none = "  ",
 				},
 			},
+			root_folder_label = ":.:s?.*?/..?",
 			icons = {
 				webdev_colors = true,
+				git_placement = "before",
+				show = {
+					file = true,
+					folder = true,
+					folder_arrow = false,
+					git = true,
+				},
+				padding = " ",
+				symlink_arrow = "  ",
+				glyphs = {
+					default = icons.documents.Default, --
+					symlink = icons.documents.Symlink, --
+					bookmark = icons.ui.Bookmark,
+					git = {
+						unstaged = icons.git.Mod_alt,
+						staged = icons.git.Add, --
+						unmerged = icons.git.Unmerged,
+						renamed = icons.git.Rename, --
+						untracked = icons.git.Untracked, -- "ﲉ"
+						deleted = icons.git.Remove, --
+						ignored = icons.git.Ignore, --◌
+					},
+					folder = {
+						-- arrow_open = "",
+						-- arrow_closed = "",
+						arrow_open = "",
+						arrow_closed = "",
+						default = icons.ui.Folder,
+						open = icons.ui.FolderOpen,
+						empty = icons.ui.EmptyFolder,
+						empty_open = icons.ui.EmptyFolderOpen,
+						symlink = icons.ui.SymlinkFolder,
+						symlink_open = icons.ui.FolderOpen,
+					},
+				},
 			},
 		},
 		hijack_directories = {
@@ -258,44 +272,24 @@ function config.nvim_tree()
 		},
 		update_focused_file = {
 			enable = true,
-			update_cwd = true,
+			update_root = true,
 			ignore_list = {},
 		},
 		ignore_ft_on_setup = {},
-		system_open = {
-			cmd = "",
-			args = {},
-		},
-		diagnostics = {
-			enable = true,
-			show_on_dirs = false,
-			icons = {
-				hint = "",
-				info = "",
-				warning = "",
-				error = "",
-			},
-		},
 		filters = {
-			dotfiles = true,
-			custom = {},
+			dotfiles = false,
+			custom = { ".DS_Store" },
 			exclude = {},
-		},
-		git = {
-			enable = true,
-			ignore = true,
-			timeout = 400,
 		},
 		actions = {
 			use_system_clipboard = true,
 			change_dir = {
 				enable = true,
 				global = false,
-				restrict_above_cwd = false,
 			},
 			open_file = {
 				quit_on_open = false,
-				resize_window = true,
+				resize_window = false,
 				window_picker = {
 					enable = true,
 					chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
@@ -305,25 +299,65 @@ function config.nvim_tree()
 					},
 				},
 			},
+			remove_file = {
+				close_window = true,
+			},
+		},
+		diagnostics = {
+			enable = false,
+			show_on_dirs = false,
+			debounce_delay = 50,
+			icons = {
+				hint = icons.diagnostics.Hint_alt,
+				info = icons.diagnostics.Information_alt,
+				warning = icons.diagnostics.Warning_alt,
+				error = icons.diagnostics.Error_alt,
+			},
+		},
+		filesystem_watchers = {
+			enable = true,
+			debounce_delay = 50,
+		},
+		git = {
+			enable = true,
+			ignore = true,
+			show_on_dirs = true,
+			timeout = 400,
 		},
 		trash = {
-			cmd = "trash",
+			cmd = "gio trash",
 			require_confirm = true,
 		},
+		live_filter = {
+			prefix = "[FILTER]: ",
+			always_show_folders = true,
+		},
+		log = {
+			enable = false,
+			truncate = false,
+			types = {
+				all = false,
+				config = false,
+				copy_paste = false,
+				dev = false,
+				diagnostics = false,
+				git = false,
+				profile = false,
+				watcher = false,
+			},
+		},
 	})
-	vim.cmd(
-		[[ autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif ]]
-	)
 end
 
 function config.nvim_bufferline()
+	local icons = { ui = require("modules.ui.icons").get("ui") }
 	require("bufferline").setup({
 		options = {
-			number = "none",
-			modified_icon = "✥",
-			buffer_close_icon = "",
-			left_trunc_marker = "",
-			right_trunc_marker = "",
+			number = nil,
+			modified_icon = icons.ui.Modified,
+			buffer_close_icon = icons.ui.Close,
+			left_trunc_marker = icons.ui.Left,
+			right_trunc_marker = icons.ui.Right,
 			max_name_length = 14,
 			max_prefix_length = 13,
 			tab_size = 20,
@@ -363,6 +397,9 @@ function config.nvim_bufferline()
 				{ filetype = "dbui", text = "Dbui", text_align = "left" },
 				{ filetype = "leaninfo", text = "Leaninfo", text_align = "right" },
 			},
+			diagnostics_indicator = function(count)
+				return "(" .. count .. ")"
+			end,
 		},
 	})
 end
@@ -569,6 +606,7 @@ function config.alpha()
 		startify.button("f", "  Find file", ":Telescope find_files theme=dropdown<CR>"),
 		startify.button("r", "  Recent file", ":Telescope frecency theme=dropdown<CR>"),
 		startify.button("p", "  Find Project", ":Telescope projects theme=dropdown<CR>"),
+		startify.button("r", "  File frecency", ":Telescope frecency theme=dropdown<CR>"),
 	}
 	alpha.setup(startify.config)
 end
@@ -585,4 +623,26 @@ function config.guihua()
 	})
 end
 
+function config.neodim()
+	local normal_background = vim.api.nvim_get_hl_by_name("Normal", true).background
+	local blend_color = normal_background ~= nil and string.format("#%06x", normal_background) or "#000000"
+
+	require("neodim").setup({
+		alpha = 0.45,
+		blend_color = blend_color,
+		update_in_insert = {
+			enable = true,
+			delay = 100,
+		},
+		hide = {
+			virtual_text = true,
+			signs = false,
+			underline = false,
+		},
+	})
+end
+
+function config.fidget()
+	require("fidget").setup({})
+end
 return config

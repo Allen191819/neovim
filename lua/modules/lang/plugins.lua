@@ -1,14 +1,11 @@
 local lang = {}
 local conf = require("modules.lang.config")
-lang["ray-x/go.nvim"] = {
+
+lang["fatih/vim-go"] = {
 	opt = true,
 	ft = "go",
+	run = ":GoInstallBinaries",
 	config = conf.lang_go,
-	required = {
-		"ray-x/guihua.lua",
-		run = "cd lua/fzy && make",
-		after = "go.nvim",
-	},
 }
 lang["simrat39/rust-tools.nvim"] = {
 	opt = true,
@@ -26,7 +23,6 @@ lang["iamcco/markdown-preview.nvim"] = {
 	run = "cd app && yarn install",
 	config = conf.makrkdown_preview,
 }
---lang["lervag/vimtex"] = { opt = true, ft = "tex", config = conf.latex }
 lang["dhruvasagar/vim-table-mode"] = { opt = true, ft = "markdown" }
 lang["mzlogin/vim-markdown-toc"] = { opt = true, ft = "markdown" }
 lang["ekickx/clipboard-image.nvim"] = {
@@ -37,7 +33,6 @@ lang["ekickx/clipboard-image.nvim"] = {
 	config = conf.clipboard_image,
 }
 lang["nvim-neorg/neorg"] = { opt = true, cmd = "Neorg", ft = "norg", config = conf.norg }
-lang["h-hg/fcitx.nvim"] = { opt = false, event = "VimEnter" }
 lang["whonore/Coqtail"] = { opt = true, ft = "coq" }
-lang["frabjous/knap"] = {opt=true, ft={ "markdown","tex" },config=conf.knap, require={"savq/paq-nvim"}}
+lang["frabjous/knap"] = { opt = true, ft = { "markdown", "tex" }, config = conf.knap, require = { "savq/paq-nvim" } }
 return lang

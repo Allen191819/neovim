@@ -1,27 +1,24 @@
 local formatting = require("modules.completion.formatting")
-if not packer_plugins["lsp_signature.nvim"].loaded then
-	vim.cmd([[packadd lsp_signature.nvim]])
-end
 
-if not packer_plugins["cmp-nvim-lsp"].loaded then
-	vim.cmd([[packadd cmp-nvim-lsp]])
-end
-if not packer_plugins["lspsaga.nvim"].loaded then
-	vim.cmd([[packadd lspsaga.nvim]])
-end
-if not packer_plugins["nvim-navic"].loaded then
-	vim.cmd([[packadd nvim-navic]])
-end
+vim.cmd([[packadd lsp_signature.nvim]])
+vim.cmd([[packadd cmp-nvim-lsp]])
+vim.cmd([[packadd lspsaga.nvim]])
 
+local util = require("lspconfig.util")
 local nvim_lsp = require("lspconfig")
 local mason = require("mason")
 local mason_lsp = require("mason-lspconfig")
-local util = require('lspconfig.util')
 
-mason.setup()
+mason.setup({
+	ui = {
+		border = "rounded",
+	},
+})
+
 mason_lsp.setup({
 	ensure_installed = {
 		"pylsp",
+		"gopls",
 		"vimls",
 		"sqls",
 		"jsonls",
@@ -33,53 +30,7 @@ mason_lsp.setup({
 	},
 })
 
-local signs = { Error = "✗", Warn = "", Hint = "", Info = "" }
-local lspconfig_window = require("lspconfig.ui.windows")
-
-local old_defaults = lspconfig_window.default_opts
-
-function lspconfig_window.default_opts(opts)
-	local win_opts = old_defaults(opts)
-	win_opts.border = "rounded"
-	return win_opts
-end
-
-for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
-local border = {
-	{ "╭", "FloatBorder" },
-	{ "─", "FloatBorder" },
-	{ "╮", "FloatBorder" },
-	{ "│", "FloatBorder" },
-	{ "╯", "FloatBorder" },
-	{ "─", "FloatBorder" },
-	{ "╰", "FloatBorder" },
-	{ "│", "FloatBorder" },
-}
-
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.documentationFormat = {
-	"markdown",
-	"plaintext",
-}
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.preselectSupport = true
-capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-capabilities.textDocument.completion.completionItem.tagSupport = {
-	valueSet = { 1 },
-}
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-	properties = { "documentation", "detail", "additionalTextEdits" },
-}
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local function custom_attach(client, bufnr)
@@ -150,7 +101,6 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 			capabilities = capabilities,
 			on_attach = function(client, bufnr)
 				custom_attach(client, bufnr)
-				require("nvim-navic").attach(client, bufnr)
 			end,
 			settings = {
 				Lua = {
@@ -164,6 +114,24 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 						preloadFileSize = 10000,
 					},
 					telemetry = { enable = false },
+				},
+			},
+		})
+	elseif server == "gopls" then
+		nvim_lsp.gopls.setup({
+			on_attach = custom_attach,
+			flags = { debounce_text_changes = 500 },
+			capabilities = capabilities,
+			cmd = { "gopls", "-remote=auto" },
+			settings = {
+				gopls = {
+					usePlaceholders = true,
+					analyses = {
+						nilness = true,
+						shadow = true,
+						unusedparams = true,
+						unusewrites = true,
+					},
 				},
 			},
 		})
@@ -182,7 +150,6 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 			single_file_support = true,
 			on_attach = function(client, bufnr)
 				custom_attach(client, bufnr)
-				require("nvim-navic").attach(client, bufnr)
 			end,
 			cmd = {
 				"clangd",
@@ -225,7 +192,6 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 			capabilities = capabilities,
 			on_attach = function(client, bufnr)
 				custom_attach(client, bufnr)
-				require("nvim-navic").attach(client, bufnr)
 			end,
 			settings = {
 				json = {
@@ -279,14 +245,10 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 				},
 			},
 		})
-	else
+	elseif server ~= "efm" then
 		nvim_lsp[server].setup({
 			capabilities = capabilities,
-			single_file_support = true,
-			on_attach = function(client, bufnr)
-				custom_attach(client, bufnr)
-				require("nvim-navic").attach(client, bufnr)
-			end,
+			on_attach = custom_attach,
 		})
 	end
 end
@@ -304,28 +266,26 @@ nvim_lsp.hls.setup({
 
 nvim_lsp.racket_langserver.setup({
 	cmd = { "racket", "--lib", "racket-langserver" },
-	filetypes = { "racket", "scheme" },
+	filetypes = { "racket" },
 	root_dir = util.find_git_ancestor,
 	single_file_support = true,
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
-		require("nvim-navic").attach(client, bufnr)
 		custom_attach(client)
 	end,
 })
 
--- https://github.com/ufo5260987423/scheme-langserver 
+-- https://github.com/ufo5260987423/scheme-langserver
 
--- nvim_lsp.scheme_langserver.setup({
--- 	cmd = {"scheme-langserver"},
--- 	filetypes = {"scheme"},
--- 	single_file_support = true,
--- 	capabilities = capabilities,
--- 	on_attach = function(client, bufnr)
--- 		require("nvim-navic").attach(client, bufnr)
--- 		custom_attach(client)
--- 	end,
--- })
+nvim_lsp.scheme_langserver.setup({
+	cmd = { "/home/allen/.local/share/nvim/scheme-langserver/run" },
+	filetypes = { "scheme" },
+	single_file_support = true,
+	capabilities = capabilities,
+	on_attach = function(client, bufnr)
+		custom_attach(client)
+	end,
+})
 
 -- https://github.com/vscode-langservers/vscode-html-languageserver-bin
 
@@ -342,7 +302,6 @@ nvim_lsp.html.setup({
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		custom_attach(client)
-		require("nvim-navic").attach(client, bufnr)
 	end,
 })
 
@@ -350,33 +309,26 @@ local efmls = require("efmls-configs")
 -- Init `efm-langserver` here.
 efmls.init({
 	on_attach = custom_attach,
+	capabilities = capabilities,
 	init_options = { documentFormatting = true, codeAction = true },
 })
 
 -- Require `efmls-configs-nvim`'s config here
 
--- local vint = require("efmls-configs.linters.vint")
-local clangtidy = require("efmls-configs.linters.clang_tidy")
+local vint = require("efmls-configs.linters.vint")
 local eslint = require("efmls-configs.linters.eslint")
 local flake8 = require("efmls-configs.linters.flake8")
 local shellcheck = require("efmls-configs.linters.shellcheck")
--- local staticcheck = require("efmls-configs.linters.staticcheck")
-local luafmt = require("efmls-configs.formatters.stylua")
-local clangfmt = require("efmls-configs.formatters.clang_format")
--- local goimports = require("efmls-configs.formatters.goimports")
+
+local black = require("efmls-configs.formatters.black")
+local stylua = require("efmls-configs.formatters.stylua")
 local prettier = require("efmls-configs.formatters.prettier")
 local shfmt = require("efmls-configs.formatters.shfmt")
-local alex = require("efmls-configs.linters.alex")
-local uncrustify = require("efmls-configs.formatters.uncrustify")
-local gcc = require("efmls-configs.linters.gcc")
--- local pylint = require("efmls-configs.linters.pylint")
--- local yapf = require("efmls-configs.formatters.yapf")
--- local vulture = require("efmls-configs.linters.vulture")
 
 -- Add your own config for formatter and linter here
 
 local rustfmt = require("modules.completion.efm.formatters.rustfmt")
-local sqlfmt = require("modules.completion.efm.formatters.sqlfmt")
+local clangfmt = require("modules.completion.efm.formatters.clangfmt")
 
 -- Override default config here
 
@@ -391,27 +343,23 @@ flake8 = vim.tbl_extend("force", flake8, {
 -- Setup formatter and linter for efmls here
 
 efmls.setup({
-	lua = { formatter = luafmt },
---	c = { formatter = clangfmt, linter = clangtidy },
---	cpp = { formatter = clangfmt, linter = clangtidy },
-	latex = { linter = alex },
+	vim = { formatter = vint },
+	lua = { formatter = stylua },
+	c = { formatter = clangfmt },
+	cpp = { formatter = clangfmt },
+	python = { formatter = black },
 	vue = { formatter = prettier },
 	typescript = { formatter = prettier, linter = eslint },
 	javascript = { formatter = prettier, linter = eslint },
 	typescriptreact = { formatter = prettier, linter = eslint },
 	javascriptreact = { formatter = prettier, linter = eslint },
 	yaml = { formatter = prettier },
-	json = { formatter = prettier, linter = eslint },
 	html = { formatter = prettier },
 	css = { formatter = prettier },
 	scss = { formatter = prettier },
 	sh = { formatter = shfmt, linter = shellcheck },
 	markdown = { formatter = prettier },
-	sql = { formatter = sqlfmt },
-	htmldjango = { formatter = prettier },
 	rust = { formatter = rustfmt },
-	-- python = {formatter = yapf},
-	-- go = { formatter = goimports, linter = staticcheck },
 })
 
 formatting.configure_format_on_save()

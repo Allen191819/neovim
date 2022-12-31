@@ -3,32 +3,35 @@ function config.telescope()
 	if not packer_plugins["sqlite.lua"].loaded then
 		vim.cmd([[packadd sqlite.lua]])
 	end
-
 	if not packer_plugins["telescope-frecency.nvim"].loaded then
 		vim.cmd([[packadd telescope-frecency.nvim]])
 	end
-
 	if not packer_plugins["project.nvim"].loaded then
 		vim.cmd([[packadd project.nvim]])
 	end
-
 	if not packer_plugins["aerial.nvim"].loaded then
 		vim.cmd([[packadd aerial.nvim]])
 	end
-
 	if not packer_plugins["telescope-live-grep-raw.nvim"].loaded then
 		vim.cmd([[packadd telescope-live-grep-raw.nvim]])
 	end
-
 	if not packer_plugins["telescope-zoxide"].loaded then
 		vim.cmd([[packadd telescope-zoxide]])
 	end
-
 	if not packer_plugins["telescope-ultisnips.nvim"].loaded then
 		vim.cmd([[packadd telescope-ultisnips.nvim]])
 	end
-
-	require("project_nvim").setup()
+	require("project_nvim").setup({
+		manual_mode = false,
+		detection_methods = { "lsp", "pattern" },
+		patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+		ignore_lsp = { "efm" },
+		exclude_dirs = {},
+		show_hidden = false,
+		silent_chdir = true,
+		scope_chdir = "global",
+		datapath = vim.fn.stdpath("data"),
+	})
 	require("telescope").setup({
 		defaults = {
 			prompt_prefix = "🔭 ",
@@ -150,61 +153,6 @@ function config.sniprun()
 	})
 end
 
-function config.wilder()
-	vim.cmd([[
-	call wilder#setup({'modes': [':', '/', '?']})
-	call wilder#set_option('use_python_remote_plugin', 0)
-
-	call wilder#set_option('pipeline', [wilder#branch(wilder#cmdline_pipeline({'use_python': 0,'fuzzy': 1, 'fuzzy_filter': wilder#lua_fzy_filter()}),wilder#vim_search_pipeline(), [wilder#check({_, x -> empty(x)}), wilder#history(), wilder#result({'draw': [{_, x -> ' ' . x}]})])])
-
-	call wilder#set_option('renderer', wilder#renderer_mux({':': wilder#popupmenu_renderer({'highlighter': wilder#lua_fzy_highlighter(), 'left': [wilder#popupmenu_devicons()], 'right': [' ', wilder#popupmenu_scrollbar()]}), '/': wilder#wildmenu_renderer({'highlighter': wilder#lua_fzy_highlighter()})}))
-	]])
-end
-
-function config.dadbod()
-	vim.g.db_ui_show_database_icon = 1
-	vim.g.db_ui_use_nerd_fonts = 1
-	vim.g.db_ui_save_localtion = "/home/allen/.local/shar/nvim/dadbod"
-	vim.g.db_ui_auto_execute_table_helpers = 1
-	vim.g.dbs = { Mydb = "mysql://root:123456@localhost/mydb" }
-	vim.g.db_ui_table_helpers = {
-		mysql = { List = 'select * from "{table}" order by id asc' },
-	}
-	vim.g.db_ui_icons = {
-		expanded = {
-			db = "▾ ",
-			buffers = "▾ ",
-			saved_queries = "▾ ",
-			schemas = "▾ ",
-			schema = "▾ פּ",
-			tables = "▾ 藺",
-			table = "▾ ",
-		},
-		collapsed = {
-			db = "▸ ",
-			buffers = "▸ ",
-			saved_queries = "▸ ",
-			schemas = "▸ ",
-			schema = "▸ פּ",
-			tables = "▸ 藺",
-			table = "▸ ",
-		},
-		saved_query = "",
-		new_query = "璘",
-		tables = "離",
-		buffers = "﬘",
-		add_connection = "",
-		connection_ok = "✓",
-		connection_error = "✕",
-	}
-end
-
-function config.quickrun()
-	vim.cmd([[
-	let b:quickrun_config = {'outputter/buffer/into': 1,"outputter/opener":"new"}
-	]])
-end
-
 function config.undotree()
 	vim.g.undotree_WindowLayout = 4
 	vim.g.undotree_SetFocusWhenToggle = 1
@@ -287,56 +235,93 @@ function config.bookmarks()
 end
 
 function config.notify()
+	local icons = {
+		diagnostics = require("modules.ui.icons").get("diagnostics"),
+		ui = require("modules.ui.icons").get("ui"),
+	}
 	vim.notify = require("notify")
 	local notify = require("notify")
 	local user_config = {
-		background_colour = "#000000",
+		background_colour = "Normal",
 		fps = 30,
 		icons = {
-			DEBUG = "",
-			ERROR = "",
-			INFO = "",
-			TRACE = "✎",
-			WARN = "",
+			ERROR = icons.diagnostics.Error,
+			WARN = icons.diagnostics.Warning,
+			INFO = icons.diagnostics.Information,
+			DEBUG = icons.ui.Bug,
+			TRACE = icons.ui.Pencil,
 		},
 		level = "info",
 		minimum_width = 50,
 		render = "default",
 		stages = "fade_in_slide_out",
-		timeout = 3000,
+		timeout = 2000,
 	}
 	notify.setup(user_config)
 end
 
-function config.translate()
-	require("translate").setup({
-		default = {
-			output = "floating",
-		},
-	})
-end
+function config.wilder()
+	local wilder = require("wilder")
+	local icons = { ui = require("modules.ui.icons").get("ui") }
 
-function config.venn()
-	function _G.Toggle_venn()
-		local venn_enabled = vim.inspect(vim.b.venn_enabled)
-		if venn_enabled == "nil" then
-			vim.b.venn_enabled = true
-			vim.cmd([[setlocal ve=all]])
-			-- draw a line on HJKL keystokes
-			vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", { noremap = true })
-			vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", { noremap = true })
-			vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", { noremap = true })
-			vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", { noremap = true })
-			-- draw a box by pressing "f" with visual selection
-			vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", { noremap = true })
-		else
-			vim.cmd([[setlocal ve=]])
-			vim.cmd([[mapclear <buffer>]])
-			vim.b.venn_enabled = nil
-		end
-	end
-	-- toggle keymappings for venn using <leader>v
-	vim.api.nvim_set_keymap("n", "<leader>v", ":lua Toggle_venn()<CR>", { noremap = true })
+	wilder.setup({ modes = { ":", "/", "?" } })
+	wilder.set_option("use_python_remote_plugin", 0)
+	wilder.set_option("pipeline", {
+		wilder.branch(
+			wilder.cmdline_pipeline({ use_python = 0, fuzzy = 1, fuzzy_filter = wilder.lua_fzy_filter() }),
+			wilder.vim_search_pipeline(),
+			{
+				wilder.check(function(_, x)
+					return x == ""
+				end),
+				wilder.history(),
+				wilder.result({
+					draw = {
+						function(_, x)
+							return icons.ui.Calendar .. " " .. x
+						end,
+					},
+				}),
+			}
+		),
+	})
+
+	local string_fg = vim.api.nvim_get_hl_by_name("String", true).foreground
+	local match_hl = string_fg ~= nil and string.format("#%06x", string_fg) or "#ABE9B3"
+
+	local popupmenu_renderer = wilder.popupmenu_renderer(wilder.popupmenu_border_theme({
+		border = "rounded",
+		highlights = {
+			border = "Title", -- highlight to use for the border
+			accent = wilder.make_hl("WilderAccent", "Pmenu", { { a = 0 }, { a = 0 }, { foreground = match_hl } }),
+		},
+		empty_message = wilder.popupmenu_empty_message_with_spinner(),
+		highlighter = wilder.lua_fzy_highlighter(),
+		left = {
+			" ",
+			wilder.popupmenu_devicons(),
+			wilder.popupmenu_buffer_flags({
+				flags = " a + ",
+				icons = { ["+"] = icons.ui.Pencil, a = icons.ui.Indicator, h = icons.ui.File },
+			}),
+		},
+		right = {
+			" ",
+			wilder.popupmenu_scrollbar(),
+		},
+	}))
+	local wildmenu_renderer = wilder.wildmenu_renderer({
+		highlighter = wilder.lua_fzy_highlighter(),
+		apply_incsearch_fix = true,
+	})
+	wilder.set_option(
+		"renderer",
+		wilder.renderer_mux({
+			[":"] = popupmenu_renderer,
+			["/"] = wildmenu_renderer,
+			substitute = wildmenu_renderer,
+		})
+	)
 end
 
 return config

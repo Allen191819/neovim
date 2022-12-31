@@ -1,10 +1,10 @@
 local editor = {}
 local conf = require("modules.editor.config")
 editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
-editor["itchyny/vim-cursorword"] = {
+editor["RRethy/vim-illuminate"] = {
 	opt = true,
-	event = { "BufReadPre", "BufNewFile" },
-	config = conf.vim_cursorwod,
+	event = "BufReadPost",
+	config = conf.illuminate,
 }
 editor["terrortylor/nvim-comment"] = {
 	opt = true,
@@ -20,7 +20,7 @@ editor["terrortylor/nvim-comment"] = {
 editor["nvim-treesitter/nvim-treesitter"] = {
 	opt = true,
 	run = ":TSUpdate",
-	event = { "BufRead", "BufNewFile","InsertEnter" },
+	event = { "BufReadPost" },
 	config = conf.nvim_treesitter,
 }
 editor["romgrk/nvim-treesitter-context"] = {
@@ -35,11 +35,6 @@ editor["JoosepAlviste/nvim-ts-context-commentstring"] = {
 editor["mfussenegger/nvim-ts-hint-textobject"] = {
 	opt = true,
 	after = "nvim-treesitter",
-}
-editor["SmiteshP/nvim-navic"] = {
-	opt = true,
-	after = "nvim-lspconfig",
-	config = conf.nvim_gps,
 }
 editor["windwp/nvim-ts-autotag"] = {
 	opt = true,
@@ -85,14 +80,30 @@ editor["voldikss/vim-floaterm"] = {
 }
 editor["norcalli/nvim-colorizer.lua"] = {
 	opt = false,
+	after = "nvim-treesitter",
 	config = conf.nvim_colorizer,
 }
-editor["rcarriga/nvim-dap-ui"] = {
-	opt = false,
-	config = conf.dap,
-	requires = {
-		{ "mfussenegger/nvim-dap", opt = false },
+
+editor["mfussenegger/nvim-dap"] = {
+	opt = true,
+	cmd = {
+		"DapSetLogLevel",
+		"DapShowLog",
+		"DapContinue",
+		"DapToggleBreakpoint",
+		"DapToggleRepl",
+		"DapStepOver",
+		"DapStepInto",
+		"DapStepOut",
+		"DapTerminate",
 	},
+	module = "dap",
+	config = conf.dap,
+}
+editor["rcarriga/nvim-dap-ui"] = {
+	opt = true,
+	after = "nvim-dap", -- Need to call setup after dap has been initialized.
+	config = conf.dapui,
 }
 editor["tpope/vim-fugitive"] = { opt = true, cmd = { "Git", "G" } }
 editor["famiu/bufdelete.nvim"] = {
@@ -104,10 +115,10 @@ editor["edluffy/specs.nvim"] = {
 	event = "CursorMoved",
 	config = conf.specs,
 }
-editor["tpope/vim-surround"] = { opt = true, event = "BufRead" }
+editor["tpope/vim-surround"] = { opt = true, event = "BufReadPost" }
 editor["Allen191819/vim-expand-region"] = {
 	opt = false,
- 	event = { "VimEnter" },
+	event = { "BufReadPost" },
 	requires = {
 		{ "kana/vim-textobj-user", opt = false },
 		{ "sgur/vim-textobj-parameter", opt = false },
@@ -131,19 +142,27 @@ editor["alpertuna/vim-header"] = {
 	},
 	config = conf.add_header,
 }
-editor["mg979/vim-visual-multi"] = { opt = true,event = { "VimEnter" }, config = conf.multi_visual }
+editor["mg979/vim-visual-multi"] = { opt = true, event = { "VimEnter" }, config = conf.multi_visual }
 editor["Chiel92/vim-autoformat"] = { cmd = { "Autoformat" }, opt = true }
 editor["AndrewRadev/switch.vim"] = { opt = true, event = "BufRead" }
 editor["abecodes/tabout.nvim"] = {
 	opt = true,
+	event = "InsertEnter",
 	config = conf.tabout,
-	after = "nvim-treesitter",
 }
 editor["yianwillis/vimcdoc"] = { opt = false }
-editor["caenrique/nvim-maximize-window-toggle"] = { opt = false }
 editor["lewis6991/impatient.nvim"] = { opt = false }
 editor["hkupty/iron.nvim"] = { opt = true, cmd = { "IronRepl" }, config = conf.iron }
-editor["brooth/far.vim"] = { opt = true,event = { "VimEnter" }, config = conf.far_vim }
-editor["Allen191819/neogen"] = { opt = true, after = "nvim-treesitter",branch="fix/ts_utils" ,config = conf.neogen }
+editor["brooth/far.vim"] = { opt = true, event = { "VimEnter" }, config = conf.far_vim }
+editor["Allen191819/neogen"] = { opt = true, event = "InsertEnter", branch = "fix/ts_utils", config = conf.neogen }
+editor["sindrets/diffview.nvim"] = {
+	opt = true,
+	cmd = { "DiffviewOpen", "DiffviewClose" },
+}
+editor["ibhagwan/smartyank.nvim"] = {
+	opt = true,
+	event = "BufReadPost",
+	config = conf.smartyank,
+}
 
 return editor

@@ -1,19 +1,8 @@
 local M = {}
 
-local home = os.getenv("HOME")
-
-local disabled_worksapce_path = home .. "/.config/nvim/format_disabled_dirs.txt"
-local disabled_worksapce_file = io.open(disabled_worksapce_path, "r")
-local disabled_worksapce = {}
-
-if disabled_worksapce_file ~= nil then
-	for line in disabled_worksapce_file:lines() do
-		local str = line:gsub("%s+", "")
-		table.insert(disabled_worksapce, str)
-	end
-end
-
-local format_on_save = false
+local settings = require("core.settings")
+local disabled_workspaces = settings.format_disabled_dirs
+local format_on_save = settings.format_on_save
 
 vim.api.nvim_create_user_command("FormatToggle", function()
 	M.toggle_format_on_save()
@@ -42,7 +31,7 @@ vim.api.nvim_create_user_command("FormatterToggle", function(opts)
 	end
 end, {
 	nargs = 1,
-	complete = function(_, _, _)
+	complete = function()
 		return {
 			"markdown",
 			"vim",
@@ -63,7 +52,7 @@ end, {
 	end,
 })
 
-function M.enable_format_on_save()
+function M.enable_format_on_save(is_configured)
 	local opts = { pattern = "*", timeout = 1000 }
 	vim.api.nvim_create_augroup("format_on_save", {})
 	vim.api.nvim_create_autocmd("BufWritePre", {
@@ -73,31 +62,37 @@ function M.enable_format_on_save()
 			require("modules.completion.formatting").format({ timeout_ms = opts.timeout, filter = M.format_filter })
 		end,
 	})
-	vim.notify("Successfully enabled format-on-save", vim.log.levels.INFO, { title = "Settings modification success!" })
+	if not is_configured then
+		vim.notify(
+			"Successfully enabled format-on-save",
+			vim.log.levels.INFO,
+			{ title = "Settings modification success!" }
+		)
+	end
 end
 
-function M.disable_format_on_save(is_configured)
-	if not is_configured then
-		pcall(vim.api.nvim_del_augroup_by_name, "format_on_save")
+function M.disable_format_on_save()
+	pcall(vim.api.nvim_del_augroup_by_name, "format_on_save")
+	if format_on_save then
 		vim.notify("Disabled format-on-save", vim.log.levels.INFO, { title = "Settings modification success!" })
 	end
 end
 
 function M.configure_format_on_save()
 	if format_on_save then
-		M.enable_format_on_save()
+		M.enable_format_on_save(true)
 	else
-		M.disable_format_on_save(true)
+		M.disable_format_on_save()
 	end
 end
 
 function M.toggle_format_on_save()
-	local status, _ = pcall(vim.api.nvim_get_autocmds, {
+	local status = pcall(vim.api.nvim_get_autocmds, {
 		group = "format_on_save",
 		event = "BufWritePre",
 	})
 	if not status then
-		M.enable_format_on_save()
+		M.enable_format_on_save(false)
 	else
 		M.disable_format_on_save()
 	end
@@ -118,8 +113,8 @@ end
 
 function M.format(opts)
 	local cwd = vim.fn.getcwd()
-	for i = 1, #disabled_worksapce do
-		if cwd.find(cwd, disabled_worksapce[i]) ~= nil then
+	for i = 1, #disabled_workspaces do
+		if cwd.find(cwd, disabled_workspaces[i]) ~= nil then
 			return
 		end
 	end
