@@ -10,6 +10,7 @@ completion["creativenull/efmls-configs-nvim"] = {
 	requires = "neovim/nvim-lspconfig",
 }
 completion["williamboman/mason.nvim"] = {
+	opt = false,
 	requires = {
 		{
 			"williamboman/mason-lspconfig.nvim",
@@ -29,7 +30,7 @@ completion["hrsh7th/nvim-cmp"] = {
 	requires = {
 		{ "onsails/lspkind.nvim" },
 		{ "lukas-reineke/cmp-under-comparator" },
-		{ "quangnguyen30192/cmp-nvim-ultisnips" ,after="nvim-cmp"},
+		{ "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
 		{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-nvim-lua", after = "cmp-nvim-lsp" },
 		{ "hrsh7th/cmp-path", after = "cmp-nvim-lsp" },
@@ -46,11 +47,10 @@ completion["hrsh7th/nvim-cmp"] = {
 		},
 	},
 }
-completion["SirVer/ultisnips"] = {
-	opt = false,
- 	event = { "VimEnter" },
-	config = conf.ultisnips,
-	requires = "Allen191819/vim-snippets",
+completion["L3MON4D3/LuaSnip"] = {
+	after = "nvim-cmp",
+	config = conf.luasnip,
+	requires = "rafamadriz/friendly-snippets",
 }
 completion["windwp/nvim-autopairs"] = {
 	after = "nvim-cmp",

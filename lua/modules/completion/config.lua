@@ -137,17 +137,53 @@ function config.cmp()
 		cmp = require("modules.ui.icons").get("cmp", false),
 	}
 	vim.cmd([[packadd nvim-cmp]])
-	vim.cmd([[packadd cmp-nvim-ultisnips]])
+--	vim.cmd([[packadd cmp-nvim-ultisnips]])
 	vim.cmd([[packadd cmp-tabnine]])
 
-	require("cmp_nvim_ultisnips").setup({ show_snippets = "all" })
+	local t = function(str)
+		return vim.api.nvim_replace_termcodes(str, true, true, true)
+	end
 
-	local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+	local has_words_before = function()
+		local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+		return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+	end
 
+	local border = function(hl)
+		return {
+			{ "╭", hl },
+			{ "─", hl },
+			{ "╮", hl },
+			{ "│", hl },
+			{ "╯", hl },
+			{ "─", hl },
+			{ "╰", hl },
+			{ "│", hl },
+		}
+	end
+
+	local cmp_window = require("cmp.utils.window")
+
+	cmp_window.info_ = cmp_window.info
+	cmp_window.info = function(self)
+		local info = self:info_()
+		info.scrollable = false
+		return info
+	end
 	local types = require("cmp.types")
 	local cmp = require("cmp")
 	local lspkind = require("lspkind")
 	cmp.setup({
+		window = {
+			completion = {
+				border = border("Normal"),
+				max_width = 80,
+				max_height = 20,
+			},
+			documentation = {
+				border = border("CmpDocBorder"),
+			},
+		},
 		sorting = {
 			comparators = {
 				require("cmp_tabnine.compare"),
@@ -175,43 +211,47 @@ function config.cmp()
 				return kind
 			end,
 		},
-		mapping = {
+		mapping = cmp.mapping.preset.insert({
+			["<CR>"] = cmp.mapping.confirm({ select = true }),
 			["<C-p>"] = cmp.mapping.select_prev_item(),
 			["<C-n>"] = cmp.mapping.select_next_item(),
 			["<C-d>"] = cmp.mapping.scroll_docs(-4),
 			["<C-f>"] = cmp.mapping.scroll_docs(4),
 			["<C-e>"] = cmp.mapping.close(),
-			["<CR>"] = cmp.mapping.confirm({ select = true }),
-			["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 			["<Tab>"] = cmp.mapping(function(fallback)
-				if require("neogen").jumpable() then
-					require("neogen").jump_next()
+				if cmp.visible() then
+					cmp.select_next_item()
+				elseif require("luasnip").expand_or_jumpable() then
+					vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"), "")
+				elseif has_words_before() then
+					cmp.complete()
 				else
-					cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+					fallback()
 				end
 			end, { "i", "s" }),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
-				if require("neogen").jumpable(true) then
-					require("neogen").jump_prev()
+				if cmp.visible() then
+					cmp.select_prev_item()
+				elseif require("luasnip").jumpable(-1) then
+					vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
 				else
-					cmp_ultisnips_mappings.jump_backwards(fallback)
+					fallback()
 				end
 			end, { "i", "s" }),
-		},
+		}),
 		snippet = {
 			expand = function(args)
-				vim.fn["UltiSnips#Anon"](args.body)
+				require("luasnip").lsp_expand(args.body)
 			end,
 		},
 		sources = {
 			{ name = "nvim_lsp", group_index = 2, max_item_count = 4 },
 			{ name = "nvim_lua", group_index = 2, max_item_count = 2 },
-			{ name = "ultisnips", group_index = 1, max_item_count = 3 },
+			{ name = "luasnip", group_index = 1, max_item_count = 3 },
 			{ name = "path", group_index = 2, max_item_count = 3 },
 			{ name = "calc", group_index = 2, max_item_count = 1 },
 			{ name = "buffer", group_index = 2, max_item_count = 3 },
 			{ name = "latex_symbols", group_index = 2, max_item_count = 5 },
-			{ name = "vim_dadbod_completion", group_index = 2, max_item_count = 3 },
 			{ name = "cmp_tabnine", group_index = 2, max_item_count = 3 },
 			{ name = "emoji", group_index = 2, max_item_count = 5 },
 			{ name = "neorg", group_index = 2, max_item_count = 5 },
@@ -225,7 +265,7 @@ function config.cmp()
 				},
 			},
 		},
-		experimental = { native_menu = false, ghost_text = false },
+		experimental = { native_menu = false, ghost_text = true },
 		preselect = types.cmp.PreselectMode.Item,
 		completion = {
 			autocomplete = { types.cmp.TriggerEvent.TextChanged },
@@ -239,18 +279,20 @@ function config.cmp()
 	})
 end
 
-function config.ultisnips()
-	vim.api.nvim_exec(
-		[[
-	autocmd BufWritePost *.snippets :CmpUltisnipsReloadSnippets
-	]],
-		true
-	)
-	vim.g.UltiSnipsRemoveSelectModeMappings = 0
-	vim.g.UltiSnipsEditSplit = "vertical"
-	vim.cmd([[
-	let g:UltiSnipsSnippetDirectories=[$HOME."/.config/nvim/ultsnips"]
-	]])
+function config.luasnip()
+	local snippet_path = os.getenv("HOME") .. "/.config/nvim/snippets/"
+	if not vim.tbl_contains(vim.opt.rtp:get(), snippet_path) then
+		vim.opt.rtp:append(snippet_path)
+	end
+
+	require("luasnip").config.set_config({
+		history = true,
+		updateevents = "TextChanged,TextChangedI",
+		delete_check_events = "TextChanged,InsertLeave",
+	})
+	require("luasnip.loaders.from_lua").lazy_load()
+	require("luasnip.loaders.from_vscode").lazy_load()
+	require("luasnip.loaders.from_snipmate").lazy_load()
 end
 
 function config.tabnine()
