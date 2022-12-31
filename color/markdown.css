@@ -14,8 +14,7 @@
     --color-border-secondary: #eaecef;
     --color-border-tertiary: #d1d5da;
     --color-kbd-foreground: #444d56;
-    --color-markdown-blockquote-border: #99CC33;
-    --color-markdown-blockquote-bg: #fafafa;
+    --color-markdown-blockquote-border: #dfe2e5;
     --color-markdown-table-border: #dfe2e5;
     --color-markdown-table-tr-border: #c6cbd1;
     --color-markdown-code-bg: #1b1f230d;
@@ -24,15 +23,14 @@
     --color-text-primary: #c9d1d9;
     --color-text-tertiary: #8b949e;
     --color-text-link: #58a6ff;
-    --color-bg-primary: #222D31;
-    --color-bg-secondary: #222D31;
+    --color-bg-primary: #0d1117;
+    --color-bg-secondary: #0d1117;
     --color-bg-tertiary: #161b22;
     --color-border-primary: #30363d;
     --color-border-secondary: #21262d;
     --color-border-tertiary: #6e7681;
     --color-kbd-foreground: #b1bac4;
     --color-markdown-blockquote-border: #3b434b;
-    --color-markdown-blockquote-bg: #201D21;
     --color-markdown-table-border: #3b434b;
     --color-markdown-table-tr-border: #272c32;
     --color-markdown-code-bg: #f0f6fc26;
@@ -52,11 +50,14 @@
 .markdown-body {
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
+  color: var(--color-text-primary);
   line-height: 1.6;
   word-wrap: break-word;
   padding: 45px;
-  color: var(--color-text-primary);
   background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
+  -webkit-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
 }
 .markdown-body > *:first-child {
   margin-top: 0 !important;
@@ -183,15 +184,10 @@
 }
 .markdown-body blockquote {
   margin-left: 0;
-  padding-left: 5px;
+  margin-right: 0;
+  padding: 0 15px;
   color: var(--color-text-tertiary);
-  background-color: var(--color-markdown-blockquote-bg);
-  border-left: 5px solid var(--color-markdown-blockquote-border);
-}
-.markdown-body blockquote blockquote {
-  margin-left: 5px;
-  margin-top: -0.3em;
-  margin-bottom: -0.3em;
+  border-left: 4px solid var(--color-markdown-blockquote-border);
 }
 .markdown-body table {
   display: block;
@@ -213,6 +209,7 @@
 .markdown-body table td {
   padding: 6px 13px;
   border: 1px solid var(--color-markdown-table-border);
+  vertical-align: top;
 }
 .markdown-body kbd {
   display: inline-block;
@@ -277,9 +274,8 @@
   background: transparent;
 }
 .markdown-body img {
-  max-width: 100%;
-  max-height: 100%;
-  margin: 0 auto;
+    max-height: 100%;
+    max-width: 100%;
 }
 .markdown-body strong {
   font-weight: bold;

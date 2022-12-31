@@ -15,5 +15,6 @@ autocmd Filetype markdown inoremap <buffer> ,3 ###<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,4 ####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,l --------<Enter>
 
+set spelllang=en_us,cjk
 inoremap <F3> <c-g>u<Esc>[s1z=`]a<c-g>u
 setlocal tabstop=4 noexpandtab shiftwidth=4
