@@ -5,3 +5,4 @@ au BufRead,BufNewFile *.v set filetype=coq
 au BufRead,BufNewFile *.hsc set filetype=haskell
 au BufRead,BufNewFile *.bpk set filetype=haskell
 au BufRead,BufNewFile *.hsig set filetype=haskell
+au BufRead,BufNewFile *.sls set filetype=scheme

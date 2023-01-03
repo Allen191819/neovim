@@ -280,6 +280,7 @@ nvim_lsp.racket_langserver.setup({
 nvim_lsp.scheme_langserver.setup({
 	cmd = { "/home/allen/.local/share/nvim/scheme-langserver/run" },
 	filetypes = { "scheme" },
+	root_dir = util.find_git_ancestor,
 	single_file_support = true,
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)

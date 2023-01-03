@@ -9,8 +9,6 @@ local plug_map = {
 	-- Bufferline
 	["n|<Leader>p"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 	["n|<Leader>q"] = map_cr("BufferLinePickClose"):with_noremap():with_silent(),
-	["n|<leader>be"] = map_cr("BufferLineSortByExtension"):with_noremap(),
-	["n|<leader>bd"] = map_cr("BufferLineSortByDirectory"):with_noremap(),
 	["n|<A-1>"] = map_cr("BufferLineGoToBuffer 1"):with_noremap():with_silent(),
 	["n|<A-2>"] = map_cr("BufferLineGoToBuffer 2"):with_noremap():with_silent(),
 	["n|<A-3>"] = map_cr("BufferLineGoToBuffer 3"):with_noremap():with_silent(),
@@ -56,7 +54,7 @@ local plug_map = {
 	["n|<Leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent(),
 	["n|<Leader>nr"] = map_cr("NvimTreeRefresh"):with_noremap():with_silent(),
 	-- Undotree
-	["n|<Leader>t"] = map_cr("UndotreeToggle"):with_noremap():with_silent(),
+	["n|<Leader>u"] = map_cr("UndotreeToggle"):with_noremap():with_silent(),
 	-- Plugin Telescope
 	["n|<Leader>fr"] = map_cu("Telescope frecency theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fl"] = map_cu("Telescope ultisnips theme=dropdown"):with_noremap():with_silent(),
@@ -97,7 +95,7 @@ local plug_map = {
 	["n|ga"] = map_cmd("v:lua.enhance_align('nga')"):with_expr(),
 	["x|ga"] = map_cmd("v:lua.enhance_align('xga')"):with_expr(),
 	-- Plugin SymbolsOutline
-	["n|<leader>b"] = map_cr("AerialToggle"):with_noremap():with_silent(),
+	["n|<leader>a"] = map_cr("AerialToggle"):with_noremap():with_silent(),
 	-- Plugin split-term
 	["n|<F12>"] = map_cr("FloatermToggle"):with_noremap():with_silent(),
 	["n|<leader>th"] = map_cr("Term"):with_noremap():with_silent(),
@@ -112,13 +110,12 @@ local plug_map = {
 	["n|<leader>mt"] = map_cr("TableModeToggle"):with_noremap():with_silent(),
 	-- Plugin dap
 	["n|<F6>"] = map_cr("lua require('dap').continue()"):with_noremap():with_silent(),
-	["n|<leader>dr"] = map_cr("lua require('dap').continue()"):with_noremap():with_silent(),
 	["n|<leader>dd"] = map_cr("lua require('dap').terminate() require('dapui').close()"):with_noremap():with_silent(),
 	["n|<leader>db"] = map_cr("lua require('dap').toggle_breakpoint()"):with_noremap():with_silent(),
 	["n|<leader>dB"] = map_cr("lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))")
 		:with_noremap()
 		:with_silent(),
-	["n|<leader>dbl"] = map_cr("lua require('dap').list_breakpoints()"):with_noremap():with_silent(),
+	["n|<leader>dpl"] = map_cr("lua require('dap').list_breakpoints()"):with_noremap():with_silent(),
 	["n|<leader>drc"] = map_cr("lua require('dap').run_to_cursor()"):with_noremap():with_silent(),
 	["n|<leader>drl"] = map_cr("lua require('dap').run_last()"):with_noremap():with_silent(),
 	["n|<F7>"] = map_cr("lua require('dap').step_over()"):with_noremap():with_silent(),
