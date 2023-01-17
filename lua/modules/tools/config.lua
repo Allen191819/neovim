@@ -6,6 +6,9 @@ function config.telescope()
 	if not packer_plugins["telescope-frecency.nvim"].loaded then
 		vim.cmd([[packadd telescope-frecency.nvim]])
 	end
+	if not packer_plugins["telescope-rooter.nvim"].loaded then
+		vim.cmd([[packadd telescope-rooter.nvim]])
+	end
 	if not packer_plugins["project.nvim"].loaded then
 		vim.cmd([[packadd project.nvim]])
 	end
@@ -18,13 +21,10 @@ function config.telescope()
 	if not packer_plugins["telescope-zoxide"].loaded then
 		vim.cmd([[packadd telescope-zoxide]])
 	end
-	if not packer_plugins["telescope-ultisnips.nvim"].loaded then
-		vim.cmd([[packadd telescope-ultisnips.nvim]])
-	end
 	require("project_nvim").setup({
 		manual_mode = false,
 		detection_methods = { "lsp", "pattern" },
-		patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+		patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "makefile" },
 		ignore_lsp = { "efm" },
 		exclude_dirs = {},
 		show_hidden = false,
@@ -69,6 +69,11 @@ function config.telescope()
 				show_unindexed = true,
 				ignore_patterns = { "*.git/*", "*/tmp/*" },
 			},
+			rooter = {
+				enable = true,
+				patterns = { ".git" },
+				debug = false,
+			},
 		},
 	})
 	require("telescope").load_extension("projects")
@@ -76,8 +81,8 @@ function config.telescope()
 	require("telescope").load_extension("aerial")
 	require("telescope").load_extension("live_grep_args")
 	require("telescope").load_extension("zoxide")
-	require("telescope").load_extension("ultisnips")
 	require("telescope").load_extension("notify")
+	require("telescope").load_extension("rooter")
 end
 
 function config.trouble()
@@ -323,7 +328,6 @@ function config.wilder()
 		})
 	)
 end
-
 
 function config.which_key()
 	local icons = {

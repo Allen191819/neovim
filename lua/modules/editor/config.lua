@@ -538,8 +538,11 @@ function config.iron()
 	})
 end
 
-function config.far_vim()
-	vim.cmd([[let g:far#enable_undo=1]])
+function config.search_replace()
+	require("search-replace").setup({
+		default_replace_single_buffer_options = "gcI",
+		default_replace_multi_buffer_options = "egcI",
+	})
 end
 
 function config.neogen()

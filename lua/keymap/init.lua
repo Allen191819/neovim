@@ -146,6 +146,12 @@ local plug_map = {
 	["n|mx"] = map_cr("BookmarkClear"):with_noremap():with_silent(),
 	-- Neorg
 	["n|<leader>sn"] = map_cr("Neorg gtd"):with_noremap():with_silent(),
+	-- Search replace
+	["v|<C-r>"] = map_cmd("<CMD>SearchReplaceSingleBufferVisualSelectio<CR>"):with_noremap():with_silent(),
+	["v|<C-s>"] = map_cmd("<CMD>SearchReplaceWithinVisualSelection<CR>"):with_noremap():with_silent(),
+	["v|<C-b>"] = map_cmd("<CMD>SearchReplaceWithinVisualSelectionCWord<CR>"):with_noremap():with_silent(),
+	["n|<leader>rs"] = map_cmd("<CMD>SearchReplaceSingleBufferSelections<CR>"):with_noremap():with_silent(),
+	["n|<leader>rbs"] = map_cmd("<CMD>SearchReplaceMultiBufferSelections<CR>"):with_noremap():with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)

@@ -509,6 +509,8 @@ end
 
 function config.indent_blankline()
 	vim.opt.termguicolors = true
+	vim.opt.list = false
+	vim.opt.listchars:append "tab:│·"
 	require("indent_blankline").setup({
 		char = "│",
 		show_first_indent_level = true,

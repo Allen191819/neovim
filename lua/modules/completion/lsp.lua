@@ -20,11 +20,11 @@ mason_lsp.setup({
 		"pylsp",
 		"gopls",
 		"vimls",
-		"sqls",
 		"jsonls",
 		"sumneko_lua",
 		"bashls",
 		"jdtls",
+--		"clangd",
 		"texlab",
 		"yamlls",
 	},
@@ -253,6 +253,8 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 	end
 end
 
+-- https://haskell-language-server.readthedocs.io/en/latest/installation.html
+
 nvim_lsp.hls.setup({
 	cmd = { "haskell-language-server-9.0.2~1.8.0.0", "--lsp" },
 	flags = { debounce_text_changes = 500 },
@@ -325,6 +327,7 @@ local black = require("efmls-configs.formatters.black")
 local stylua = require("efmls-configs.formatters.stylua")
 local prettier = require("efmls-configs.formatters.prettier")
 local shfmt = require("efmls-configs.formatters.shfmt")
+-- local astyle = require 'efmls-configs.formatters.astyle'
 
 -- Add your own config for formatter and linter here
 

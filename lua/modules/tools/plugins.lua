@@ -17,6 +17,10 @@ tools["ahmedkhalf/project.nvim"] = {
 	opt = true,
 	after = "telescope.nvim",
 }
+tools["desdic/telescope-rooter.nvim"] = {
+	opt = true,
+	after = "telescope.nvim",
+}
 tools["rcarriga/nvim-notify"] = { opt = false, config = conf.notify }
 tools["nvim-telescope/telescope-frecency.nvim"] = {
 	opt = true,
@@ -35,7 +39,6 @@ tools["jvgrootveld/telescope-zoxide"] = {
 	opt = true,
 	after = "telescope.nvim",
 }
-tools["fhill2/telescope-ultisnips.nvim"] = { opt = true, after = "telescope.nvim" }
 tools["MattesGroeger/vim-bookmarks"] = { opt = false, config = conf.bookmarks }
 tools["thinca/vim-quickrun"] = {
 	opt = true,
