@@ -26,25 +26,23 @@ local plug_map = {
 	-- Lsp mapp work when insertenter and lsp start
 	["n|<leader>li"] = map_cr("LspInfo"):with_noremap():with_silent():with_nowait(),
 	["n|<leader>lr"] = map_cr("LspRestart"):with_noremap():with_silent():with_nowait(),
+	["n|<leader>ca"] = map_cr("Lspsaga code_action"):with_noremap():with_silent(),
+	["v|<leader>ca"] = map_cu("Lspsaga range_code_action"):with_noremap():with_silent(),
+	["n|<leader>r"] = map_cr("Lspsaga rename"):with_noremap():with_silent(),
 	["n|g["] = map_cr("<cmd>lua vim.diagnostic.goto_next()"):with_noremap():with_silent(),
 	["n|g]"] = map_cr("<cmd>lua vim.diagnostic.goto_prev()"):with_noremap():with_silent(),
-	["n|<leader>r"] = map_cr("Lspsaga rename"):with_noremap():with_silent(),
 	["n|K"] = map_cr("Lspsaga hover_doc"):with_noremap():with_silent(),
-	["n|<leader>ca"] = map_cr("Lspsaga code_action"):with_noremap():with_silent(),
-	["v|<leader>ca"] = map_cu("<C-U>Lspsaga range_code_action"):with_noremap():with_silent(),
 	["n|gd"] = map_cr("lua vim.lsp.buf.definition()"):with_noremap():with_silent(),
 	["n|gr"] = map_cr("lua vim.lsp.buf.references()"):with_noremap():with_silent(),
-	["n|gh"] = map_cr("Lspsaga signature_help"):with_noremap():with_silent(),
 	["n|sp"] = map_cr("Lspsaga lsp_finder"):with_noremap():with_silent(),
-	["n|gp"] = map_cr("Lspsaga preview_definition"):with_noremap():with_silent(),
+	["n|gp"] = map_cr("Lspsaga peek_definition"):with_noremap():with_silent(),
 	-- Git
 	["n|<Leader>g"] = map_cu("Git"):with_noremap():with_silent(),
 	["n|gps"] = map_cr("G push"):with_noremap():with_silent(),
 	["n|gpl"] = map_cr("G pull"):with_noremap():with_silent(),
 	["n|Lg"] = map_cr("LazyGit"):with_noremap():with_silent(),
 	-- Plugin trouble
-	["n|gt"] = map_cr("TroubleToggle"):with_noremap():with_silent(),
-	["n|gR"] = map_cr("TroubleToggle lsp_references"):with_noremap():with_silent(),
+	["n|<leader>t"] = map_cr("TroubleToggle"):with_noremap():with_silent(),
 	["n|<leader>cd"] = map_cr("TroubleToggle document_diagnostics"):with_noremap():with_silent(),
 	["n|<leader>cw"] = map_cr("TroubleToggle workspace_diagnostics"):with_noremap():with_silent(),
 	["n|<leader>cq"] = map_cr("TroubleToggle quickfix"):with_noremap():with_silent(),
@@ -57,7 +55,6 @@ local plug_map = {
 	["n|<Leader>u"] = map_cr("UndotreeToggle"):with_noremap():with_silent(),
 	-- Plugin Telescope
 	["n|<Leader>fr"] = map_cu("Telescope frecency theme=dropdown"):with_noremap():with_silent(),
-	["n|<Leader>fl"] = map_cu("Telescope ultisnips theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fn"] = map_cu("Telescope notify theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fa"] = map_cu("Telescope aerial theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fw"] = map_cu("Telescope live_grep_args theme=dropdown"):with_noremap():with_silent(),
@@ -80,8 +77,6 @@ local plug_map = {
 	--- Plugins vim-expand-region
 	["v|v"] = map_cmd("v:lua.expand_region('v')"):with_expr(),
 	["v|V"] = map_cmd("v:lua.expand_region('V')"):with_expr(),
-	-- Toggle window
-	["n|<leader>f"] = map_cr("ToggleOnly"):with_noremap():with_silent(),
 	-- Switch
 	["n|gs"] = map_cr("Switch"):with_noremap():with_silent(),
 	-- Plugin Hop
@@ -117,13 +112,13 @@ local plug_map = {
 	["n|<leader>dpl"] = map_cr("lua require('dap').list_breakpoints()"):with_noremap():with_silent(),
 	["n|<leader>drc"] = map_cr("lua require('dap').run_to_cursor()"):with_noremap():with_silent(),
 	["n|<leader>drl"] = map_cr("lua require('dap').run_last()"):with_noremap():with_silent(),
-	["n|<F7>"] = map_cr("lua require('dap').step_over()"):with_noremap():with_silent(),
 	["n|<leader>dv"] = map_cr("lua require('dap').step_over()"):with_noremap():with_silent(),
-	["n|<F8>"] = map_cr("lua require('dap').step_into()"):with_noremap():with_silent(),
 	["n|<leader>di"] = map_cr("lua require('dap').step_into()"):with_noremap():with_silent(),
-	["n|<F9>"] = map_cr("lua require('dap').step_out()"):with_noremap():with_silent(),
 	["n|<leader>do"] = map_cr("lua require('dap').step_out()"):with_noremap():with_silent(),
 	["n|<leader>dl"] = map_cr("lua require('dap').repl.open()"):with_noremap():with_silent(),
+	["n|<F7>"] = map_cr("lua require('dap').step_over()"):with_noremap():with_silent(),
+	["n|<F8>"] = map_cr("lua require('dap').step_into()"):with_noremap():with_silent(),
+	["n|<F9>"] = map_cr("lua require('dap').step_out()"):with_noremap():with_silent(),
 	["o|m"] = map_cu([[lua require('tsht').nodes()]]):with_silent(),
 	-- IronRepl
 	["v|<leader>is"] = map_cmd("<Plug>(iron-visual-send)"):with_silent(),
@@ -136,7 +131,7 @@ local plug_map = {
 	-- Calender
 	["n|,uu"] = map_cr("Calendar"):with_noremap():with_silent(),
 	["n|,uc"] = map_cr("Calendar -view=clock"):with_noremap():with_silent(),
-	["n|,uy"] = map_cr("Calendar -view=year -split=vertical -width=27"):with_noremap():with_silent(),
+	["n|,uy"] = map_cr("Calendar -view=year"):with_noremap():with_silent(),
 	-- Bookmark
 	["n|mm"] = map_cr("BookmarkToggle"):with_noremap():with_silent(),
 	["n|mn"] = map_cr("BookmarkNext"):with_noremap():with_silent(),

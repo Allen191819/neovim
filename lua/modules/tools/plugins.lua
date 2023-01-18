@@ -52,7 +52,7 @@ tools["michaelb/sniprun"] = {
 }
 tools["folke/which-key.nvim"] = {
 	opt = true,
-	key = ',',
+	keys = "<leader>,",
 	config = conf.which_key,
 }
 tools["folke/trouble.nvim"] = {

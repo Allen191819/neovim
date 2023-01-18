@@ -9,7 +9,6 @@ vim.g.mapleader = " "
 -- default map
 local def_map = {
     -- Vim map
-    ["n|<C-s>"] = map_cu("write"):with_noremap(),
     ["n|Y"] = map_cmd("y$"),
     ["n|D"] = map_cmd("d$"),
     ["n|Q"] = map_cmd(":q<Cr>"),

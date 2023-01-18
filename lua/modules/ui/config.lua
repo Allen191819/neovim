@@ -396,6 +396,11 @@ function config.nvim_bufferline()
 				},
 				{ filetype = "dbui", text = "Dbui", text_align = "left" },
 				{ filetype = "leaninfo", text = "Leaninfo", text_align = "right" },
+				{
+					filetype = "fugitive",
+					text = "Fugitive",
+					text_align = "center",
+				},
 			},
 			diagnostics_indicator = function(count)
 				return "(" .. count .. ")"

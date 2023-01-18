@@ -338,13 +338,13 @@ function config.which_key()
 	require("which-key").setup({
 		plugins = {
 			presets = {
-				operators = false,
+				operators = true,
 				motions = false,
 				text_objects = false,
-				windows = false,
-				nav = false,
-				z = false,
-				g = false,
+				windows = true,
+				nav = true,
+				z = true,
+				g = true,
 			},
 		},
 
