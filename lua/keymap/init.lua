@@ -59,7 +59,6 @@ local plug_map = {
 	["n|<Leader>fr"] = map_cu("Telescope frecency theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fl"] = map_cu("Telescope ultisnips theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fn"] = map_cu("Telescope notify theme=dropdown"):with_noremap():with_silent(),
-	["n|<Leader>fb"] = map_cu("Telescope vim_bookmarks theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fa"] = map_cu("Telescope aerial theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fw"] = map_cu("Telescope live_grep_args theme=dropdown"):with_noremap():with_silent(),
 	["n|<Leader>fp"] = map_cu("Telescope projects theme=dropdown"):with_noremap():with_silent(),

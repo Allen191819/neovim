@@ -54,25 +54,30 @@ function config.nvim_treesitter()
 					["ac"] = "@class.outer",
 					["ic"] = "@class.inner",
 				},
+				selection_modes = {
+					['@parameter.outer'] = 'v', -- charwise
+					['@function.outer'] = 'V', -- linewise
+					['@class.outer'] = '<c-v>', -- blockwise
+				},
 			},
 			move = {
 				enable = true,
 				set_jumps = true, -- whether to set jumps in the jumplist
 				goto_next_start = {
 					["]["] = "@function.outer",
-					["]m"] = "@class.outer",
+					["]c"] = "@class.outer",
 				},
 				goto_next_end = {
 					["]]"] = "@function.outer",
-					["]M"] = "@class.outer",
+					["]C"] = "@class.outer",
 				},
 				goto_previous_start = {
 					["[["] = "@function.outer",
-					["[m"] = "@class.outer",
+					["[c"] = "@class.outer",
 				},
 				goto_previous_end = {
 					["[]"] = "@function.outer",
-					["[M"] = "@class.outer",
+					["[C"] = "@class.outer",
 				},
 			},
 		},
@@ -426,8 +431,9 @@ function config.expand_region()
 		\ 'ib'  :1,
 		\ 'iB'  :1,
 		\ 'ip'  :1,
-		\ 'i,'  :1,
-		\ 'il'  :1
+		\ 'iT'  :1,
+		\ 'il'  :1,
+		\ 'ix'  :1,
 		\ }
 		]])
 end

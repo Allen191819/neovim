@@ -27,12 +27,9 @@ editor["romgrk/nvim-treesitter-context"] = {
 	opt = true,
 	after = "nvim-treesitter",
 }
+editor["nvim-treesitter/nvim-treesitter-textobjects"]={opt = true, after = "nvim-treesitter"}
 editor["p00f/nvim-ts-rainbow"] = { opt = true, after = "nvim-treesitter" }
 editor["JoosepAlviste/nvim-ts-context-commentstring"] = {
-	opt = true,
-	after = "nvim-treesitter",
-}
-editor["mfussenegger/nvim-ts-hint-textobject"] = {
 	opt = true,
 	after = "nvim-treesitter",
 }
@@ -123,6 +120,8 @@ editor["Allen191819/vim-expand-region"] = {
 		{ "kana/vim-textobj-user", opt = false },
 		{ "sgur/vim-textobj-parameter", opt = false },
 		{ "kana/vim-textobj-line", opt = false },
+		{ "adolenc/vim-textobj-toplevel", opt = false },
+		{ "whatyouhide/vim-textobj-xmlattr", opt = false },
 	},
 	config = conf.expand_region,
 }

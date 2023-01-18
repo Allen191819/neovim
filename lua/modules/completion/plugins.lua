@@ -12,9 +12,7 @@ completion["creativenull/efmls-configs-nvim"] = {
 completion["williamboman/mason.nvim"] = {
 	opt = false,
 	requires = {
-		{
-			"williamboman/mason-lspconfig.nvim",
-		},
+		{ "williamboman/mason-lspconfig.nvim",},
 		{ "WhoIsSethDaniel/mason-tool-installer.nvim", config = conf.mason_install },
 	},
 }
