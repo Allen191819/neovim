@@ -72,7 +72,7 @@ editor["karb94/neoscroll.nvim"] = {
 editor["vimlab/split-term.vim"] = { opt = true, cmd = { "Term", "VTerm" } }
 editor["voldikss/vim-floaterm"] = {
 	opt = true,
-	cmd = { "FloatermToggle", "FloatermNew" },
+	event = "VimEnter",
 	config = conf.floaterm,
 }
 editor["norcalli/nvim-colorizer.lua"] = {

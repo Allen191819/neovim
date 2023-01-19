@@ -282,6 +282,7 @@ function config.cmp()
 			{ name = "cmp_tabnine", max_item_count = 3 },
 			{ name = "emoji", max_item_count = 5 },
 			{ name = "neorg", max_item_count = 5 },
+			{ name = "tidal", max_item_count = 5 },
 			{
 				name = "look",
 				max_item_count = 3,
