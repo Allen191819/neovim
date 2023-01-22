@@ -37,7 +37,7 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "kdheepak/cmp-latex-symbols",after = "cmp-calc"},
 		{ "hrsh7th/cmp-emoji",ft={"markdown","tex"}},
 		{ "octaltree/cmp-look", after = "nvim-cmp" },
-		{ "fools-mate/cmp-tidal", ft = {"haskell" }},
+--		{ "fools-mate/cmp-tidal", ft = {"haskell" }},
 		{
 			"tzachar/cmp-tabnine",
 			run = "./install.sh",

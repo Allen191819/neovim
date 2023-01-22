@@ -391,13 +391,11 @@ function config.dap()
 			startup = "${file}",
 			stopOnEntry = true,
 			logFile = vim.fn.stdpath("data") .. "/haskell-dap.log",
-			logLevel = "DEBUG",
+			logLevel = "WARNING",
 			ghciEnv = vim.empty_dict(),
-			ghciPrompt = "λ> ",
+			ghciPrompt = "ghci>",
 			ghciInitialPrompt = "λ>>",
-			ghciCmd = "stack ghci --test --no-load --no-build "
-				.. "--main-is TARGET "
-				.. "--ghci-options -fprint-evld-with-show",
+			ghciCmd= "stack ghci --test --no-load --no-build --main-is TARGET --ghci-options -fprint-evld-with-show",
 		},
 	}
 end

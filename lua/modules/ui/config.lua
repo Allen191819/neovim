@@ -608,6 +608,21 @@ end
 function config.alpha()
 	local alpha = require("alpha")
 	local startify = require("alpha.themes.startify")
+	startify.section.header.val = {
+    [[   *---------------------------------------------* ]],
+    [[   |      _   _                 _                |]],
+    [[   |     | \ | | ___  _____   _(_)_ __ ___       |]],
+    [[   |     |  \| |/ _ \/ _ \ \ / / | '_ ` _ \      |]],
+    [[   |     | |\  |  __/ (_) \ V /| | | | | | |     |]],
+    [[   |     |_| \_|\___|\___/ \_/ |_|_| |_| |_|     |]],
+    [[   *---------------------------------------------*]],
+    [[          o]],
+    [[           o   ^__^]],
+    [[            o  (oo)\\_______]],
+    [[               (__)\\       )\\/\\]],
+    [[                   ||----w |]],
+    [[                   ||     ||]],
+	}
 	startify.section.top_buttons.val = {
 		startify.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
 		startify.button("f", "  Find file", ":Telescope find_files theme=dropdown<CR>"),
