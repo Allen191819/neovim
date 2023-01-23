@@ -24,9 +24,10 @@ mason_lsp.setup({
 		"sumneko_lua",
 		"bashls",
 		"jdtls",
---		"clangd",
+		"clangd",
 		"texlab",
 		"yamlls",
+		"tsserver"
 	},
 })
 
@@ -134,13 +135,6 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 					},
 				},
 			},
-		})
-	elseif server == "sqls" then
-		nvim_lsp.sqls.setup({
-			cmd = { "sqls" },
-			args = { "-config ~/.config/sqls/config.yml" },
-			filetypes = { "sql", "mysql" },
-			on_attach = custom_attach,
 		})
 	elseif server == "clangd" then
 		local copy_capabilities = capabilities
