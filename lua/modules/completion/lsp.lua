@@ -150,7 +150,7 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 				"--background-index",
 				"--pch-storage=memory",
 				-- You MUST set this arg ↓ to your clangd executable location (if not included)!
-				"--query-driver=/usr/bin/clang++,/usr/bin/**/clang-*,/bin/clang,/bin/clang++,/usr/bin/gcc,/usr/bin/g++",
+				"--query-driver=/usr/bin/clang++,/usr/bin/**/clang-*,/bin/clang,/bin/clang++,/usr/bin/gcc,/usr/bin/g++,/home/allen/Workplace/Raspberry_pi/toolchain/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-gcc",
 				"--clang-tidy",
 				"--all-scopes-completion",
 				"--cross-file-rename",
