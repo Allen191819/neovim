@@ -169,6 +169,9 @@ local data = {
 		spell = "暈",
 		luasnip = "",
 		treesitter = "",
+		look = "﬜",
+		tabnine = "",
+		Codeium = "",
 	},
 	dap = {
 		Breakpoint = "",

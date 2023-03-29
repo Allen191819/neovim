@@ -29,19 +29,23 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "lukas-reineke/cmp-under-comparator" },
 		{ "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
 		{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
+		{ "ray-x/cmp-treesitter", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-nvim-lua", after = "cmp-nvim-lsp" },
 		{ "hrsh7th/cmp-path", after = "cmp-nvim-lsp" },
 		{ "hrsh7th/cmp-buffer", after = "cmp-path" },
 		{ "hrsh7th/cmp-calc", after = "cmp-path" },
 		{ "kdheepak/cmp-latex-symbols",after = "cmp-calc"},
 		{ "hrsh7th/cmp-emoji",ft={"markdown","tex"}},
-		{ "octaltree/cmp-look", after = "nvim-cmp" },
-		{
-			"tzachar/cmp-tabnine",
-			run = "./install.sh",
-			event = "InsertEnter",
-			config = conf.tabnine,
+		{ "jcdickinson/codeium.nvim",
+		 	event = "InsertEnter",
+			config=conf.codeium,
 		},
+		-- {
+		-- 	"tzachar/cmp-tabnine",
+		-- 	run = "./install.sh",
+		-- 	event = "InsertEnter",
+		-- 	config = conf.tabnine,
+		-- },
 	},
 }
 completion["L3MON4D3/LuaSnip"] = {
@@ -53,9 +57,5 @@ completion["windwp/nvim-autopairs"] = {
 	after = "nvim-cmp",
 	config = conf.autopairs,
 }
-completion["kristijanhusak/vim-dadbod-completion"] = {
-	opt = true,
-	config = conf.dadbod,
-	after = "nvim-cmp",
-}
+
 return completion

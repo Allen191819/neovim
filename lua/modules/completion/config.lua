@@ -165,7 +165,7 @@ function config.cmp()
 		cmp = require("modules.ui.icons").get("cmp", false),
 	}
 	vim.cmd([[packadd nvim-cmp]])
-	vim.cmd([[packadd cmp-tabnine]])
+	-- vim.cmd([[packadd cmp-tabnine]])
 
 	local t = function(str)
 		return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -200,6 +200,7 @@ function config.cmp()
 	local cmp = require("cmp")
 	local lspkind = require("lspkind")
 	local compare = require("cmp.config.compare")
+	local types = require("cmp.types")
 	compare.lsp_scores = function(entry1, entry2)
 		local diff
 		if entry1.completion_item.score and entry2.completion_item.score then
@@ -222,7 +223,7 @@ function config.cmp()
 		},
 		sorting = {
 			comparators = {
-				require("cmp_tabnine.compare"),
+				-- require("cmp_tabnine.compare"),
 				cmp.config.compare.offset,
 				cmp.config.compare.exact,
 				cmp.config.compare.score,
@@ -289,19 +290,27 @@ function config.cmp()
 			{ name = "calc", max_item_count = 1 },
 			{ name = "buffer", max_item_count = 3 },
 			{ name = "latex_symbols", max_item_count = 5 },
-			{ name = "cmp_tabnine", max_item_count = 3 },
+		--	{ name = "cmp_tabnine", max_item_count = 3 },
 			{ name = "emoji", max_item_count = 5 },
 			{ name = "neorg", max_item_count = 5 },
-			{
-				name = "look",
-				max_item_count = 3,
-				option = {
-					convert_case = true,
-					loud = true,
-				},
-			},
+			{ name = "codeium", max_item_count = 2 ,priority = 20},
+		},
+		experimental = { native_menu = false, ghost_text = true },
+		preselect = types.cmp.PreselectMode.Item,
+		completion = {
+			autocomplete = { types.cmp.TriggerEvent.TextChanged },
+			completeopt = "menu,menuone,noselect",
+			keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
+			keyword_length = 2,
+			get_trigger_characters = function(trigger_characters)
+				return trigger_characters
+			end,
 		},
 	})
+end
+
+function config.codeium()
+	require("codeium").setup({})
 end
 
 function config.luasnip()
