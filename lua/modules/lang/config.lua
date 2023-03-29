@@ -138,6 +138,7 @@ function config.norg()
 	require("neorg").setup({
 		load = {
 			["core.defaults"] = {},
+			["core.export"] = { config = {} },
 			["core.norg.completion"] = { config = {
 				engine = "nvim-cmp",
 			} },
@@ -147,19 +148,11 @@ function config.norg()
 					workspaces = {
 						work = "~/norg/work",
 						home = "~/norg/home",
-						gtd = "~/norg/gtd",
 					},
+					index = "index.norg",
 				},
 			},
-			["core.export"] = { config = {} },
 			["core.export.markdown"] = {},
-			["core.keybinds"] = {},
-			["core.gtd.base"] = {
-				config = {
-					workspace = "gtd",
-				},
-			},
-			["core.norg.qol.todo_items"] = { config = {} },
 		},
 	})
 end

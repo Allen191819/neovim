@@ -197,9 +197,18 @@ function config.cmp()
 		info.scrollable = false
 		return info
 	end
-	local types = require("cmp.types")
 	local cmp = require("cmp")
 	local lspkind = require("lspkind")
+	local compare = require("cmp.config.compare")
+	compare.lsp_scores = function(entry1, entry2)
+		local diff
+		if entry1.completion_item.score and entry2.completion_item.score then
+			diff = (entry2.completion_item.score * entry2.score) - (entry1.completion_item.score * entry1.score)
+		else
+			diff = entry2.score - entry1.score
+		end
+		return (diff < 0)
+	end
 	cmp.setup({
 		window = {
 			completion = {
@@ -275,6 +284,7 @@ function config.cmp()
 			{ name = "nvim_lsp", max_item_count = 4 },
 			{ name = "nvim_lua", max_item_count = 2 },
 			{ name = "luasnip", max_item_count = 3 },
+			{ name = "treesitter", max_item_count = 3 },
 			{ name = "path", max_item_count = 3 },
 			{ name = "calc", max_item_count = 1 },
 			{ name = "buffer", max_item_count = 3 },
@@ -282,7 +292,6 @@ function config.cmp()
 			{ name = "cmp_tabnine", max_item_count = 3 },
 			{ name = "emoji", max_item_count = 5 },
 			{ name = "neorg", max_item_count = 5 },
-			{ name = "tidal", max_item_count = 5 },
 			{
 				name = "look",
 				max_item_count = 3,
@@ -291,17 +300,6 @@ function config.cmp()
 					loud = true,
 				},
 			},
-		},
-		experimental = { native_menu = false, ghost_text = true },
-		preselect = types.cmp.PreselectMode.Item,
-		completion = {
-			autocomplete = { types.cmp.TriggerEvent.TextChanged },
-			completeopt = "menu,menuone,noselect",
-			keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
-			keyword_length = 2,
-			get_trigger_characters = function(trigger_characters)
-				return trigger_characters
-			end,
 		},
 	})
 end
@@ -375,5 +373,3 @@ function config.mason_install()
 end
 
 return config
-
-
