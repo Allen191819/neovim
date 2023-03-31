@@ -28,7 +28,7 @@ func! CompileRunGccH()
 	elseif &filetype == 'tex'
 		:lua require("knap").toggle_autopreviewing()
 	elseif &filetype == 'html'
-		silent! exec "!chromium % &"
+		:lua require("knap").toggle_autopreviewing()
 	elseif &filetype == 'javascript'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
 	elseif &filetype == 'go'
@@ -47,8 +47,7 @@ func! CompileRunGccF()
 		exec "!g++ -std=c++11 % -Wall -o %< -g"
 		:FloatermNew time ./%<
 	elseif &filetype == 'rust'
-		exec "!rustc %"
-		:FloatermNew time ./%<
+		:FloatermNew cargo run
 	elseif &filetype == 'java'
 		:FloatermNew javac % && java %<
     elseif &filetype == 'lua'
@@ -64,6 +63,8 @@ func! CompileRunGccF()
 	elseif &filetype == 'markdown'
 		:lua require("knap").toggle_autopreviewing()
 	elseif &filetype == 'html'
+		:lua require("knap").toggle_autopreviewing()
+	elseif &filetype == 'tex'
 		:lua require("knap").toggle_autopreviewing()
 	elseif &filetype == 'javascript'
 		:FloatermNew export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
