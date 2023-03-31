@@ -292,6 +292,7 @@ function config.cmp()
 			{ name = "latex_symbols", max_item_count = 5 },
 		--	{ name = "cmp_tabnine", max_item_count = 3 },
 			{ name = "emoji", max_item_count = 5 },
+		--	{ name = "spell", max_item_count = 2 },
 			{ name = "neorg", max_item_count = 5 },
 			{ name = "codeium", max_item_count = 2 ,priority = 20},
 		},
@@ -310,7 +311,8 @@ function config.cmp()
 end
 
 function config.codeium()
-	require("codeium").setup({})
+	require("codeium").setup({
+	})
 end
 
 function config.luasnip()

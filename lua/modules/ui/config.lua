@@ -636,7 +636,7 @@ end
 function config.popui()
 	vim.ui.select = require("popui.ui-overrider")
 	vim.ui.input = require("popui.input-overrider")
-	vim.g.popui_border_style = "rounded"
+	vim.g.popui_border_style = "none"
 end
 
 function config.guihua()
