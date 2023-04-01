@@ -163,9 +163,10 @@ editor["ibhagwan/smartyank.nvim"] = {
 	event = "BufReadPost",
 	config = conf.smartyank,
 }
-editor["Pocco81/true-zen.nvim"] = {
+editor["folke/zen-mode.nvim"] = {
 	opt = true,
-	cmd = {"TZNarrow","TZFocus","TZMinimalist","TZAtaraxis"}
+	cmd = {"ZenMode"},
+	conf = conf.zen_mode
 }
 
 return editor

@@ -139,7 +139,9 @@ local plug_map = {
 	["n|ma"] = map_cr("BookmarkShowAll"):with_noremap():with_silent(),
 	["n|mx"] = map_cr("BookmarkClear"):with_noremap():with_silent(),
 	-- Neorg
-	["n|<leader>sn"] = map_cr("Neorg gtd"):with_noremap():with_silent(),
+	["n|<leader>sn"] = map_cr("Neorg"):with_noremap():with_silent(),
+	-- True Zen
+	["n|<leader>zm"] = map_cr("ZenMode"):with_noremap():with_silent(),
 	-- Search replace
 	["v|<C-r>"] = map_cmd("<CMD>SearchReplaceSingleBufferVisualSelectio<CR>"):with_noremap():with_silent(),
 	["v|<C-s>"] = map_cmd("<CMD>SearchReplaceWithinVisualSelection<CR>"):with_noremap():with_silent(),

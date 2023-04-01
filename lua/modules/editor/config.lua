@@ -590,32 +590,22 @@ function config.smartyank()
 	})
 end
 
-function config.true_zen()
-	require("true-zen").setup({
-		modes = { -- configurations per mode
-			ataraxis = {
-				shade = "dark", -- if `dark` then dim the padding windows, otherwise if it's `light` it'll brighten said windows
-				minimum_writing_area = { -- minimum size of main window
-					width = 70,
-					height = 44,
-				},
-				quit_untoggles = true, -- type :q or :qa to quit Ataraxis mode
-				padding = { -- padding windows
-					left = 52,
-					right = 52,
-					top = 0,
-					bottom = 0,
-				},
+function config.zen_mode()
+	require("zen-mode").setup({
+		window = {},
+		plugins = {
+			options = {
+				enabled = true,
+				ruler = true,
+				showcmd = false,
 			},
-		},
-		integrations = {
-			tmux = true, -- hide tmux status bar in (minimalist, ataraxis)
-			kitty = { -- increment font size in Kitty. Note: you must set `allow_remote_control socket-only` and `listen_on unix:/tmp/kitty` in your personal config (ataraxis)
+			twilight = { enabled = false },
+			gitsigns = { enabled = true },
+			tmux = { enabled = true },
+			kitty = {
 				enabled = true,
 				font = "+1",
 			},
-			twilight = false, -- enable twilight (ataraxis)
-			lualine = true, -- hide nvim-lualine (ataraxis)
 		},
 	})
 end

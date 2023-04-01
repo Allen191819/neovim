@@ -27,7 +27,7 @@ mason_lsp.setup({
 		"clangd",
 		"texlab",
 		"yamlls",
-		"tsserver"
+		"tsserver",
 	},
 })
 
@@ -267,7 +267,7 @@ nvim_lsp.racket_langserver.setup({
 	single_file_support = true,
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
-		custom_attach(client,bufnr)
+		custom_attach(client, bufnr)
 	end,
 })
 
@@ -280,7 +280,7 @@ nvim_lsp.scheme_langserver.setup({
 	single_file_support = true,
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
-		custom_attach(client,bufnr)
+		custom_attach(client, bufnr)
 	end,
 })
 
@@ -298,7 +298,7 @@ nvim_lsp.html.setup({
 	flags = { debounce_text_changes = 500 },
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
-		custom_attach(client,bufnr)
+		custom_attach(client, bufnr)
 	end,
 })
 
