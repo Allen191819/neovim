@@ -1,0 +1,7 @@
+{
+  "sscript": {
+    "prefix": "sscript",
+    "body": ["<script src=\"$1\"></script>"],
+    "description": "HTML - Import a script via src"
+  }
+}

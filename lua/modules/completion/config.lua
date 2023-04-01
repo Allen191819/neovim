@@ -316,7 +316,7 @@ function config.codeium()
 end
 
 function config.luasnip()
-	local snippet_path = os.getenv("HOME") .. "/.config/nvim/snippets/"
+	local snippet_path = vim.fn.stdpath("config") .. "/snippets/"
 	if not vim.tbl_contains(vim.opt.rtp:get(), snippet_path) then
 		vim.opt.rtp:append(snippet_path)
 	end
@@ -329,6 +329,7 @@ function config.luasnip()
 	require("luasnip.loaders.from_lua").lazy_load()
 	require("luasnip.loaders.from_vscode").lazy_load()
 	require("luasnip.loaders.from_snipmate").lazy_load()
+	vim.api.nvim_create_user_command('LuaSnipAdd',  ":edit "..snippet_path.." | NvimTreeOpen",{})
 end
 
 function config.tabnine()
