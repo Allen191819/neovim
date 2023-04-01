@@ -92,16 +92,19 @@ function config.lang_go()
 	vim.g.go_code_completion_enabled = 0
 end
 
-function config.makrkdown_preview()
-	vim.g.mkdp_auto_start = 0
-	vim.g.mkdp_auto_close = 1
-	vim.g.mkdp_refresh_slow = 0
-	vim.g.mkdp_command_for_global = 0
-	vim.g.mkdp_browser = "chromium"
-	vim.g.mkdp_page_title = "「${name}」"
-	vim.g.mkdp_filetypes = { "markdown" }
-	vim.g.mkdp_theme = "light"
-	vim.g.vmt_auto_update_on_save = 1
+function config.peek()
+	require("peek").setup({
+		auto_load = false,
+		close_on_bdelete = true,
+		syntax = false,
+		theme = "dark",
+		update_on_change = true,
+		app = {"chromium"},
+		filetype = { "markdown" },
+		throttle_time = "auto",
+	})
+	vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
+	vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
 end
 
 function config.clipboard_image()
@@ -164,7 +167,6 @@ function config.knap()
 		mdtopdf = "pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile% --listing",
 		mdtopdfviewerlaunch = "zathura %outputfile%",
 		mdtopdfviewerrefresh = "kill -HUP %pid%",
-
 		markdownoutputext = "pdf",
 		markdowntopdf = "pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile% --listing",
 		markdowntopdfviewerlaunch = "zathura %outputfile%",
@@ -179,6 +181,10 @@ function config.knap()
 		delay = 250,
 	}
 	vim.g.knap_settings = gknapsettings
+	vim.api.nvim_create_user_command('KnapOpen',  require("knap").process_once, {})
+	vim.api.nvim_create_user_command('KnapClose', require("knap").close_viewer, {})
+	vim.api.nvim_create_user_command('KnapToggle',require("knap").toggle_autopreviewing, {})
+	vim.api.nvim_create_user_command('KnapJump',  require("knap").forward_jump, {})
 end
 
 return config

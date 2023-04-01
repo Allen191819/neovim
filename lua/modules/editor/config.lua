@@ -55,9 +55,9 @@ function config.nvim_treesitter()
 					["ic"] = "@class.inner",
 				},
 				selection_modes = {
-					['@parameter.outer'] = 'v', -- charwise
-					['@function.outer'] = 'V', -- linewise
-					['@class.outer'] = '<c-v>', -- blockwise
+					["@parameter.outer"] = "v", -- charwise
+					["@function.outer"] = "V", -- linewise
+					["@class.outer"] = "<c-v>", -- blockwise
 				},
 			},
 			move = {
@@ -395,7 +395,7 @@ function config.dap()
 			ghciEnv = vim.empty_dict(),
 			ghciPrompt = "ghci>",
 			ghciInitialPrompt = "λ>>",
-			ghciCmd= "stack ghci --test --no-load --no-build --main-is TARGET --ghci-options -fprint-evld-with-show",
+			ghciCmd = "stack ghci --test --no-load --no-build --main-is TARGET --ghci-options -fprint-evld-with-show",
 		},
 	}
 end
@@ -455,14 +455,15 @@ function config.floaterm()
 	vim.g.floaterm_keymap_next = ""
 	vim.g.floaterm_keymap_toggle = "<F12>"
 	vim.g.floaterm_autoclose = 0
-	vim.cmd[[ 
+	vim.cmd([[
 		command! Ranger FloatermNew --title=ranger --autoclose=1 ranger
 		command! LazyGit FloatermNew --width=0.95 --height=0.95 --title=lazygit --autoclose=1 lazygit
 		command! Ipython FloatermNew --position=right --width=0.5 --wintype=vsplit --name=repl --title=ipython ipython
 		command! Ghci FloatermNew --position=right --width=0.5 --wintype=vsplit --name=repl --title=ghci ghci
 		command! Scheme FloatermNew --position=right --width=0.5 --wintype=vsplit --name=repl --title=scheme chez
 		command! Lua FloatermNew --position=right --width=0.5 --wintype=vsplit --name=repl --title=lua lua
-	]]
+		command! Glow FloatermNew --title=glow --autoclose=1 glow
+	]])
 end
 
 function config.add_header()
@@ -585,6 +586,36 @@ function config.smartyank()
 			ssh_only = true, -- false to OSC52 yank also in local sessions
 			silent = false, -- true to disable the "n chars copied" echo
 			echo_hl = "Directory", -- highlight group of the OSC52 echo message
+		},
+	})
+end
+
+function config.true_zen()
+	require("true-zen").setup({
+		modes = { -- configurations per mode
+			ataraxis = {
+				shade = "dark", -- if `dark` then dim the padding windows, otherwise if it's `light` it'll brighten said windows
+				minimum_writing_area = { -- minimum size of main window
+					width = 70,
+					height = 44,
+				},
+				quit_untoggles = true, -- type :q or :qa to quit Ataraxis mode
+				padding = { -- padding windows
+					left = 52,
+					right = 52,
+					top = 0,
+					bottom = 0,
+				},
+			},
+		},
+		integrations = {
+			tmux = true, -- hide tmux status bar in (minimalist, ataraxis)
+			kitty = { -- increment font size in Kitty. Note: you must set `allow_remote_control socket-only` and `listen_on unix:/tmp/kitty` in your personal config (ataraxis)
+				enabled = true,
+				font = "+1",
+			},
+			twilight = false, -- enable twilight (ataraxis)
+			lualine = true, -- hide nvim-lualine (ataraxis)
 		},
 	})
 end

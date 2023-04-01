@@ -17,11 +17,11 @@ lang["mattn/webapi-vim"] = {
 	ft = "rust",
 }
 lang["chrisbra/csv.vim"] = { opt = true, ft = "csv" }
-lang["iamcco/markdown-preview.nvim"] = {
+lang["toppair/peek.nvim"] = {
 	opt = true,
 	ft = "markdown",
-	run = "cd app && yarn install",
-	config = conf.makrkdown_preview,
+	run = "deno task --quiet build:fast",
+	config = conf.peek,
 }
 lang["dhruvasagar/vim-table-mode"] = { opt = true, ft = "markdown" }
 lang["mzlogin/vim-markdown-toc"] = { opt = true, ft = "markdown" }

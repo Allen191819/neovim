@@ -24,11 +24,11 @@ func! CompileRunGccH()
 	elseif &filetype == 'r'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 Rscript %
 	elseif &filetype == 'markdown'
-		exec "MarkdownPreview"
+		:PeekOpen
 	elseif &filetype == 'tex'
-		:lua require("knap").toggle_autopreviewing()
+		:KnapToggle
 	elseif &filetype == 'html'
-		:lua require("knap").toggle_autopreviewing()
+		:KnapToggle
 	elseif &filetype == 'javascript'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
 	elseif &filetype == 'go'
@@ -61,11 +61,11 @@ func! CompileRunGccF()
 	elseif &filetype == 'r'
 		:FloatermNew Rscript %
 	elseif &filetype == 'markdown'
-		:lua require("knap").toggle_autopreviewing()
+		:KnapToggle
 	elseif &filetype == 'html'
-		:lua require("knap").toggle_autopreviewing()
+		:KnapToggle
 	elseif &filetype == 'tex'
-		:lua require("knap").toggle_autopreviewing()
+		:KnapToggle
 	elseif &filetype == 'javascript'
 		:FloatermNew export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
 	elseif &filetype == 'go'
