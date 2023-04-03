@@ -153,7 +153,7 @@ editor["yianwillis/vimcdoc"] = { opt = false }
 editor["lewis6991/impatient.nvim"] = { opt = false }
 editor["hkupty/iron.nvim"] = { opt = true, cmd = { "IronRepl" }, config = conf.iron }
 editor["roobert/search-replace.nvim"] = { opt = true, event = { "VimEnter" }, config = conf.search_replace }
-editor["Allen191819/neogen"] = { opt = true, event = "InsertEnter", branch = "fix/ts_utils", config = conf.neogen }
+editor["danymat/neogen"] = { opt = true, event = "InsertEnter", config = conf.neogen }
 editor["sindrets/diffview.nvim"] = {
 	opt = true,
 	cmd = { "DiffviewOpen", "DiffviewClose" },

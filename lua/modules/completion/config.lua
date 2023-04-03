@@ -238,10 +238,10 @@ function config.cmp()
 			fields = { "kind", "abbr", "menu" },
 			format = function(entry, vim_item)
 				local kind = lspkind.cmp_format({
-					mode = "symbol_text",
-					maxwidth = 50,
-					symbol_map = vim.tbl_deep_extend("force", icons.kind, icons.type, icons.cmp),
-				})(entry, vim_item)
+						mode = "symbol_text",
+						maxwidth = 50,
+						symbol_map = vim.tbl_deep_extend("force", icons.kind, icons.type, icons.cmp),
+					})(entry, vim_item)
 				local strings = vim.split(kind.kind, "%s", { trimempty = true })
 				kind.kind = " " .. strings[1] .. " "
 				kind.menu = "    (" .. strings[2] .. ")"
@@ -252,7 +252,7 @@ function config.cmp()
 			["<CR>"] = cmp.mapping.confirm({ select = true }),
 			["<C-p>"] = cmp.mapping.select_prev_item(),
 			["<C-n>"] = cmp.mapping.select_next_item(),
-			["<C-d>"] = cmp.mapping.scroll_docs(-4),
+			["<C-d>"] = cmp.mapping.scroll_docs( -4),
 			["<C-f>"] = cmp.mapping.scroll_docs(4),
 			["<C-e>"] = cmp.mapping.close(),
 			["<Tab>"] = cmp.mapping(function(fallback)
@@ -269,7 +269,7 @@ function config.cmp()
 			["<S-Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
 					cmp.select_prev_item()
-				elseif require("luasnip").jumpable(-1) then
+				elseif require("luasnip").jumpable( -1) then
 					vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
 				else
 					fallback()
@@ -282,21 +282,20 @@ function config.cmp()
 			end,
 		},
 		sources = {
-			{ name = "nvim_lsp", max_item_count = 4 },
-			{ name = "nvim_lua", max_item_count = 2 },
-			{ name = "luasnip", max_item_count = 3 },
-			{ name = "treesitter", max_item_count = 3 },
-			{ name = "path", max_item_count = 3 },
-			{ name = "calc", max_item_count = 1 },
-			{ name = "buffer", max_item_count = 3 },
+			{ name = "nvim_lsp",      max_item_count = 4 },
+			{ name = "nvim_lua",      max_item_count = 2 },
+			{ name = "luasnip",       max_item_count = 3 },
+			{ name = "treesitter",    max_item_count = 3 },
+			{ name = "path",          max_item_count = 3 },
+			{ name = "calc",          max_item_count = 1 },
+			{ name = "buffer",        max_item_count = 3 },
 			{ name = "latex_symbols", max_item_count = 5 },
-		--	{ name = "cmp_tabnine", max_item_count = 3 },
-			{ name = "emoji", max_item_count = 5 },
-		--	{ name = "spell", max_item_count = 2 },
-			{ name = "neorg", max_item_count = 5 },
-			{ name = "codeium", max_item_count = 2 ,priority = 20},
+			--	{ name = "cmp_tabnine", max_item_count = 3 },
+			{ name = "emoji",         max_item_count = 5 },
+			{ name = "neorg",         max_item_count = 5 },
+			{ name = "codeium",       max_item_count = 2,  priority = 20 },
 		},
-		experimental = { native_menu = false, ghost_text = true },
+		experimental = { native_menu = false, ghost_text = { hlgroup = "Comment" } },
 		preselect = types.cmp.PreselectMode.Item,
 		completion = {
 			autocomplete = { types.cmp.TriggerEvent.TextChanged },
@@ -329,7 +328,7 @@ function config.luasnip()
 	require("luasnip.loaders.from_lua").lazy_load()
 	require("luasnip.loaders.from_vscode").lazy_load()
 	require("luasnip.loaders.from_snipmate").lazy_load()
-	vim.api.nvim_create_user_command('LuaSnipAdd',  ":edit "..snippet_path.." | NvimTreeOpen",{})
+	vim.api.nvim_create_user_command('LuaSnipAdd', ":edit " .. snippet_path .. " | NvimTreeOpen", {})
 end
 
 function config.tabnine()

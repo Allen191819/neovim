@@ -8,7 +8,7 @@ ui["hoob3rt/lualine.nvim"] = {
 	config = conf.lualine,
 }
 ui["goolord/alpha-nvim"] = { opt = false, config = conf.alpha }
--- ui["hood/popui.nvim"] = { opt = false, config = conf.popui }
+ui["hood/popui.nvim"] = { opt = false, config = conf.popui }
 ui["kyazdani42/nvim-tree.lua"] = {
 	opt = true,
 	cmd = { "NvimTreeToggle", "NvimTreeOpen" },
