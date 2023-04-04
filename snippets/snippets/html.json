@@ -1,7 +1,28 @@
 {
-  "sscript": {
-    "prefix": "sscript",
-    "body": ["<script src=\"$1\"></script>"],
-    "description": "HTML - Import a script via src"
-  }
+    "sscript": {
+        "prefix": "sscript",
+        "body": [
+            "<script src=\"$1\"></script>",
+            "$2"
+        ],
+        "description": "HTML - Import a script via src"
+    },
+    "vuejs": {
+        "prefix": "vuejs",
+        "body": [
+            "<!-- Import vue.js from cdn -->",
+            "<script src=\"https://cdn.jsdelivr.net/npm/vue/dist/vue.js\"></script>",
+            "$1"
+        ],
+        "description": "HTML - Import vue.js from CDN"
+    },
+    "jqueryjs": {
+        "prefix": "jqueryjs",
+        "body":[
+            "<!-- Import jquery.js from cdn -->",
+            "<script src=\"http://libs.baidu.com/jquery/2.0.0/jquery.min.js\"></script>",
+            "$1"
+        ],
+        "description": "HTML - Import jquery.js from CDN"
+    }
 }
