@@ -268,16 +268,13 @@ function config.dap()
 		{ text = icons.dap.BreakpointRejected, texthl = "DapBreakpoint", linehl = "", numhl = "" }
 	)
 	vim.fn.sign_define("DapLogPoint", { text = icons.dap.LogPoint, texthl = "DapLogPoint", linehl = "", numhl = "" })
-
 	dap.configurations.c = dap.configurations.cpp
 	dap.configurations.rust = dap.configurations.cpp
-
 	dap.adapters.lldb = {
 		type = "executable",
 		command = "/usr/bin/lldb-vscode",
 		name = "lldb",
 	}
-
 	dap.configurations.cpp = {
 		{
 			name = "Launch",
@@ -301,17 +298,11 @@ function config.dap()
 	}
 	dap.configurations.python = {
 		{
-			-- The first three options are required by nvim-dap
 			type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
 			request = "launch",
 			name = "Launch file",
-			-- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
-
 			program = "${file}", -- This configuration will launch the current file if used.
 			pythonPath = function()
-				-- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
-				-- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
-				-- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
 				local cwd = vim.fn.getcwd()
 				if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
 					return cwd .. "/venv/bin/python"
@@ -353,7 +344,6 @@ function config.dap()
 				end)
 			end
 		end)
-		-- Wait for delve to start
 		vim.defer_fn(function()
 			callback({ type = "server", host = "127.0.0.1", port = port })
 		end, 100)
@@ -377,27 +367,27 @@ function config.dap()
 		},
 	}
 
-	dap.adapters.haskell = {
-		type = "executable",
-		command = "haskell-debug-adapter",
-		args = { "--hackage-version=0.0.33.0" },
-	}
-	dap.configurations.haskell = {
-		{
-			type = "haskell",
-			request = "launch",
-			name = "Debug",
-			workspace = "${workspaceFolder}",
-			startup = "${file}",
-			stopOnEntry = true,
-			logFile = vim.fn.stdpath("data") .. "/haskell-dap.log",
-			logLevel = "WARNING",
-			ghciEnv = vim.empty_dict(),
-			ghciPrompt = "ghci>",
-			ghciInitialPrompt = "λ>>",
-			ghciCmd = "stack ghci --test --no-load --no-build --main-is TARGET --ghci-options -fprint-evld-with-show",
-		},
-	}
+	-- dap.adapters.haskell = {
+	-- 	type = "executable",
+	-- 	command = "haskell-debug-adapter",
+	-- 	args = { "--hackage-version=0.0.33.0" },
+	-- }
+	-- dap.configurations.haskell = {
+	-- 	{
+	-- 		type = "haskell",
+	-- 		request = "launch",
+	-- 		name = "Debug",
+	-- 		workspace = "${workspaceFolder}",
+	-- 		startup = "${file}",
+	-- 		stopOnEntry = true,
+	-- 		logFile = vim.fn.stdpath("data") .. "/haskell-dap.log",
+	-- 		logLevel = "WARNING",
+	-- 		ghciEnv = vim.empty_dict(),
+	-- 		ghciPrompt = "ghci>",
+	-- 		ghciInitialPrompt = "λ>>",
+	-- 		ghciCmd = "stack ghci --test --no-load --no-build --main-is TARGET --ghci-options -fprint-evld-with-show",
+	-- 	},
+	-- }
 end
 
 function config.specs()
