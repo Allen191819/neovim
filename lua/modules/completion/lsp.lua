@@ -250,7 +250,7 @@ end
 -- https://haskell-language-server.readthedocs.io/en/latest/installation.html
 
 nvim_lsp.hls.setup({
-	cmd = { "haskell-language-server-9.0.2~1.8.0.0", "--lsp" },
+	cmd = { "haskell-language-server-9.2.7~1.10.0.0", "--lsp" },
 	flags = { debounce_text_changes = 500 },
 	capabilities = capabilities,
 	on_attach = function(client)
