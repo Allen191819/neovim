@@ -36,16 +36,16 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "hrsh7th/cmp-calc", after = "cmp-path" },
 		{ "kdheepak/cmp-latex-symbols",after = "cmp-calc"},
 		{ "hrsh7th/cmp-emoji",ft={"markdown","tex"}},
-		{ "jcdickinson/codeium.nvim",
-		 	event = "InsertEnter",
-			config=conf.codeium,
-		},
-		-- {
-		-- 	"tzachar/cmp-tabnine",
-		-- 	run = "./install.sh",
-		-- 	event = "InsertEnter",
-		-- 	config = conf.tabnine,
+		-- { "jcdickinson/codeium.nvim",
+		--  	event = "InsertEnter",
+		-- 	config=conf.codeium,
 		-- },
+		{
+			"tzachar/cmp-tabnine",
+			run = "./install.sh",
+			event = "InsertEnter",
+			config = conf.tabnine,
+		},
 	},
 }
 completion["L3MON4D3/LuaSnip"] = {

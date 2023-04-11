@@ -165,7 +165,7 @@ function config.cmp()
 		cmp = require("modules.ui.icons").get("cmp", false),
 	}
 	vim.cmd([[packadd nvim-cmp]])
-	-- vim.cmd([[packadd cmp-tabnine]])
+	vim.cmd([[packadd cmp-tabnine]])
 
 	local t = function(str)
 		return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -223,7 +223,7 @@ function config.cmp()
 		},
 		sorting = {
 			comparators = {
-				-- require("cmp_tabnine.compare"),
+				require("cmp_tabnine.compare"),
 				cmp.config.compare.offset,
 				cmp.config.compare.exact,
 				cmp.config.compare.score,
@@ -290,10 +290,9 @@ function config.cmp()
 			{ name = "calc",          max_item_count = 1 },
 			{ name = "buffer",        max_item_count = 3 },
 			{ name = "latex_symbols", max_item_count = 5 },
-			--	{ name = "cmp_tabnine", max_item_count = 3 },
+			{ name = "cmp_tabnine", max_item_count = 3 },
 			{ name = "emoji",         max_item_count = 5 },
 			{ name = "neorg",         max_item_count = 5 },
-			{ name = "codeium",       max_item_count = 2,  priority = 20 },
 		},
 		experimental = { native_menu = false, ghost_text = { hlgroup = "Comment" } },
 		preselect = types.cmp.PreselectMode.Item,
@@ -332,8 +331,14 @@ function config.luasnip()
 end
 
 function config.tabnine()
-	local tabnine = require("cmp_tabnine.config")
-	tabnine:setup({ max_line = 200, max_num_results = 20, sort = true })
+	local tabnine = require('cmp_tabnine.config')
+	tabnine:setup({
+		max_lines = 200,
+		max_num_results = 10,
+		sort = true,
+		run_on_every_keystroke = true,
+		show_prediction_strength = false
+	})
 end
 
 function config.autopairs()

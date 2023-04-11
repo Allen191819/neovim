@@ -170,7 +170,7 @@ local data = {
 		luasnip = "",
 		treesitter = "",
 		look = "﬜",
-		tabnine = "",
+		TabNine = "",
 		Codeium = "",
 	},
 	dap = {
