@@ -235,11 +235,11 @@ function config.cmp()
 			},
 		},
 		formatting = {
-			fields = { "kind", "abbr", "menu" },
 			format = function(entry, vim_item)
 				local kind = lspkind.cmp_format({
 						mode = "symbol_text",
 						maxwidth = 50,
+						ellipsis_char = '...',
 						symbol_map = vim.tbl_deep_extend("force", icons.kind, icons.type, icons.cmp),
 					})(entry, vim_item)
 				return kind
