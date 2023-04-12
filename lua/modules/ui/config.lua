@@ -271,7 +271,6 @@ function config.nvim_tree()
 			update_root = true,
 			ignore_list = {},
 		},
-		ignore_ft_on_setup = {},
 		filters = {
 			dotfiles = false,
 			custom = { ".DS_Store" },
