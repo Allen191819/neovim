@@ -242,9 +242,6 @@ function config.cmp()
 						maxwidth = 50,
 						symbol_map = vim.tbl_deep_extend("force", icons.kind, icons.type, icons.cmp),
 					})(entry, vim_item)
-				local strings = vim.split(kind.kind, "%s", { trimempty = true })
-				kind.kind = " " .. strings[1] .. " "
-				kind.menu = "    (" .. strings[2] .. ")"
 				return kind
 			end,
 		},
@@ -290,7 +287,7 @@ function config.cmp()
 			{ name = "calc",          max_item_count = 1 },
 			{ name = "buffer",        max_item_count = 3 },
 			{ name = "latex_symbols", max_item_count = 5 },
-			{ name = "cmp_tabnine", max_item_count = 3 },
+			{ name = "cmp_tabnine",   max_item_count = 3 },
 			{ name = "emoji",         max_item_count = 5 },
 			{ name = "neorg",         max_item_count = 5 },
 		},
