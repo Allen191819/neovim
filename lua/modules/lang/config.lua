@@ -136,12 +136,11 @@ function config.norg()
 	require("neorg").setup({
 		load = {
 			["core.defaults"] = {},
-			["core.export"] = { config = {} },
-			["core.norg.completion"] = { config = {
+			["core.completion"] = { config = {
 				engine = "nvim-cmp",
 			} },
-			["core.norg.concealer"] = {},
-			["core.norg.dirman"] = {
+			["core.concealer"] = {},
+			["core.dirman"] = {
 				config = {
 					workspaces = {
 						work = "~/norg/work",
@@ -150,6 +149,7 @@ function config.norg()
 					index = "index.norg",
 				},
 			},
+			["core.export"] = { config = {export_dir="<export-dir>/<language>-export"} },
 			["core.export.markdown"] = {},
 		},
 	})
