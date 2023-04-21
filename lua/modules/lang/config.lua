@@ -99,7 +99,7 @@ function config.peek()
 		syntax = false,
 		theme = "dark",
 		update_on_change = true,
-		app = {"chromium"},
+		app = { "chromium" },
 		filetype = { "markdown" },
 		throttle_time = "auto",
 	})
@@ -140,6 +140,11 @@ function config.norg()
 				engine = "nvim-cmp",
 			} },
 			["core.concealer"] = {},
+			["core.qol.todo_items"] = {
+				config = {
+					create_todo_parents = true
+				}
+			},
 			["core.dirman"] = {
 				config = {
 					workspaces = {
@@ -149,7 +154,7 @@ function config.norg()
 					index = "index.norg",
 				},
 			},
-			["core.export"] = { config = {export_dir="<export-dir>/<language>-export"} },
+			["core.export"] = { config = { export_dir = "<export-dir>/<language>-export" } },
 			["core.export.markdown"] = {},
 		},
 	})
@@ -160,31 +165,35 @@ function config.knap()
 		-- html
 		htmloutputext = "html",
 		htmltohtml = "none",
-		htmltohtmlviewerlaunch = "live-server --quiet --browser=chromium --open=%outputfile% --watch=%outputfile% --wait=800",
+		htmltohtmlviewerlaunch =
+		"live-server --quiet --browser=chromium --open=%outputfile% --watch=%outputfile% --wait=800",
 		htmltohtmlviewerrefresh = "none",
 		-- markdown
 		mdoutputext = "pdf",
-		mdtopdf = "pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile% --listing",
+		mdtopdf =
+		"pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile% --listing",
 		mdtopdfviewerlaunch = "zathura %outputfile%",
 		mdtopdfviewerrefresh = "kill -HUP %pid%",
 		markdownoutputext = "pdf",
-		markdowntopdf = "pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile% --listing",
+		markdowntopdf =
+		"pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile% --listing",
 		markdowntopdfviewerlaunch = "zathura %outputfile%",
 		markdowntopdfviewerrefresh = "kill -HUP %pid%",
 		-- latex
 		texoutputext = "pdf",
 		textopdf = "xelatex -interaction=batchmode -halt-on-error -synctex=1 %docroot%",
-		textopdfviewerlaunch = "zathura --synctex-editor-command 'nvim --headless -es --cmd \"lua require('\"'\"'knaphelper'\"'\"').relayjump('\"'\"'%servername%'\"'\"','\"'\"'%{input}'\"'\"',%{line},0)\"' %outputfile%",
+		textopdfviewerlaunch =
+		"zathura --synctex-editor-command 'nvim --headless -es --cmd \"lua require('\"'\"'knaphelper'\"'\"').relayjump('\"'\"'%servername%'\"'\"','\"'\"'%{input}'\"'\"',%{line},0)\"' %outputfile%",
 		textopdfviewerrefresh = "none",
 		textopdfforwardjump = "zathura --synctex-forward=%line%:%column%:%srcfile% %outputfile%",
 		textopdfshorterror = 'A=%outputfile% ; LOGFILE="${A%.pdf}.log" ; rubber-info "$LOGFILE" 2>&1 | head -n 1',
 		delay = 250,
 	}
 	vim.g.knap_settings = gknapsettings
-	vim.api.nvim_create_user_command('KnapOpen',  require("knap").process_once, {})
+	vim.api.nvim_create_user_command('KnapOpen', require("knap").process_once, {})
 	vim.api.nvim_create_user_command('KnapClose', require("knap").close_viewer, {})
-	vim.api.nvim_create_user_command('KnapToggle',require("knap").toggle_autopreviewing, {})
-	vim.api.nvim_create_user_command('KnapJump',  require("knap").forward_jump, {})
+	vim.api.nvim_create_user_command('KnapToggle', require("knap").toggle_autopreviewing, {})
+	vim.api.nvim_create_user_command('KnapJump', require("knap").forward_jump, {})
 end
 
 return config
