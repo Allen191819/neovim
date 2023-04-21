@@ -32,7 +32,7 @@ lang["ekickx/clipboard-image.nvim"] = {
 	ft = "markdown",
 	config = conf.clipboard_image,
 }
-lang["nvim-neorg/neorg"] = { opt = true, cmd = "Neorg", ft = "norg", config = conf.norg }
+lang["nvim-neorg/neorg"] = { opt = false, config = conf.norg }
 lang["whonore/Coqtail"] = { opt = true, ft = "coq" }
 lang["frabjous/knap"] = { opt = true, ft = { "markdown", "tex", "html" }, config = conf.knap, require = { "savq/paq-nvim" } }
 return lang

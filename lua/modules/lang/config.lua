@@ -148,10 +148,10 @@ function config.norg()
 			["core.dirman"] = {
 				config = {
 					workspaces = {
-						work = "~/norg/work",
-						home = "~/norg/home",
+						notes = "~/norg"
 					},
 					index = "index.norg",
+					default_workspace = "notes"
 				},
 			},
 			["core.export"] = { config = { export_dir = "<export-dir>/<language>-export" } },
