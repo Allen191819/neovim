@@ -1,0 +1,16 @@
+{
+    "metadata": {
+        "prefix": "metadata",
+        "body": [
+            "---",
+            "title: \"$1\"",
+            "author: [\"$2\"]",
+            "date: \"$3\"",
+            "keywords: [\"$4\"]",
+            "caption-justification: \"centering\"",
+            "---",
+            "$5",
+        ],
+        "description": "Metadata for pandoc",
+    },
+}
