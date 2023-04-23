@@ -4,13 +4,14 @@
         "body": [
             "---",
             "title: \"$1\"",
-            "author: [\"$2\"]",
-            "date: \"$3\"",
+            "author: [\"${2:Allen}\"]",
+            "date: ${3:\\today}",
             "keywords: [\"$4\"]",
-            "caption-justification: \"centering\"",
-            "---",
-            "$5",
-        ],
-        "description": "Metadata for pandoc",
-    },
+            "caption-justification: \"${5:centering}\"",
+            "lang: \"${6:zh}\"",
+            "toc: true",
+            "toc-own-page: true",
+            "---"],
+        "description": "Metadata for pandoc"
+    }
 }

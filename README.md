@@ -16,4 +16,5 @@ _✨ neovim lua config ✨_
 
 ## Reference
 
-[nvimdots](https://github.com/ayamir/nvimdots)
++ [😄nvimdots](https://github.com/ayamir/nvimdots)
+
