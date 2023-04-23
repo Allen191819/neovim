@@ -97,7 +97,7 @@ function config.peek()
 		auto_load = false,
 		close_on_bdelete = true,
 		syntax = false,
-		theme = "dark",
+		theme = "light",
 		update_on_change = true,
 		app = { "chromium" },
 		filetype = { "markdown" },
@@ -171,12 +171,12 @@ function config.knap()
 		-- markdown
 		mdoutputext = "pdf",
 		mdtopdf =
-		"pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile% --listing",
+		"pandoc --pdf-engine=xelatex --highlight-style ~/.config/nvim/color/adam.theme --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile%",
 		mdtopdfviewerlaunch = "zathura %outputfile%",
 		mdtopdfviewerrefresh = "kill -HUP %pid%",
 		markdownoutputext = "pdf",
 		markdowntopdf =
-		"pandoc --pdf-engine=xelatex --highlight-style tango --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile% --listing",
+		"pandoc --pdf-engine=xelatex --highlight-style ~/.config/nvim/color/adam.theme --template ~/.config/nvim/color/eisvogel.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile%",
 		markdowntopdfviewerlaunch = "zathura %outputfile%",
 		markdowntopdfviewerrefresh = "kill -HUP %pid%",
 		-- latex

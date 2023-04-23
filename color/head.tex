@@ -4,3 +4,10 @@
 \makeatletter
 \def\fps@figure{H} 
 \makeatother
+
+\definecolor{bgcolor}{HTML}{E0E0E0}
+\let\oldtexttt\texttt
+
+\renewcommand{\texttt}[1]{
+  \colorbox{bgcolor}{\oldtexttt{#1}}
+}
