@@ -152,12 +152,12 @@ function config.knap()
 		-- markdown
 		mdoutputext = "pdf",
 		mdtopdf =
-		"pandoc --pdf-engine=xelatex --highlight-style ~/.config/nvim/color/adam.theme --template ~/.config/nvim/color/eisvogel.tex -H ~/.config/nvim/color/head.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile%",
+		"pandoc --pdf-engine=xelatex --highlight-style ~/.config/nvim/color/adam.theme --template ~/.config/nvim/color/eisvogel.tex -H ~/.config/nvim/color/head.tex -V CJKmainfont='Noto Serif CJK SC' %docroot% -o %outputfile%",
 		mdtopdfviewerlaunch = "zathura %outputfile%",
 		mdtopdfviewerrefresh = "kill -HUP %pid%",
 		markdownoutputext = "pdf",
 		markdowntopdf =
-		"pandoc --pdf-engine=xelatex --highlight-style ~/.config/nvim/color/adam.theme --template ~/.config/nvim/color/eisvogel.tex -H ~/.config/nvim/color/head.tex -V CJKmainfont='Source Han Serif CN' %docroot% -o %outputfile%",
+		"pandoc --pdf-engine=xelatex --highlight-style ~/.config/nvim/color/adam.theme --template ~/.config/nvim/color/eisvogel.tex -H ~/.config/nvim/color/head.tex -V CJKmainfont='Noto Serif CJK SC' %docroot% -o %outputfile%",
 		markdowntopdfviewerlaunch = "zathura %outputfile%",
 		markdowntopdfviewerrefresh = "kill -HUP %pid%",
 		-- latex
