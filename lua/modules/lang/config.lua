@@ -1,21 +1,9 @@
 local config = {}
 
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 local function custom_attach(client)
-	vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
-	vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
-	vim.api.nvim_create_autocmd("CursorHold", {
-		callback = function()
-			local opts = {
-				focusable = false,
-				close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-				border = "rounded",
-				source = "always",
-				prefix = " ",
-				scope = "cursor",
-			}
-			vim.diagnostic.open_float(nil, opts)
-		end,
-	})
 	require("lsp_signature").on_attach({
 		bind = true,
 		use_lspsaga = false,
@@ -26,13 +14,6 @@ local function custom_attach(client)
 		handler_opts = {
 			border = "rounded",
 		},
-	})
-	vim.diagnostic.config({
-		virtual_text = false,
-		signs = true,
-		underline = true,
-		update_in_insert = false,
-		severity_sort = true,
 	})
 end
 
@@ -194,6 +175,21 @@ function config.knap()
 	vim.api.nvim_create_user_command('KnapClose', require("knap").close_viewer, {})
 	vim.api.nvim_create_user_command('KnapToggle', require("knap").toggle_autopreviewing, {})
 	vim.api.nvim_create_user_command('KnapJump', require("knap").forward_jump, {})
+end
+
+function config.coq()
+	local util = require("lspconfig.util")
+	require'coq-lsp'.setup({
+	lsp = {
+		on_attach = function(client, bufnr)
+			custom_attach(client);
+		end,
+		root_dir = util.find_git_ancestor,
+		init_options = {
+			show_notices_as_diagnostics = false,
+			capabilities = capabilities,
+		},
+	}})
 end
 
 return config
