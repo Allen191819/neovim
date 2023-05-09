@@ -136,7 +136,7 @@ function config.lualine()
 
 	ins_right({
 		function()
-			return "ﬦ"
+			return "󰘧"
 		end,
 		color = { fg = colors.orange },
 	})
