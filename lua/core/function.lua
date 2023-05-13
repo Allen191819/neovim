@@ -24,7 +24,7 @@ func! CompileRunGccH()
 	elseif &filetype == 'r'
 		:FloatermNew --position=bottom --wintype=split --height=0.35 Rscript %
 	elseif &filetype == 'markdown'
-		:PeekOpen
+		:MarkdownPreviewToggle
 	elseif &filetype == 'tex'
 		:KnapToggle
 	elseif &filetype == 'html'

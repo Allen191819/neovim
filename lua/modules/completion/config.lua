@@ -225,8 +225,8 @@ function config.cmp()
 			comparators = {
 				cmp.config.compare.offset,
 				cmp.config.compare.exact,
-				require("cmp_tabnine.compare"),
 				cmp.config.compare.score,
+				require("cmp_tabnine.compare"),
 				require("cmp-under-comparator").under,
 				cmp.config.compare.kind,
 				cmp.config.compare.sort_text,
@@ -279,9 +279,9 @@ function config.cmp()
 			end,
 		},
 		sources = {
-			{ name = "nvim_lsp",      max_item_count = 4 ,priority = 99},
+			{ name = "nvim_lsp",      max_item_count = 4 ,priority = 1000},
 			{ name = "nvim_lua",      max_item_count = 2 },
-			{ name = "luasnip",       max_item_count = 3 },
+			{ name = "luasnip",       max_item_count = 3 ,priority = 1000},
 			{ name = "treesitter",    max_item_count = 3 },
 			{ name = "path",          max_item_count = 3 },
 			{ name = "calc",          max_item_count = 1 },

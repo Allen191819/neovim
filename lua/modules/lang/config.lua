@@ -73,19 +73,9 @@ function config.lang_go()
 	vim.g.go_code_completion_enabled = 0
 end
 
-function config.peek()
-	require("peek").setup({
-		auto_load = false,
-		close_on_bdelete = true,
-		syntax = false,
-		theme = "light",
-		update_on_change = true,
-		app = { "chromium" },
-		filetype = { "markdown" },
-		throttle_time = "auto",
-	})
-	vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
-	vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
+function config.markdown_preview()
+	vim.g.mkdp_browser = "surf"
+	vim.g.mkdp_theme = 'dark'
 end
 
 function config.clipboard_image()
