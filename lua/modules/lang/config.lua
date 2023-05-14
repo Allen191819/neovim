@@ -51,6 +51,17 @@ function config.rust_tools()
 		},
 		server = {
 			standalone = false,
+			settings = {
+				['rust-analyzer'] = {
+					cargo = {
+						target = "x86_64-unknown-none",
+					},
+					check = {
+						allTargets = false,
+						extraArgs = { "--target", "x86_64-unknown-none" },
+					}
+				}
+			}
 		}, -- rust-analyer options
 		on_initialized = function(client)
 			custom_attach(client)
@@ -169,17 +180,18 @@ end
 
 function config.coq()
 	local util = require("lspconfig.util")
-	require'coq-lsp'.setup({
-	lsp = {
-		on_attach = function(client, bufnr)
-			custom_attach(client);
-		end,
-		root_dir = util.find_git_ancestor,
-		init_options = {
-			show_notices_as_diagnostics = false,
-			capabilities = capabilities,
-		},
-	}})
+	require 'coq-lsp'.setup({
+		lsp = {
+			on_attach = function(client, bufnr)
+				custom_attach(client);
+			end,
+			root_dir = util.find_git_ancestor,
+			init_options = {
+				show_notices_as_diagnostics = false,
+				capabilities = capabilities,
+			},
+		}
+	})
 end
 
 return config
