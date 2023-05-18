@@ -85,8 +85,8 @@ function config.lang_go()
 end
 
 function config.markdown_preview()
-	vim.g.mkdp_browser = "surf"
 	vim.g.mkdp_theme = 'dark'
+	vim.g.mkdp_port = '2233'
 end
 
 function config.clipboard_image()
