@@ -43,7 +43,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 			close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
 			border = "rounded",
 			source = "always",
-			prefix = " ",
+			prefix = "",
 			scope = "cursor",
 		}
 		vim.diagnostic.open_float(nil, opts)
