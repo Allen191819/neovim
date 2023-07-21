@@ -7,6 +7,7 @@ local core_map = {
 	-- Suckless
 	["n|<S-Tab>"] = map_cr("normal za"):with_noremap():with_silent():with_desc("edit: Toggle code fold"),
 	["n|<C-s>"] = map_cu("write"):with_noremap():with_silent():with_desc("edit: Save file"),
+	["n|Q"] = map_cmd(":q<Cr>"):with_desc("edit: Exit from editor"),
 	["n|Y"] = map_cmd("y$"):with_desc("edit: Yank text to EOL"),
 	["n|D"] = map_cmd("d$"):with_desc("edit: Delete text to EOL"),
 	["n|n"] = map_cmd("nzzzv"):with_noremap():with_desc("edit: Next search result"),
@@ -28,6 +29,7 @@ local core_map = {
 	["n|<C-q>"] = map_cr("wq"):with_desc("edit: Save file and quit"),
 	["n|<A-S-q>"] = map_cr("q!"):with_desc("edit: Force quit"),
 	["n|<leader>o"] = map_cr("setlocal spell! spelllang=en_us"):with_desc("edit: Toggle spell check"),
+	["n|<leader>h"] = map_cr("set hlsearch!<CR>"):with_desc("edit: Toggle search hl"),
 	["n|tn"] = map_cr("tabnew"):with_noremap():with_silent():with_desc("tab: Create a new tab"),
 	["n|tk"] = map_cr("tabnext"):with_noremap():with_silent():with_desc("tab: Move to next tab"),
 	["n|tj"] = map_cr("tabprevious"):with_noremap():with_silent():with_desc("tab: Move to previous tab"),

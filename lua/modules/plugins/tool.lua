@@ -5,12 +5,12 @@ tool["tpope/vim-fugitive"] = {
 	cmd = { "Git", "G" },
 }
 -- only for fcitx5 user who uses non-English language during coding
-tool["pysan3/fcitx5.nvim"] = {
-	lazy = true,
-	event = "BufReadPost",
-	cond = vim.fn.executable("fcitx5-remote") == 1,
-	config = require("tool.fcitx5"),
-}
+-- tool["pysan3/fcitx5.nvim"] = {
+-- 	lazy = true,
+-- 	event = "BufReadPost",
+-- 	cond = vim.fn.executable("fcitx5-remote") == 1,
+-- 	config = require("tool.fcitx5"),
+-- }
 tool["nvim-tree/nvim-tree.lua"] = {
 	lazy = true,
 	cmd = {
@@ -63,11 +63,10 @@ tool["gelguy/wilder.nvim"] = {
 	config = require("tool.wilder"),
 	dependencies = { "romgrk/fzy-lua-native" },
 }
-tool["tpope/vim-fugitive"] = { lazy = true, cmd = { "Git", "G" } }
 tool["mbbill/undotree"] = {
 	lazy = true,
 	cmd = "UndotreeToggle",
-	-- config = require("tool.undotree"),
+	config = require("tool.undotree"),
 }
 tool["itchyny/calendar.vim"] = {
 	lazy = false,
@@ -75,9 +74,14 @@ tool["itchyny/calendar.vim"] = {
 tool["stevearc/aerial.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
-	-- config=require("tool.aerial")
+	config = require("tool.aerial"),
 }
 
+tool["voldikss/vim-floaterm"] = {
+	opt = true,
+	event = "VimEnter",
+	config = require("tool.floaterm"),
+}
 ----------------------------------------------------------------------
 --                        Telescope Plugins                         --
 ----------------------------------------------------------------------
@@ -88,7 +92,6 @@ tool["nvim-telescope/telescope.nvim"] = {
 	dependencies = {
 		{ "nvim-tree/nvim-web-devicons" },
 		{ "nvim-lua/plenary.nvim" },
-		{ "debugloop/telescope-undo.nvim" },
 		{ "nvim-telescope/telescope-symbols.nvim" },
 		{
 			"ahmedkhalf/project.nvim",

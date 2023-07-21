@@ -46,7 +46,7 @@ local function load_options()
 		laststatus = 2,
 		linebreak = true,
 		list = true,
-		listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
+		-- listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
 		magic = true,
 		mousescroll = "ver:3,hor:6",
 		number = true,

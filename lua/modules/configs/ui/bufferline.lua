@@ -13,7 +13,7 @@ return function()
 			tab_size = 20,
 			color_icons = true,
 			show_buffer_icons = true,
-			show_buffer_close_icons = true,
+			show_buffer_close_icons = false,
 			show_close_icon = true,
 			show_tab_indicators = true,
 			enforce_regular_tabs = true,
@@ -26,16 +26,43 @@ return function()
 			end,
 			offsets = {
 				{
-					filetype = "NvimTree",
-					text = "File Explorer",
-					text_align = "center",
-					padding = 0,
-				},
-				{
 					filetype = "lspsagaoutline",
 					text = "Lspsaga Outline",
 					text_align = "center",
 					padding = 0,
+				},
+				{
+					filetype = "NvimTree",
+					text = "File Explorer",
+					text_align = "center",
+					padding = 1,
+				},
+				{
+					filetype = "undotree",
+					text = "Undo History",
+					text_align = "left",
+				},
+				{
+					filetype = "calendar",
+					text = "Calendar",
+					text_align = "right",
+				},
+				{
+					filetype = "Outline",
+					text = "Outline Window",
+					text_align = "right",
+				},
+				{
+					filetype = "earial",
+					text = "Outline Window",
+					text_align = "right",
+				},
+				{ filetype = "dbui", text = "Dbui", text_align = "left" },
+				{ filetype = "leaninfo", text = "Leaninfo", text_align = "right" },
+				{
+					filetype = "fugitive",
+					text = "Fugitive",
+					text_align = "center",
 				},
 			},
 		},

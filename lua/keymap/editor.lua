@@ -64,6 +64,19 @@ local plug_map = {
 		:with_noremap()
 		:with_desc("edit: Toggle comment for block with selection"),
 
+	-- Plugin: vim-expand-region
+	["v|v"] = map_cmd("<Plug>(expand_region_expand)")
+		:with_silent()
+		:with_noremap()
+		:with_desc("edit: Expand region expand"),
+	["v|V"] = map_cmd("<Plug>(expand_region_shrink)")
+		:with_silent()
+		:with_noremap()
+		:with_desc("edit: Expand region shrink"),
+
+	-- Plugin: Switch
+	["n|gs"] = map_cr("Swithc"):with_silent():with_noremap():with_desc("edit: Switch False to True"),
+
 	-- Plugin: diffview
 	["n|<leader>D"] = map_cr("DiffviewOpen"):with_silent():with_noremap():with_desc("git: Show diff"),
 	["n|<leader><leader>D"] = map_cr("DiffviewClose"):with_silent():with_noremap():with_desc("git: Close diff"),
