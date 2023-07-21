@@ -1,4 +1,4 @@
-local vim = vim
+-- Now use `<A-k>` or `<A-1>` to back to the `dotstutor`.
 local autocmd = {}
 
 function autocmd.nvim_create_augroups(definitions)
@@ -6,13 +6,20 @@ function autocmd.nvim_create_augroups(definitions)
 		vim.api.nvim_command("augroup " .. group_name)
 		vim.api.nvim_command("autocmd!")
 		for _, def in ipairs(definition) do
-			local command = table.concat(vim.tbl_flatten {"autocmd", def}, " ")
+			local command = table.concat(vim.tbl_flatten({ "autocmd", def }), " ")
 			vim.api.nvim_command(command)
 		end
 		vim.api.nvim_command("augroup END")
 	end
 end
 
+local mapping = require("keymap.completion")
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+	callback = function(event)
+		mapping.lsp(event.buf)
+	end,
+})
 
 -- auto close NvimTree
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -22,38 +29,78 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		local layout = vim.api.nvim_call_function("winlayout", {})
 		if
 			layout[1] == "leaf"
-			and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
+			and vim.api.nvim_get_option_value("filetype", { buf = vim.api.nvim_win_get_buf(layout[2]) }) == "NvimTree"
 			and layout[3] == nil
 		then
-			vim.cmd("confirm quit")
+			vim.api.nvim_command([[confirm quit]])
 		end
+	end,
+})
+
+-- auto close some filetype with <q>
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = {
+		"qf",
+		"help",
+		"man",
+		"notify",
+		"nofile",
+		"lspinfo",
+		"terminal",
+		"prompt",
+		"toggleterm",
+		"copilot",
+		"startuptime",
+		"tsplayground",
+		"PlenaryTestPopup",
+	},
+	callback = function(event)
+		vim.bo[event.buf].buflisted = false
+		vim.api.nvim_buf_set_keymap(event.buf, "n", "q", "<CMD>close<CR>", { silent = true })
+	end,
+})
+
+-- Fix fold issue of files opened by telescope
+vim.api.nvim_create_autocmd("BufRead", {
+	callback = function()
+		vim.api.nvim_create_autocmd("BufWinEnter", {
+			once = true,
+			command = "normal! zx",
+		})
 	end,
 })
 
 function autocmd.load_autocmds()
 	local definitions = {
-		packer = {},
+		lazy = {},
 		bufs = {
 			-- Reload vim config automatically
 			{
 				"BufWritePost",
-				[[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]]
-			}, -- Reload Vim script automatically if setlocal autoread
+				[[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]],
+			},
+			-- Reload Vim script automatically if setlocal autoread
 			{
 				"BufWritePost,FileWritePost",
 				"*.vim",
-				[[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]
+				[[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]],
 			},
-			{"BufWritePre", "/tmp/*", "setlocal noundofile"},
-			{"BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile"},
-			{"BufWritePre", "MERGE_MSG", "setlocal noundofile"},
-			{"BufWritePre", "*.tmp", "setlocal noundofile"},
-			{"BufWritePre", "*.bak", "setlocal noundofile"},
+			{ "BufWritePre", "/tmp/*", "setlocal noundofile" },
+			{ "BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile" },
+			{ "BufWritePre", "MERGE_MSG", "setlocal noundofile" },
+			{ "BufWritePre", "*.tmp", "setlocal noundofile" },
+			{ "BufWritePre", "*.bak", "setlocal noundofile" },
+			-- auto place to last edit
 			{
 				"BufReadPost",
 				"*",
-				[[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif]]
-			}
+				[[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif]],
+			},
+			-- Auto toggle fcitx5
+			-- {"InsertLeave", "* :silent", "!fcitx5-remote -c"},
+			-- {"BufCreate", "*", ":silent !fcitx5-remote -c"},
+			-- {"BufEnter", "*", ":silent !fcitx5-remote -c "},
+			-- {"BufLeave", "*", ":silent !fcitx5-remote -c "}
 		},
 		wins = {
 			-- Highlight current line only on focused window
@@ -67,11 +114,11 @@ function autocmd.load_autocmds()
 				"*",
 				[[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]],
 			},
-			-- Force write shada on leaving nvim
+			-- Attempt to write shada when leaving nvim
 			{
 				"VimLeave",
 				"*",
-				[[if has('nvim') | wshada! | else | wviminfo! | endif]],
+				[[if has('nvim') | wshada | else | wviminfo! | endif]],
 			},
 			-- Check if file changed when its window is focus, more eager than 'autoread'
 			{ "FocusGained", "* checktime" },
@@ -102,6 +149,7 @@ function autocmd.load_autocmds()
 			},
 		},
 	}
+
 	autocmd.nvim_create_augroups(definitions)
 end
 
