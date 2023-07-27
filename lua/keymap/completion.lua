@@ -21,7 +21,7 @@ function mapping.lsp(buf)
 		["n|<leader>ld"] = map_cr("Lspsaga show_line_diagnostics ++unfocus")
 			:with_buffer(buf)
 			:with_desc("lsp: Line diagnostic"),
-		["n|gs"] = map_callback(function()
+		["n|ghs"] = map_callback(function()
 			vim.lsp.buf.signature_help()
 		end):with_desc("lsp: Signature help"),
 		["n|gr"] = map_cr("Lspsaga rename"):with_buffer(buf):with_desc("lsp: Rename in file range"),

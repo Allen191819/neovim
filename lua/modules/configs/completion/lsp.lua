@@ -14,6 +14,22 @@ return function()
 		misc = require("modules.utils.icons").get("misc", true),
 	}
 
+	vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]])
+	vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
+	vim.api.nvim_create_autocmd("CursorHold", {
+		callback = function()
+			local opts = {
+				focusable = false,
+				close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+				border = "rounded",
+				source = "always",
+				prefix = "",
+				scope = "cursor",
+			}
+			vim.diagnostic.open_float(nil, opts)
+		end,
+	})
+
 	mason.setup({
 		ui = {
 			border = "single",
@@ -148,4 +164,11 @@ return function()
 	end
 
 	vim.api.nvim_command([[LspStart]]) -- Start LSPs
+	vim.diagnostic.config({
+		virtual_text = false,
+		signs = true,
+		underline = false,
+		update_in_insert = false,
+		severity_sort = true,
+	})
 end
