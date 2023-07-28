@@ -97,11 +97,11 @@ editor["Allen191819/vim-expand-region"] = {
 	lazy = true,
 	event = { "BufReadPost" },
 	dependencies = {
-		{ "kana/vim-textobj-user", opt = false },
-		{ "sgur/vim-textobj-parameter", opt = false },
-		{ "kana/vim-textobj-line", opt = false },
-		{ "adolenc/vim-textobj-toplevel", opt = false },
-		{ "whatyouhide/vim-textobj-xmlattr", opt = false },
+		{ "kana/vim-textobj-user" },
+		{ "sgur/vim-textobj-parameter" },
+		{ "kana/vim-textobj-line" },
+		{ "adolenc/vim-textobj-toplevel" },
+		{ "whatyouhide/vim-textobj-xmlattr" },
 	},
 	config = require("editor.region_expand"),
 }

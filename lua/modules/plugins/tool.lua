@@ -78,7 +78,7 @@ tool["stevearc/aerial.nvim"] = {
 }
 
 tool["voldikss/vim-floaterm"] = {
-	opt = true,
+	lazy = true,
 	event = "VimEnter",
 	config = require("tool.floaterm"),
 }

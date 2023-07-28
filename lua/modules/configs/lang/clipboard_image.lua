@@ -1,9 +1,8 @@
 return function()
-	local filename = vim.fn.expand("%:t:r")
 	require("clipboard-image").setup({
 		default = {
-			img_dir = "img/" .. filename,
-			img_dir_txt = "img/" .. filename,
+			img_dir = { "%:p:h", "img", "%:t:r" },
+			affix = "![](%s)",
 			img_name = function()
 				vim.fn.inputsave()
 				local name = vim.fn.input("Name: ")
@@ -13,7 +12,6 @@ return function()
 				end
 				return name
 			end,
-			affix = "%s",
 		},
 		markdown = { affix = "![](%s)" },
 		tex = { affix = "{%s}" },

@@ -25,9 +25,8 @@ lang["iamcco/markdown-preview.nvim"] = {
 }
 lang["dhruvasagar/vim-table-mode"] = { lazy = true, ft = "markdown" }
 lang["mzlogin/vim-markdown-toc"] = { lazy = true, ft = "markdown" }
-lang["ekickx/clipboard-image.nvim"] = {
+lang["Allen191819/clipboard-image.nvim"] = {
 	lazy = true,
-	commit = "f678fb378c049cd3f6b0a187014e9bc3bbd09706",
 	ft = { "markdown", "tex" },
 	config = require("lang.clipboard_image"),
 }
@@ -36,7 +35,7 @@ lang["chrisbra/csv.vim"] = {
 	ft = "csv",
 }
 lang["tomtomjhj/coq-lsp.nvim"] = {
-	opt = true,
+	lazy = true,
 	ft = "coq",
 	config = require("lang.coq"),
 	dependencies = {
@@ -44,7 +43,7 @@ lang["tomtomjhj/coq-lsp.nvim"] = {
 	},
 }
 lang["frabjous/knap"] = {
-	opt = true,
+	lazy = true,
 	ft = { "markdown", "tex", "html" },
 	config = require("lang.knap"),
 	dependencies = { "savq/paq-nvim" },
