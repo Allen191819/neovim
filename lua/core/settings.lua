@@ -67,6 +67,7 @@ settings["external_browser"] = "chrome-cli open"
 ---@type table<string, boolean>
 settings["formatter_block_list"] = {
 	lua = false, -- example
+	markdown = true,
 }
 
 -- Servers in this list will skip setting formatting capabilities if rhs is true.
