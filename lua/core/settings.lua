@@ -30,6 +30,7 @@ settings["diagnostics_level"] = "Information"
 ---@type string[]
 settings["format_disabled_dirs"] = {
 	"~/format_disabled_dir",
+	"/home/allen/Workplace/suckless/dwm",
 }
 
 -- Set it to false if you don't use nvim to open big files.
